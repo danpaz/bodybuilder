@@ -13,5 +13,22 @@
     "babel": "5.8.21",
     "chai": "3.2.0",
     "mocha": "2.2.5"
-  }
+  },
+  "dependencies": {
+    "lodash": "3.10.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/danpaz/bodybuilder"
+  },
+  "keywords": [
+    "elasticsearch",
+    "bodybuilder",
+    "querying",
+    "queries",
+    "query",
+    "elastic",
+    "search",
+    "dsl"
+  ]
 }

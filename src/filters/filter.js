@@ -8,6 +8,24 @@ export default class Filter {
     return JSON.stringify(this)
   }
 
+  andify() {
+    return {
+      and: [this]
+    }
+  }
+
+  orify() {
+    return {
+      or: [this]
+    }
+  }
+
+  notify() {
+    return {
+      not: this
+    }
+  }
+
   static get filtersMade() {
     return !this._count ? 0 : this._count
   }

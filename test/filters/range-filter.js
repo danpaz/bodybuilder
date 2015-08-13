@@ -25,10 +25,5 @@ describe('RangeFilter', () => {
     })
   })
 
-  it('should convert to string', () => {
-    let result = new RangeFilter('born', {gte: 'now'})
-    expect(result.toString()).to.equal('{"range":{"born":{"gte":"now"}}}')
-  })
-
 })
 

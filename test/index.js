@@ -27,7 +27,7 @@ describe('BodyBuilder', () => {
   })
 
   it('should add a filter', () => {
-    let result = new BodyBuilder().termFilter('user', 'kimchy')
+    let result = new BodyBuilder().filter('term', 'user', 'kimchy')
     expect(result).to.eql({
       query: {
         filter: {
@@ -35,6 +35,13 @@ describe('BodyBuilder', () => {
         }
       },
     })
+  })
+
+  it('should throw if filter type not found', () => {
+    let fn = () => {
+      new BodyBuilder().filter('not-found', 'user', 'kimchy')
+    }
+    expect(fn).to.throw(/Filter type not found/)
   })
 
 })

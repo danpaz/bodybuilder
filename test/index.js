@@ -37,6 +37,42 @@ describe('BodyBuilder', () => {
     })
   })
 
+  it('should add two filters using bool filter', () => {
+    let result = new BodyBuilder().filter('term', 'user', 'kimchy')
+                                  .filter('term', 'user', 'herald')
+    expect(result).to.eql({
+      query: {
+        filter: {
+          bool: {
+            must: [
+              {term: {user: 'kimchy'}},
+              {term: {user: 'herald'}}
+            ]
+          }
+        }
+      },
+    })
+  })
+
+  it('should add three filters using bool filter', () => {
+    let result = new BodyBuilder().filter('term', 'user', 'kimchy')
+                                  .filter('term', 'user', 'herald')
+                                  .filter('term', 'user', 'johnny')
+    expect(result).to.eql({
+      query: {
+        filter: {
+          bool: {
+            must: [
+              {term: {user: 'kimchy'}},
+              {term: {user: 'herald'}},
+              {term: {user: 'johnny'}}
+            ]
+          }
+        }
+      },
+    })
+  })
+
   it('should throw if filter type not found', () => {
     let fn = () => {
       new BodyBuilder().filter('not-found', 'user', 'kimchy')

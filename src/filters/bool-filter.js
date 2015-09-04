@@ -6,13 +6,13 @@ export default class BoolFilter extends Filter {
     super()
     this.bool = {}
     if (musts) {
-      this.bool.must = musts
+      this.bool.must = [musts]
     }
     if (mustNots) {
-      this.bool.must_not = mustNots
+      this.bool.must_not = [mustNots]
     }
     if (shoulds) {
-      this.bool.should = shoulds
+      this.bool.should = [shoulds]
     }
   }
 

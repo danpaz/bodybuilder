@@ -8,11 +8,13 @@ describe('BoolFilter', () => {
     let result = new BoolFilter(filter)
     expect(result).to.eql({
       bool: {
-        must: {
-          exists: {
-            user: 'kimchy'
+        must: [
+          {
+            exists: {
+              user: 'kimchy'
+            }
           }
-        }
+        ]
       }
     })
   })

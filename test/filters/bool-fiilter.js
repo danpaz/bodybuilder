@@ -5,7 +5,7 @@ describe('BoolFilter', () => {
 
   it('should create a bool filter', () => {
     let filter = {exists: {user: 'kimchy'}}
-    let result = new BoolFilter(filter)
+    let result = new BoolFilter().and(filter)
     expect(result).to.eql({
       bool: {
         must: [

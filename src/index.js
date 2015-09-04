@@ -35,24 +35,37 @@ export default class BodyBuilder {
     return this
   }
 
-  _addFilter(filter, boolFilterType) {
+  _addFilter(boolFilterType, filter) {
     let currentFilters = this.query.filter
     let boolCurrent
     let boolNew
 
+    // First argument is optional, defaults to 'and'.
+    //
+    if(boolFilterType && !filter) {
+      filter = boolFilterType
+      boolFilterType = 'and'
+    }
+
+    // Only one filter, no need for bool filters.
+    //
     if (!currentFilters) {
       this.query.filter = filter
       return this
     }
 
-    boolNew = new BoolFilter(filter)
+    // We have a single existing non-bool filter, need to merge with new.
+    //
+    boolNew = new BoolFilter()[boolFilterType](filter)
 
     if (!currentFilters.bool) {
-      boolCurrent = new BoolFilter(currentFilters)
+      boolCurrent = new BoolFilter()[boolFilterType](currentFilters)
       this.query.filter = mergeConcat({}, boolCurrent, boolNew)
       return this
     }
 
+    // We have multiple existing filters, need to merge with new.
+    //
     this.query.filter = mergeConcat({}, currentFilters, boolNew)
 
     return this
@@ -68,6 +81,30 @@ export default class BodyBuilder {
 
     filter = new klass(...args)
     return this._addFilter(filter)
+  }
+
+  orFilter(type, ...args) {
+    let klass = FILTERS_MAP[type]
+    let filter
+
+    if (!klass) {
+      throw new Error('Filter type not found.', type)
+    }
+
+    filter = new klass(...args)
+    return this._addFilter('or', filter)
+  }
+
+  notFilter(type, ...args) {
+    let klass = FILTERS_MAP[type]
+    let filter
+
+    if (!klass) {
+      throw new Error('Filter type not found.', type)
+    }
+
+    filter = new klass(...args)
+    return this._addFilter('not', filter)
   }
 
 }

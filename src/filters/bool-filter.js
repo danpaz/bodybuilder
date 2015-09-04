@@ -2,18 +2,24 @@ import Filter from './filter'
 
 export default class BoolFilter extends Filter {
 
-  constructor(musts, mustNots, shoulds) {
+  constructor() {
     super()
     this.bool = {}
-    if (musts) {
-      this.bool.must = [musts]
-    }
-    if (mustNots) {
-      this.bool.must_not = [mustNots]
-    }
-    if (shoulds) {
-      this.bool.should = [shoulds]
-    }
+  }
+
+  and(filter) {
+    this.bool.must = [filter]
+    return this
+  }
+
+  not(filter) {
+    this.bool.must_not = [filter]
+    return this
+  }
+
+  or(filter) {
+    this.bool.should = [filter]
+    return this
   }
 
 }

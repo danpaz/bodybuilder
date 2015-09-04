@@ -73,6 +73,48 @@ describe('BodyBuilder', () => {
     })
   })
 
+  it('should add an or filter using bool filter', () => {
+    let result = new BodyBuilder().filter('term', 'user', 'kimchy')
+                                  .orFilter('term', 'user', 'herald')
+    expect(result).to.eql({
+      query: {
+        filter: {
+          bool: {
+            should: [
+              {term: {user: 'kimchy'}},
+              {term: {user: 'herald'}}
+            ]
+          }
+        }
+      },
+    })
+  })
+
+  it('should add and, not, and or filters using bool filter', () => {
+    let result = new BodyBuilder().filter('term', 'user', 'kimchy')
+                                  .filter('term', 'user', 'herald')
+                                  .orFilter('term', 'user', 'johnny')
+                                  .notFilter('term', 'user', 'cassie')
+    expect(result).to.eql({
+      query: {
+        filter: {
+          bool: {
+            must: [
+              {term: {user: 'kimchy'}},
+              {term: {user: 'herald'}}
+            ],
+            should: [
+              {term: {user: 'johnny'}}
+            ],
+            must_not: [
+              {term: {user: 'cassie'}}
+            ]
+          }
+        }
+      },
+    })
+  })
+
   it('should throw if filter type not found', () => {
     let fn = () => {
       new BodyBuilder().filter('not-found', 'user', 'kimchy')

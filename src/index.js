@@ -1,9 +1,27 @@
 import _ from 'lodash'
-import TermFilter from './filters/term-filter'
 import BoolFilter from './filters/bool-filter'
+import ExistsFilter from './filters/exists-filter'
+import MatchAllFilter from './filters/exists-filter'
+import MissingFilter from './filters/missing-filter'
+import PrefixFilter from './filters/prefix-filter'
+import RangeFilter from './filters/range-filter'
+import TermFilter from './filters/term-filter'
+import TermsFilter from './filters/terms-filter'
 
 const FILTERS_MAP = {
-  term: TermFilter
+  bool: BoolFilter,
+  boolean: BoolFilter,
+  exists: ExistsFilter,
+  exist: ExistsFilter,
+  matchAll: MatchAllFilter,
+  matchall: MatchAllFilter,
+  'match-all': MatchAllFilter,
+  match_all: MatchAllFilter,
+  missing: MissingFilter,
+  prefix: PrefixFilter,
+  range: RangeFilter,
+  term: TermFilter,
+  terms: TermsFilter
 }
 
 function mergeConcat(target) {

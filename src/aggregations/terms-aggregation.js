@@ -1,7 +1,7 @@
 /**
  * Construct a Terms aggregation.
  *
- * @param  {String} field Field name to query over.
+ * @param  {String} field Field name to aggregate over.
  * @param  {String} name  Aggregation name. Defaults to agg_terms_<field>.
  * @return {Object}       Terms filter.
  */

@@ -8,6 +8,8 @@ import rangeFilter from './filters/range-filter'
 import termFilter from './filters/term-filter'
 import termsFilter from './filters/terms-filter'
 
+import termsAggregation from './aggregations/terms-aggregation'
+
 const FILTERS_MAP = {
   bool: boolFilter,
   boolean: boolFilter,
@@ -22,6 +24,10 @@ const FILTERS_MAP = {
   range: rangeFilter,
   term: termFilter,
   terms: termsFilter
+}
+
+const AGGREGATIONS_MAP = {
+  terms: termsAggregation
 }
 
 function mergeConcat(target) {
@@ -68,8 +74,7 @@ export default class BodyBuilder {
     // Only one filter, no need for bool filters.
     //
     if (!currentFilters) {
-      this.query.filter = filter
-      return this
+      return filter
     }
 
     // We have a single existing non-bool filter, need to merge with new.
@@ -78,15 +83,14 @@ export default class BodyBuilder {
 
     if (!currentFilters.bool) {
       boolCurrent = boolFilter(boolFilterType, currentFilters)
-      this.query.filter = mergeConcat({}, boolCurrent, boolNew)
-      return this
+      return mergeConcat({}, boolCurrent, boolNew)
     }
 
     // We have multiple existing filters, need to merge with new.
     //
-    this.query.filter = mergeConcat({}, currentFilters, boolNew)
+    return mergeConcat({}, currentFilters, boolNew)
 
-    return this
+    return
   }
 
   filter(type, ...args) {
@@ -98,7 +102,8 @@ export default class BodyBuilder {
     }
 
     filter = klass(...args)
-    return this._addFilter(filter)
+    this.query.filter = this._addFilter('and', filter)
+    return this
   }
 
   orFilter(type, ...args) {
@@ -110,7 +115,8 @@ export default class BodyBuilder {
     }
 
     filter = klass(...args)
-    return this._addFilter('or', filter)
+    this.query.filter = this._addFilter('or', filter)
+    return this
   }
 
   notFilter(type, ...args) {
@@ -122,7 +128,21 @@ export default class BodyBuilder {
     }
 
     filter = klass(...args)
-    return this._addFilter('not', filter)
+    this.query.filter = this._addFilter('not', filter)
+    return this
+  }
+
+  aggregation(type, ...args) {
+    let klass = AGGREGATIONS_MAP[type]
+    let aggregation
+
+    if (!klass) {
+      throw new Error('Aggregation type not found.', type)
+    }
+
+    aggregation = klass(...args)
+    this.query.aggregations = aggregation
+    return this
   }
 
 }

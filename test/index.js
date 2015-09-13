@@ -122,4 +122,38 @@ describe('BodyBuilder', () => {
     expect(fn).to.throw(/Filter type not found/)
   })
 
+  it('should add an aggregation', () => {
+    let result = new BodyBuilder().aggregation('terms', 'user')
+    expect(result).to.eql({
+      query: {
+        aggregations: {
+          agg_user: {
+            terms: {
+              field: 'user'
+            }
+          }
+        }
+      }
+    })
+  })
+
+  it('should add an aggregation and a filter', () => {
+    let result = new BodyBuilder().filter('term', 'user', 'kimchy')
+                                  .aggregation('terms', 'user')
+    expect(result).to.eql({
+      query: {
+        filter: {
+          term: {user: 'kimchy'}
+        },
+        aggregations: {
+          agg_user: {
+            terms: {
+              field: 'user'
+            }
+          }
+        }
+      }
+    })
+  })
+
 })

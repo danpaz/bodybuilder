@@ -170,7 +170,7 @@ describe('BodyBuilder', () => {
 
   it('should add an aggregation and a filter', () => {
     let result = new BodyBuilder().filter('term', 'user', 'kimchy')
-                                  .aggregation('terms', 'user')
+                                  .agg('terms', 'user')
     expect(result).to.eql({
       query: {
         filtered: {

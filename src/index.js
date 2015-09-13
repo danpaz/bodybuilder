@@ -148,4 +148,8 @@ export default class BodyBuilder {
     return this
   }
 
+  agg(...args) {
+    return this.aggregation(...args)
+  }
+
 }

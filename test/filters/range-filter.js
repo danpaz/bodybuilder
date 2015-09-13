@@ -1,25 +1,15 @@
-import RangeFilter from '../../src/filters/range-filter'
+import rangeFilter from '../../src/filters/range-filter'
 import {expect} from 'chai'
 
-describe('RangeFilter', () => {
+describe('rangeFilter', () => {
 
-  it('should create a gte filter', () => {
-    let result = new RangeFilter('born', {gte: 'now'})
+  it('should create a range filter', () => {
+    let result = rangeFilter('born', {lte: 'now', gte: '30d'})
     expect(result).to.eql({
       range: {
         born: {
-          gte: 'now'
-        }
-      }
-    })
-  })
-
-  it('should create a lte filter', () => {
-    let result = new RangeFilter('born', {lte: 'now'})
-    expect(result).to.eql({
-      range: {
-        born: {
-          lte: 'now'
+          lte: 'now',
+          gte: '30d'
         }
       }
     })

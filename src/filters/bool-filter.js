@@ -1,25 +1,25 @@
-import Filter from './filter'
+const CONDITIONS_MAP = {
+  must: 'must',
+  should: 'should',
+  must_not: 'must_not',
+  mustNot: 'must_not',
+  and: 'must',
+  or: 'should',
+  not: 'must_not'
+}
 
-export default class BoolFilter extends Filter {
-
-  constructor() {
-    super()
-    this.bool = {}
+/**
+ * Construct a Boolean composite filter.
+ *
+ * @param  {String} condition Boolean condition: must, must_not, should.
+ * @param  {Object} filter    Fully-formed filter.
+ * @return {Object}           Boolean filter.
+ */
+export default function boolFilter(condition, filter) {
+  let cond = CONDITIONS_MAP[condition]
+  return {
+    bool: {
+      [cond]: [filter]
+    }
   }
-
-  and(filter) {
-    this.bool.must = [filter]
-    return this
-  }
-
-  not(filter) {
-    this.bool.must_not = [filter]
-    return this
-  }
-
-  or(filter) {
-    this.bool.should = [filter]
-    return this
-  }
-
 }

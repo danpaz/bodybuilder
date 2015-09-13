@@ -1,11 +1,11 @@
-import BoolFilter from '../../src/filters/bool-filter'
+import boolFilter from '../../src/filters/bool-filter'
 import {expect} from 'chai'
 
-describe('BoolFilter', () => {
+describe('boolFilter', () => {
 
   it('should create a bool filter', () => {
     let filter = {exists: {user: 'kimchy'}}
-    let result = new BoolFilter().and(filter)
+    let result = boolFilter('and', filter)
     expect(result).to.eql({
       bool: {
         must: [

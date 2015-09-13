@@ -1,10 +1,10 @@
-import TermFilter from '../../src/filters/term-filter'
+import termFilter from '../../src/filters/term-filter'
 import {expect} from 'chai'
 
-describe('TermFilter', () => {
+describe('termFilter', () => {
 
   it('should create a simple term filter', () => {
-    let result = new TermFilter('user', 'kimchy')
+    let result = termFilter('user', 'kimchy')
     expect(result).to.eql({
       term: {
         user: 'kimchy'

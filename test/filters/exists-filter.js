@@ -1,10 +1,10 @@
-import ExistsFilter from '../../src/filters/exists-filter'
+import existsFilter from '../../src/filters/exists-filter'
 import {expect} from 'chai'
 
-describe('ExistsFilter', () => {
+describe('existsFilter', () => {
 
   it('should create a simple exists filter', () => {
-    let result = new ExistsFilter('user', 'kimchy')
+    let result = existsFilter('user', 'kimchy')
     expect(result).to.eql({
       exists: {
         user: 'kimchy'

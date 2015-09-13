@@ -1,12 +1,14 @@
-import Filter from './filter'
-
-export default class TermFilter extends Filter {
-
-  // opts = {_cache}
-  constructor(field, term, opts) {
-    super()
-    this.term = {}
-    this.term[field] = term
+/**
+ * Construct a Term filter.
+ *
+ * @param  {String} field Field name to query over.
+ * @param  {String} term  Query value.
+ * @return {Object}       Term filter.
+ */
+export default function termFilter(field, term) {
+  return {
+    term: {
+      [field]: term
+    }
   }
-
 }

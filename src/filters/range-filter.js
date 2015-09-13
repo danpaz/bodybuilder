@@ -1,13 +1,14 @@
-import Filter from './filter'
-
-export default class RangeFilter extends Filter {
-
-  // ranges = {gte, lte}
-  // opts = {time_zone}
-  constructor(field, ranges) {
-    super()
-    this.range = {}
-    this.range[field] = ranges
+/**
+ * Construct a Range filter.
+ *
+ * @param  {String} field  Field name to query over.
+ * @param  {Object} ranges One or more range queries.
+ * @return {Object}        Range filter.
+ */
+export default function rangeFilter(field, ranges) {
+  return {
+    range: {
+      [field]: ranges
+    }
   }
-
 }

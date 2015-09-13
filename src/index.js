@@ -1,27 +1,27 @@
 import _ from 'lodash'
-import BoolFilter from './filters/bool-filter'
-import ExistsFilter from './filters/exists-filter'
-import MatchAllFilter from './filters/exists-filter'
-import MissingFilter from './filters/missing-filter'
-import PrefixFilter from './filters/prefix-filter'
-import RangeFilter from './filters/range-filter'
-import TermFilter from './filters/term-filter'
-import TermsFilter from './filters/terms-filter'
+import boolFilter from './filters/bool-filter'
+import existsFilter from './filters/exists-filter'
+import matchAllFilter from './filters/exists-filter'
+import missingFilter from './filters/missing-filter'
+import prefixFilter from './filters/prefix-filter'
+import rangeFilter from './filters/range-filter'
+import termFilter from './filters/term-filter'
+import termsFilter from './filters/terms-filter'
 
 const FILTERS_MAP = {
-  bool: BoolFilter,
-  boolean: BoolFilter,
-  exists: ExistsFilter,
-  exist: ExistsFilter,
-  matchAll: MatchAllFilter,
-  matchall: MatchAllFilter,
-  'match-all': MatchAllFilter,
-  match_all: MatchAllFilter,
-  missing: MissingFilter,
-  prefix: PrefixFilter,
-  range: RangeFilter,
-  term: TermFilter,
-  terms: TermsFilter
+  bool: boolFilter,
+  boolean: boolFilter,
+  exists: existsFilter,
+  exist: existsFilter,
+  matchAll: matchAllFilter,
+  matchall: matchAllFilter,
+  'match-all': matchAllFilter,
+  match_all: matchAllFilter,
+  missing: missingFilter,
+  prefix: prefixFilter,
+  range: rangeFilter,
+  term: termFilter,
+  terms: termsFilter
 }
 
 function mergeConcat(target) {
@@ -74,10 +74,10 @@ export default class BodyBuilder {
 
     // We have a single existing non-bool filter, need to merge with new.
     //
-    boolNew = new BoolFilter()[boolFilterType](filter)
+    boolNew = boolFilter(boolFilterType, filter)
 
     if (!currentFilters.bool) {
-      boolCurrent = new BoolFilter()[boolFilterType](currentFilters)
+      boolCurrent = boolFilter(boolFilterType, currentFilters)
       this.query.filter = mergeConcat({}, boolCurrent, boolNew)
       return this
     }
@@ -97,7 +97,7 @@ export default class BodyBuilder {
       throw new Error('Filter type not found.', type)
     }
 
-    filter = new klass(...args)
+    filter = klass(...args)
     return this._addFilter(filter)
   }
 
@@ -109,7 +109,7 @@ export default class BodyBuilder {
       throw new Error('Filter type not found.', type)
     }
 
-    filter = new klass(...args)
+    filter = klass(...args)
     return this._addFilter('or', filter)
   }
 
@@ -121,7 +121,7 @@ export default class BodyBuilder {
       throw new Error('Filter type not found.', type)
     }
 
-    filter = new klass(...args)
+    filter = klass(...args)
     return this._addFilter('not', filter)
   }
 

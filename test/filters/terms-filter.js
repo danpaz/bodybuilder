@@ -1,12 +1,12 @@
-import TermsFilter from '../../src/filters/terms-filter'
+import termsFilter from '../../src/filters/terms-filter'
 import {expect} from 'chai'
 
-describe('TermsFilter', () => {
+describe('termsFilter', () => {
 
   it('should create a simple terms filter', () => {
-    let result = new TermsFilter('user', ['kimchy', 'elasticsearch'])
+    let result = termsFilter('user', ['kimchy', 'elasticsearch'])
     expect(result).to.eql({
-      term: {
+      terms: {
         user: ['kimchy', 'elasticsearch']
       }
     })

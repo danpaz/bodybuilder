@@ -1,11 +1,14 @@
-import Filter from './filter'
-
-export default class MissingFilter extends Filter {
-
-  constructor(field, term, opts) {
-    super()
-    this.missing = {}
-    this.missing[field] = term
+/**
+ * Construct a Missing filter.
+ *
+ * @param  {String} field Field name to query over.
+ * @param  {String} term  Query value.
+ * @return {Object}       Missing filter.
+ */
+export default function missingFilter(field, term) {
+  return {
+    missing: {
+      [field]: term
+    }
   }
-
 }

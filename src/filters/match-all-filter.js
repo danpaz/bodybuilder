@@ -1,10 +1,10 @@
-import Filter from './filter'
-
-export default class MatchAllFilter extends Filter {
-
-  constructor() {
-    super()
-    this.match_all = {}
+/**
+ * Construct a Match All filter.
+ *
+ * @return {Object} Match All filter.
+ */
+export default function matchAllFilter() {
+  return {
+    match_all: {}
   }
-
 }

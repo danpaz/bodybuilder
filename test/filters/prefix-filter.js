@@ -1,10 +1,10 @@
-import PrefixFilter from '../../src/filters/prefix-filter'
+import prefixFilter from '../../src/filters/prefix-filter'
 import {expect} from 'chai'
 
-describe('PrefixFilter', () => {
+describe('prefixFilter', () => {
 
   it('should create a simple prefix filter', () => {
-    let result = new PrefixFilter('user', 'ki')
+    let result = prefixFilter('user', 'ki')
     expect(result).to.eql({
       prefix: {
         user: 'ki'

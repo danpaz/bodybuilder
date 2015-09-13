@@ -1,11 +1,14 @@
-import Filter from './filter'
-
-export default class PrefixFilter extends Filter {
-
-  constructor(field, prefixTerm, opts) {
-    super()
-    this.prefix = {}
-    this.prefix[field] = prefixTerm
+/**
+ * Construct a Prefix filter.
+ *
+ * @param  {String} field      Field name to query over.
+ * @param  {String} prefixTerm Query value.
+ * @return {Object}            Prefix filter.
+ */
+export default function prefixFilter(field, prefixTerm) {
+  return {
+    prefix: {
+      [field]: prefixTerm
+    }
   }
-
 }

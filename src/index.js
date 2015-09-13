@@ -144,7 +144,7 @@ export default class BodyBuilder {
     }
 
     aggregation = klass(...args)
-    this.query.aggregations = aggregation
+    this.query.aggregations = _.merge({}, this.query.aggregations, aggregation)
     return this
   }
 

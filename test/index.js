@@ -3,7 +3,7 @@ import {expect} from 'chai'
 
 describe('BodyBuilder', () => {
 
-  it('should work', () => {
+  it('should default to empty query', () => {
     let result = new BodyBuilder()
     expect(result).to.eql({
       query: {}
@@ -137,9 +137,30 @@ describe('BodyBuilder', () => {
     expect(result).to.eql({
       query: {
         aggregations: {
-          agg_user: {
+          agg_terms_user: {
             terms: {
               field: 'user'
+            }
+          }
+        }
+      }
+    })
+  })
+
+  it('should add multiple aggregations', () => {
+    let result = new BodyBuilder().aggregation('terms', 'user')
+                                  .aggregation('terms', 'name')
+    expect(result).to.eql({
+      query: {
+        aggregations: {
+          agg_terms_user: {
+            terms: {
+              field: 'user'
+            }
+          },
+          agg_terms_name: {
+            terms: {
+              field: 'name'
             }
           }
         }
@@ -158,7 +179,7 @@ describe('BodyBuilder', () => {
           }
         },
         aggregations: {
-          agg_user: {
+          agg_terms_user: {
             terms: {
               field: 'user'
             }

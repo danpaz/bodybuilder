@@ -2,11 +2,11 @@
  * Construct a Terms aggregation.
  *
  * @param  {String} field Field name to query over.
- * @param  {String} name  Aggregation name. Defaults to agg_<field>.
+ * @param  {String} name  Aggregation name. Defaults to agg_terms_<field>.
  * @return {Object}       Terms filter.
  */
 export default function termsAggregation(field, name) {
-  name = name || `agg_${field}`
+  name = name || `agg_terms_${field}`
   return {
     [name]: {
       terms: {

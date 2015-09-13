@@ -30,10 +30,12 @@ describe('BodyBuilder', () => {
     let result = new BodyBuilder().filter('term', 'user', 'kimchy')
     expect(result).to.eql({
       query: {
-        filter: {
-          term: {user: 'kimchy'}
+        filtered: {
+          filter: {
+            term: {user: 'kimchy'}
+          }
         }
-      },
+      }
     })
   })
 
@@ -42,15 +44,17 @@ describe('BodyBuilder', () => {
                                   .filter('term', 'user', 'herald')
     expect(result).to.eql({
       query: {
-        filter: {
-          bool: {
-            must: [
-              {term: {user: 'kimchy'}},
-              {term: {user: 'herald'}}
-            ]
+        filtered: {
+          filter: {
+            bool: {
+              must: [
+                {term: {user: 'kimchy'}},
+                {term: {user: 'herald'}}
+              ]
+            }
           }
         }
-      },
+      }
     })
   })
 
@@ -60,16 +64,18 @@ describe('BodyBuilder', () => {
                                   .filter('term', 'user', 'johnny')
     expect(result).to.eql({
       query: {
-        filter: {
-          bool: {
-            must: [
-              {term: {user: 'kimchy'}},
-              {term: {user: 'herald'}},
-              {term: {user: 'johnny'}}
-            ]
+        filtered: {
+          filter: {
+            bool: {
+              must: [
+                {term: {user: 'kimchy'}},
+                {term: {user: 'herald'}},
+                {term: {user: 'johnny'}}
+              ]
+            }
           }
         }
-      },
+      }
     })
   })
 
@@ -78,15 +84,17 @@ describe('BodyBuilder', () => {
                                   .orFilter('term', 'user', 'herald')
     expect(result).to.eql({
       query: {
-        filter: {
-          bool: {
-            should: [
-              {term: {user: 'kimchy'}},
-              {term: {user: 'herald'}}
-            ]
+        filtered: {
+          filter: {
+            bool: {
+              should: [
+                {term: {user: 'kimchy'}},
+                {term: {user: 'herald'}}
+              ]
+            }
           }
         }
-      },
+      }
     })
   })
 
@@ -97,21 +105,23 @@ describe('BodyBuilder', () => {
                                   .notFilter('term', 'user', 'cassie')
     expect(result).to.eql({
       query: {
-        filter: {
-          bool: {
-            must: [
-              {term: {user: 'kimchy'}},
-              {term: {user: 'herald'}}
-            ],
-            should: [
-              {term: {user: 'johnny'}}
-            ],
-            must_not: [
-              {term: {user: 'cassie'}}
-            ]
+        filtered: {
+          filter: {
+            bool: {
+              must: [
+                {term: {user: 'kimchy'}},
+                {term: {user: 'herald'}}
+              ],
+              should: [
+                {term: {user: 'johnny'}}
+              ],
+              must_not: [
+                {term: {user: 'cassie'}}
+              ]
+            }
           }
         }
-      },
+      }
     })
   })
 
@@ -142,8 +152,10 @@ describe('BodyBuilder', () => {
                                   .aggregation('terms', 'user')
     expect(result).to.eql({
       query: {
-        filter: {
-          term: {user: 'kimchy'}
+        filtered: {
+          filter: {
+            term: {user: 'kimchy'}
+          }
         },
         aggregations: {
           agg_user: {

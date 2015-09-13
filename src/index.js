@@ -60,7 +60,7 @@ export default class BodyBuilder {
   }
 
   _addFilter(boolFilterType, filter) {
-    let currentFilters = this.query.filter
+    let currentFilters = this.query.filtered.filter
     let boolCurrent
     let boolNew
 
@@ -102,7 +102,8 @@ export default class BodyBuilder {
     }
 
     filter = klass(...args)
-    this.query.filter = this._addFilter('and', filter)
+    this.query.filtered = this.query.filtered || {}
+    this.query.filtered.filter = this._addFilter('and', filter)
     return this
   }
 
@@ -115,7 +116,8 @@ export default class BodyBuilder {
     }
 
     filter = klass(...args)
-    this.query.filter = this._addFilter('or', filter)
+    this.query.filtered = this.query.filtered || {}
+    this.query.filtered.filter = this._addFilter('or', filter)
     return this
   }
 
@@ -128,7 +130,8 @@ export default class BodyBuilder {
     }
 
     filter = klass(...args)
-    this.query.filter = this._addFilter('not', filter)
+    this.query.filtered = this.query.filtered || {}
+    this.query.filtered.filter = this._addFilter('not', filter)
     return this
   }
 

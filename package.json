@@ -2,7 +2,7 @@
   "name": "bodybuilder",
   "version": "0.0.1",
   "description": "An elasticsearch query body builder.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "mocha --recursive --compilers js:babel/register test/",
     "build": "babel src --out-dir lib"

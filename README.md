@@ -22,32 +22,31 @@ var body = bodyBuilder.filter('term', 'user', 'kimchy')
 
 /**
  * body = {
- *     query: {
- *       filtered: {
- *         filter: {
- *           bool: {
- *             must: [
- *               {term: {user: 'kimchy'}},
- *               {term: {user: 'herald'}}
- *             ],
- *             should: [
- *               {term: {user: 'johnny'}}
- *             ],
- *             must_not: [
- *               {term: {user: 'cassie'}}
- *             ]
- *           }
+ *   query: {
+ *     filtered: {
+ *       filter: {
+ *         bool: {
+ *           must: [
+ *             {term: {user: 'kimchy'}},
+ *             {term: {user: 'herald'}}
+ *           ],
+ *           should: [
+ *             {term: {user: 'johnny'}}
+ *           ],
+ *           must_not: [
+ *             {term: {user: 'cassie'}}
+ *           ]
  *         }
- *       },
- *       aggregations: {
- *         agg_terms_user: {
- *           terms: {
- *             field: 'user'
- *           }
+ *       }
+ *     },
+ *     aggregations: {
+ *       agg_terms_user: {
+ *         terms: {
+ *           field: 'user'
  *         }
  *       }
  *     }
- *   })
+ *   }
  * }
  */
 ```

@@ -7,7 +7,7 @@ are being added.
 
 ## Install
 
-    npm install
+    npm install bodybuilder
 
 ## Usage
 

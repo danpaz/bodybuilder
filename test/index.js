@@ -11,10 +11,14 @@ describe('BodyBuilder', () => {
   })
 
   it('should set a sort direction', () => {
-    let result = new BodyBuilder().sort('asc')
+    let result = new BodyBuilder().sort('timestamp', 'asc')
     expect(result).to.eql({
       query: {},
-      sort: 'asc'
+      sort: {
+        timestamp: {
+          order: 'asc'
+        }
+      }
     })
   })
 

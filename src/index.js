@@ -49,8 +49,12 @@ export default class BodyBuilder {
     this.query = {}
   }
 
-  sort(direction) {
-    this.sort = direction
+  sort(field, direction) {
+    this.sort = {
+      [field]: {
+        order: direction
+      }
+    }
     return this
   }
 
@@ -89,8 +93,6 @@ export default class BodyBuilder {
     // We have multiple existing filters, need to merge with new.
     //
     return mergeConcat({}, currentFilters, boolNew)
-
-    return
   }
 
   filter(type, ...args) {

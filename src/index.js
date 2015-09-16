@@ -3,6 +3,7 @@ import boolFilter from './filters/bool-filter'
 import existsFilter from './filters/exists-filter'
 import matchAllFilter from './filters/exists-filter'
 import missingFilter from './filters/missing-filter'
+import nestedFilter from './filters/nested-filter'
 import prefixFilter from './filters/prefix-filter'
 import rangeFilter from './filters/range-filter'
 import termFilter from './filters/term-filter'
@@ -20,6 +21,7 @@ const FILTERS_MAP = {
   'match-all': matchAllFilter,
   match_all: matchAllFilter,
   missing: missingFilter,
+  nested: nestedFilter,
   prefix: prefixFilter,
   range: rangeFilter,
   term: termFilter,

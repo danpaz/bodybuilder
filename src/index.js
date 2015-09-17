@@ -65,6 +65,11 @@ export default class BodyBuilder {
     return this
   }
 
+  rawOption(k, v) {
+    this[k] = v
+    return this
+  }
+
   _addFilter(boolFilterType, filter) {
     let currentFilters = this.query.filtered.filter
     let boolCurrent

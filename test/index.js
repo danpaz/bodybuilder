@@ -30,6 +30,14 @@ describe('BodyBuilder', () => {
     })
   })
 
+  it('should set a raw option', () => {
+    let result = new BodyBuilder().rawOption('_sourceExclude', 'bigfield')
+    expect(result).to.eql({
+      query: {},
+      _sourceExclude: 'bigfield'
+    })
+  })
+
   it('should add a filter', () => {
     let result = new BodyBuilder().filter('term', 'user', 'kimchy')
     expect(result).to.eql({

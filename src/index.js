@@ -32,6 +32,9 @@ const AGGREGATIONS_MAP = {
   terms: termsAggregation
 }
 
+/**
+ * Extends lodash's merge by allowing array concatenation.
+ */
 function mergeConcat(target) {
   let args = Array.prototype.slice.call(arguments, 1)
 
@@ -70,17 +73,10 @@ export default class BodyBuilder {
     return this
   }
 
-  _addFilter(boolFilterType, filter) {
+  _addFilter(filter, boolFilterType = 'and') {
     let currentFilters = this.query.filtered.filter
     let boolCurrent
     let boolNew
-
-    // First argument is optional, defaults to 'and'.
-    //
-    if(boolFilterType && !filter) {
-      filter = boolFilterType
-      boolFilterType = 'and'
-    }
 
     // Only one filter, no need for bool filters.
     //
@@ -112,7 +108,7 @@ export default class BodyBuilder {
 
     filter = klass(...args)
     this.query.filtered = this.query.filtered || {}
-    this.query.filtered.filter = this._addFilter('and', filter)
+    this.query.filtered.filter = this._addFilter(filter, 'and')
     return this
   }
 
@@ -126,7 +122,7 @@ export default class BodyBuilder {
 
     filter = klass(...args)
     this.query.filtered = this.query.filtered || {}
-    this.query.filtered.filter = this._addFilter('or', filter)
+    this.query.filtered.filter = this._addFilter(filter, 'or')
     return this
   }
 
@@ -140,7 +136,7 @@ export default class BodyBuilder {
 
     filter = klass(...args)
     this.query.filtered = this.query.filtered || {}
-    this.query.filtered.filter = this._addFilter('not', filter)
+    this.query.filtered.filter = this._addFilter(filter, 'not')
     return this
   }
 
@@ -157,6 +153,9 @@ export default class BodyBuilder {
     return this
   }
 
+  /**
+   * Alias to BodyBuilder#aggregation.
+   */
   agg(...args) {
     return this.aggregation(...args)
   }

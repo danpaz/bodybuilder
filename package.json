@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha --recursive --compilers js:babel/register test/",
-    "build": "babel src --out-dir lib"
+    "build": "babel src --out-dir lib",
+    "watch:build": "babel src --watch --out-dir lib"
   },
   "author": "Daniel Paz-Soldan <daniel.pazsoldan@gmail.com>",
   "license": "MIT",

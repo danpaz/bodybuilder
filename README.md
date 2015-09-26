@@ -1,3 +1,5 @@
+![bodybuilder](img/bodybuilder.jpeg)
+
 # bodybuilder
 
 An elasticsearch query body builder.

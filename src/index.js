@@ -10,6 +10,14 @@ import termFilter from './filters/term-filter'
 import termsFilter from './filters/terms-filter'
 
 import termsAggregation from './aggregations/terms-aggregation'
+import maxAggregation from './aggregations/max-aggregation'
+import minAggregation from './aggregations/min-aggregation'
+
+import fuzzyQuery from './queries/fuzzy-query'
+import matchQuery from './queries/match-query'
+import rangeQuery from './queries/range-query'
+import termQuery from './queries/term-query'
+import termsQuery from './queries/terms-query'
 
 const FILTERS_MAP = {
   bool: boolFilter,
@@ -29,7 +37,17 @@ const FILTERS_MAP = {
 }
 
 const AGGREGATIONS_MAP = {
-  terms: termsAggregation
+  terms: termsAggregation,
+  min: minAggregation,
+  max: maxAggregation
+}
+
+const QUERIES_MAP = {
+  fuzzy: fuzzyQuery,
+  match: matchQuery,
+  range: rangeQuery,
+  term: termQuery,
+  terms: termsQuery,
 }
 
 /**
@@ -49,10 +67,6 @@ function mergeConcat(target) {
 }
 
 export default class BodyBuilder {
-
-  constructor() {
-    this.query = {}
-  }
 
   sort(field, direction) {
     this.sort = {
@@ -103,10 +117,11 @@ export default class BodyBuilder {
     let filter
 
     if (!klass) {
-      throw new Error('Filter type not found.', type)
+      throw new TypeError(`Filter type ${type} not found.`)
     }
 
     filter = klass(...args)
+    this.query = this.query || {}
     this.query.filtered = this.query.filtered || {}
     this.query.filtered.filter = this._addFilter(filter, 'and')
     return this
@@ -117,10 +132,11 @@ export default class BodyBuilder {
     let filter
 
     if (!klass) {
-      throw new Error('Filter type not found.', type)
+      throw new TypeError(`Filter type ${type} not found.`)
     }
 
     filter = klass(...args)
+    this.query = this.query || {}
     this.query.filtered = this.query.filtered || {}
     this.query.filtered.filter = this._addFilter(filter, 'or')
     return this
@@ -131,10 +147,11 @@ export default class BodyBuilder {
     let filter
 
     if (!klass) {
-      throw new Error('Filter type not found.', type)
+      throw new TypeError(`Filter type ${type} not found.`)
     }
 
     filter = klass(...args)
+    this.query = this.query || {}
     this.query.filtered = this.query.filtered || {}
     this.query.filtered.filter = this._addFilter(filter, 'not')
     return this
@@ -145,11 +162,11 @@ export default class BodyBuilder {
     let aggregation
 
     if (!klass) {
-      throw new Error('Aggregation type not found.', type)
+      throw new TypeError(`Aggregation type ${type} not found.`)
     }
 
     aggregation = klass(...args)
-    this.query.aggregations = _.merge({}, this.query.aggregations, aggregation)
+    this.aggregations = _.merge({}, this.aggregations, aggregation)
     return this
   }
 
@@ -158,6 +175,23 @@ export default class BodyBuilder {
    */
   agg(...args) {
     return this.aggregation(...args)
+  }
+
+  addQuery(type, ...args) {
+    let klass = QUERIES_MAP[type]
+    let query
+
+    if (!klass) {
+      throw new TypeError(`Query type ${type} not found.`)
+    }
+
+    query = klass(...args)
+
+    this.query = this.query || {}
+    this.query.filtered = this.query.filtered || {}
+    this.query.filtered.query = query
+
+    return this
   }
 
 }

@@ -5,15 +5,12 @@ describe('BodyBuilder', () => {
 
   it('should default to empty query', () => {
     let result = new BodyBuilder()
-    expect(result).to.eql({
-      query: {}
-    })
+    expect(result).to.eql({})
   })
 
   it('should set a sort direction', () => {
     let result = new BodyBuilder().sort('timestamp', 'asc')
     expect(result).to.eql({
-      query: {},
       sort: {
         timestamp: {
           order: 'asc'
@@ -25,7 +22,6 @@ describe('BodyBuilder', () => {
   it('should set a size', () => {
     let result = new BodyBuilder().size(25)
     expect(result).to.eql({
-      query: {},
       size: 25
     })
   })
@@ -33,7 +29,6 @@ describe('BodyBuilder', () => {
   it('should set a raw option', () => {
     let result = new BodyBuilder().rawOption('_sourceExclude', 'bigfield')
     expect(result).to.eql({
-      query: {},
       _sourceExclude: 'bigfield'
     })
   })
@@ -139,20 +134,18 @@ describe('BodyBuilder', () => {
 
   it('should throw if filter type not found', () => {
     let fn = () => {
-      new BodyBuilder().filter('not-found', 'user', 'kimchy')
+      new BodyBuilder().filter('unknown', 'user', 'kimchy')
     }
-    expect(fn).to.throw(/Filter type not found/)
+    expect(fn).to.throw('Filter type unknown not found.')
   })
 
   it('should add an aggregation', () => {
     let result = new BodyBuilder().aggregation('terms', 'user')
     expect(result).to.eql({
-      query: {
-        aggregations: {
-          agg_terms_user: {
-            terms: {
-              field: 'user'
-            }
+      aggregations: {
+        agg_terms_user: {
+          terms: {
+            field: 'user'
           }
         }
       }
@@ -163,17 +156,15 @@ describe('BodyBuilder', () => {
     let result = new BodyBuilder().aggregation('terms', 'user')
                                   .aggregation('terms', 'name')
     expect(result).to.eql({
-      query: {
-        aggregations: {
-          agg_terms_user: {
-            terms: {
-              field: 'user'
-            }
-          },
-          agg_terms_name: {
-            terms: {
-              field: 'name'
-            }
+      aggregations: {
+        agg_terms_user: {
+          terms: {
+            field: 'user'
+          }
+        },
+        agg_terms_name: {
+          terms: {
+            field: 'name'
           }
         }
       }
@@ -189,12 +180,46 @@ describe('BodyBuilder', () => {
           filter: {
             term: {user: 'kimchy'}
           }
-        },
-        aggregations: {
-          agg_terms_user: {
-            terms: {
-              field: 'user'
+        }
+      },
+      aggregations: {
+        agg_terms_user: {
+          terms: {
+            field: 'user'
+          }
+        }
+      }
+    })
+  })
+
+  it('should add a query', () => {
+    let result = new BodyBuilder().addQuery('match', 'message', 'this is a test')
+    expect(result).to.eql({
+      query: {
+        filtered: {
+          query: {
+            match: {
+              message: 'this is a test'
             }
+          }
+        }
+      }
+    })
+  })
+
+  it('should add a query with a filter', () => {
+    let result = new BodyBuilder().addQuery('match', 'message', 'this is a test')
+                                  .filter('term', 'user', 'kimchy')
+    expect(result).to.eql({
+      query: {
+        filtered: {
+          query: {
+            match: {
+              message: 'this is a test'
+            }
+          },
+          filter: {
+            term: {user: 'kimchy'}
           }
         }
       }

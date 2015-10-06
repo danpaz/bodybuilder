@@ -1,6 +1,6 @@
-![bodybuilder](img/bodybuilder.jpeg)
-
 # bodybuilder
+
+![bodybuilder](img/bodybuilder.jpeg)
 
 An elasticsearch query body builder.
 
@@ -15,17 +15,22 @@ are being added.
 
 ```js
 var BodyBuilder = require('bodybuilder');
-var bodyBuilder = new BodyBuilder();
-var body = bodyBuilder.filter('term', 'user', 'kimchy')
-                      .filter('term', 'user', 'herald')
-                      .orFilter('term', 'user', 'johnny')
-                      .notFilter('term', 'user', 'cassie')
-                      .aggregation('terms', 'user')
+var body = new BodyBuilder().addQuery('match', 'message', 'this is a test')
+                            .filter('term', 'user', 'kimchy')
+                            .filter('term', 'user', 'herald')
+                            .orFilter('term', 'user', 'johnny')
+                            .notFilter('term', 'user', 'cassie')
+                            .aggregation('terms', 'user');
 
 /**
- * body = {
+ * body == {
  *   query: {
  *     filtered: {
+ *       query: {
+ *         match: {
+ *           message: 'this is a test'
+ *         }
+ *       },
  *       filter: {
  *         bool: {
  *           must: [

@@ -1,27 +1,4 @@
-import boolFilter from './bool-filter'
-import existsFilter from './exists-filter'
-import matchAllFilter from './exists-filter'
-import missingFilter from './missing-filter'
-import prefixFilter from './prefix-filter'
-import rangeFilter from './range-filter'
-import termFilter from './term-filter'
-import termsFilter from './terms-filter'
-
-const FILTERS_MAP = {
-  bool: boolFilter,
-  boolean: boolFilter,
-  exists: existsFilter,
-  exist: existsFilter,
-  matchAll: matchAllFilter,
-  matchall: matchAllFilter,
-  'match-all': matchAllFilter,
-  match_all: matchAllFilter,
-  missing: missingFilter,
-  prefix: prefixFilter,
-  range: rangeFilter,
-  term: termFilter,
-  terms: termsFilter
-}
+import filters from './index'
 
 /**
  * Construct a Nested filter: a filter inside a filter.
@@ -35,7 +12,7 @@ const FILTERS_MAP = {
  * @return {Object}       Nested filter.
  */
 export default function nestedFilter(path, type, field, ...args) {
-  let klass = FILTERS_MAP[type]
+  let klass = filters[type]
   let nestedField = `${path}.${field}`
   let filter
 

@@ -207,6 +207,27 @@ describe('BodyBuilder', () => {
     })
   })
 
+  it('should add multiple queries', () => {
+    let result = new BodyBuilder().addQuery('match', 'message', 'this is a test')
+                                  .addQuery('match', 'message', 'another test')
+                                  .addQuery('match', 'title', 'test')
+    expect(result).to.eql({
+      query: {
+        filtered: {
+          query: {
+            bool: {
+              must: [
+                {match: {message: 'this is a test'}},
+                {match: { message: 'another test'}},
+                {match: {title: 'test'}}
+              ]
+            }
+          }
+        }
+      }
+    })
+  })
+
   it('should add a query with a filter', () => {
     let result = new BodyBuilder().addQuery('match', 'message', 'this is a test')
                                   .filter('term', 'user', 'kimchy')

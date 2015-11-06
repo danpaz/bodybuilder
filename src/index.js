@@ -147,18 +147,19 @@ export default class BodyBuilder {
 
   addQuery(type, ...args) {
     let klass = queries[type]
-    let query
+    let newQuery
+    let currentQuery
 
     if (!klass) {
       throw new TypeError(`Query type ${type} not found.`)
     }
 
-    query = klass(...args)
+    newQuery = klass(...args)
 
     this.query = this.query || {}
     this.query.filtered = this.query.filtered || {}
-    this.query.filtered.query = query
-
+    currentQuery = this.query.filtered.query
+    this.query.filtered.query = boolMerge('query', newQuery, currentQuery, 'and')
     return this
   }
 

@@ -28,7 +28,7 @@ function mergeConcat(target) {
  * @param  {String} bool        Type of boolean (and, or, not).
  * @return {Object}             Combined filter or query.
  */
-function merge(type, newObj, currentObj, bool = 'and') {
+function boolMerge(type, newObj, currentObj, bool = 'and') {
   let typeClass = type === 'query' ? queries : filters
   let boolCurrent
   let boolNew
@@ -87,7 +87,7 @@ export default class BodyBuilder {
     this.query = this.query || {}
     this.query.filtered = this.query.filtered || {}
     currentFilter = this.query.filtered.filter
-    this.query.filtered.filter = merge('filter', newFilter, currentFilter, 'and')
+    this.query.filtered.filter = boolMerge('filter', newFilter, currentFilter, 'and')
     return this
   }
 
@@ -104,7 +104,7 @@ export default class BodyBuilder {
     this.query = this.query || {}
     this.query.filtered = this.query.filtered || {}
     currentFilter = this.query.filtered.filter
-    this.query.filtered.filter = merge('filter', newFilter, currentFilter, 'or')
+    this.query.filtered.filter = boolMerge('filter', newFilter, currentFilter, 'or')
     return this
   }
 
@@ -121,7 +121,7 @@ export default class BodyBuilder {
     this.query = this.query || {}
     this.query.filtered = this.query.filtered || {}
     currentFilter = this.query.filtered.filter
-    this.query.filtered.filter = merge('filter', newFilter, currentFilter, 'not')
+    this.query.filtered.filter = boolMerge('filter', newFilter, currentFilter, 'not')
     return this
   }
 

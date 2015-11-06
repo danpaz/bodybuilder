@@ -19,6 +19,40 @@ function mergeConcat(target) {
   return _.merge.apply(null, args)
 }
 
+/**
+ * Merge two filters or queries using Boolean filters or queries.
+ *
+ * @param  {String} type        Either 'filter' or 'query'.
+ * @param  {Object} newObj      New filter to add.
+ * @param  {Object} currentObj  Old filter to merge into.
+ * @param  {String} bool        Type of boolean (and, or, not).
+ * @return {Object}             Combined filter or query.
+ */
+function merge(type, newObj, currentObj, bool = 'and') {
+  let typeClass = type === 'query' ? queries : filters
+  let boolCurrent
+  let boolNew
+
+  // Only one, no need for bool.
+  //
+  if (!currentObj) {
+    return newObj
+  }
+
+  // We have a single existing non-bool, need to merge with new.
+  //
+  boolNew = typeClass.bool(bool, newObj)
+
+  if (!currentObj.bool) {
+    boolCurrent = typeClass.bool(bool, currentObj)
+    return mergeConcat({}, boolCurrent, boolNew)
+  }
+
+  // We have multiple existing, need to merge with new.
+  //
+  return mergeConcat({}, currentObj, boolNew)
+}
+
 export default class BodyBuilder {
 
   sort(field, direction) {
@@ -40,73 +74,54 @@ export default class BodyBuilder {
     return this
   }
 
-  _addFilter(filter, boolFilterType = 'and') {
-    let currentFilters = this.query.filtered.filter
-    let boolCurrent
-    let boolNew
-
-    // Only one filter, no need for bool filters.
-    //
-    if (!currentFilters) {
-      return filter
-    }
-
-    // We have a single existing non-bool filter, need to merge with new.
-    //
-    boolNew = filters.bool(boolFilterType, filter)
-
-    if (!currentFilters.bool) {
-      boolCurrent = filters.bool(boolFilterType, currentFilters)
-      return mergeConcat({}, boolCurrent, boolNew)
-    }
-
-    // We have multiple existing filters, need to merge with new.
-    //
-    return mergeConcat({}, currentFilters, boolNew)
-  }
-
   filter(type, ...args) {
     let klass = filters[type]
-    let filter
+    let newFilter
+    let currentFilter
 
     if (!klass) {
       throw new TypeError(`Filter type ${type} not found.`)
     }
 
-    filter = klass(...args)
+    newFilter = klass(...args)
     this.query = this.query || {}
     this.query.filtered = this.query.filtered || {}
-    this.query.filtered.filter = this._addFilter(filter, 'and')
+    currentFilter = this.query.filtered.filter
+    this.query.filtered.filter = merge('filter', newFilter, currentFilter, 'and')
     return this
   }
 
   orFilter(type, ...args) {
     let klass = filters[type]
-    let filter
+    let newFilter
+    let currentFilter
 
     if (!klass) {
       throw new TypeError(`Filter type ${type} not found.`)
     }
 
-    filter = klass(...args)
+    newFilter = klass(...args)
     this.query = this.query || {}
     this.query.filtered = this.query.filtered || {}
-    this.query.filtered.filter = this._addFilter(filter, 'or')
+    currentFilter = this.query.filtered.filter
+    this.query.filtered.filter = merge('filter', newFilter, currentFilter, 'or')
     return this
   }
 
   notFilter(type, ...args) {
     let klass = filters[type]
-    let filter
+    let newFilter
+    let currentFilter
 
     if (!klass) {
       throw new TypeError(`Filter type ${type} not found.`)
     }
 
-    filter = klass(...args)
+    newFilter = klass(...args)
     this.query = this.query || {}
     this.query.filtered = this.query.filtered || {}
-    this.query.filtered.filter = this._addFilter(filter, 'not')
+    currentFilter = this.query.filtered.filter
+    this.query.filtered.filter = merge('filter', newFilter, currentFilter, 'not')
     return this
   }
 

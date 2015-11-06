@@ -118,6 +118,78 @@ var body = new BodyBuilder().addQuery('match', 'message', 'this is a test')
  // }
  ```
 
+### Sort
+
+Set a sort direction using `sort(field, direction)`, where direction defaults to
+ascending.
+
+```js
+var body = new Bodybuilder().filter('term', 'message', 'test')
+                            .sort('date');
+// body == {
+//   sort: {
+//     date: {
+//       order: 'asc'
+//     }
+//   },
+//   query: {
+//     filtered: {
+//       filter: {
+//         term: {
+//           message: 'test'
+//         }
+//       }
+//     }
+//   }
+// }
+```
+
+### From / Size
+
+Set `from` and `size` parameters to configure the offset and maximum hits to be
+returned.
+
+```js
+var body = new Bodybuilder().filter('term', 'message', 'test')
+                            .size(5)
+                            .from(10);
+// body == {
+//   size: 5,
+//   from: 10,
+//   query: {
+//     filtered: {
+//       filter: {
+//         term: {
+//           message: 'test'
+//         }
+//       }
+//     }
+//   }
+// }
+```
+
+### Other Options
+
+Set any other search request option using `rawOption` passing in the key-value
+pair to include in the body.
+
+```js
+var body = new Bodybuilder().filter('term', 'message', 'test')
+                            .rawOption('_sourceExclude', 'verybigfield');
+// body == {
+//   _sourceExclude: 'verybigfield',
+//   query: {
+//     filtered: {
+//       filter: {
+//         term: {
+//           message: 'test'
+//         }
+//       }
+//     }
+//   }
+// }
+```
+
 ## Test
 
 Run unit tests:

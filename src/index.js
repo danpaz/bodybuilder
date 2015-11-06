@@ -55,12 +55,17 @@ function boolMerge(type, newObj, currentObj, bool = 'and') {
 
 export default class BodyBuilder {
 
-  sort(field, direction) {
+  sort(field, direction = 'asc') {
     this.sort = {
       [field]: {
         order: direction
       }
     }
+    return this
+  }
+
+  from(quantity) {
+    this.from = quantity
     return this
   }
 

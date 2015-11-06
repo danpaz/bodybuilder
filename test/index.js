@@ -8,8 +8,8 @@ describe('BodyBuilder', () => {
     expect(result).to.eql({})
   })
 
-  it('should set a sort direction', () => {
-    let result = new BodyBuilder().sort('timestamp', 'asc')
+  it('should use default sort direction', () => {
+    let result = new BodyBuilder().sort('timestamp')
     expect(result).to.eql({
       sort: {
         timestamp: {
@@ -19,7 +19,25 @@ describe('BodyBuilder', () => {
     })
   })
 
-  it('should set a size', () => {
+  it('should set a sort direction', () => {
+    let result = new BodyBuilder().sort('timestamp', 'desc')
+    expect(result).to.eql({
+      sort: {
+        timestamp: {
+          order: 'desc'
+        }
+      }
+    })
+  })
+
+  it('should set a from value', () => {
+    let result = new BodyBuilder().from(25)
+    expect(result).to.eql({
+      from: 25
+    })
+  })
+
+  it('should set a size value', () => {
     let result = new BodyBuilder().size(25)
     expect(result).to.eql({
       size: 25
@@ -36,6 +54,23 @@ describe('BodyBuilder', () => {
   it('should add a filter', () => {
     let result = new BodyBuilder().filter('term', 'user', 'kimchy')
     expect(result).to.eql({
+      query: {
+        filtered: {
+          filter: {
+            term: {user: 'kimchy'}
+          }
+        }
+      }
+    })
+  })
+
+  it('should add a filter with from and size', () => {
+    let result = new BodyBuilder().filter('term', 'user', 'kimchy')
+                                  .size(25)
+                                  .from(100)
+    expect(result).to.eql({
+      size: 25,
+      from: 100,
       query: {
         filtered: {
           filter: {

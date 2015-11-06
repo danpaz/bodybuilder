@@ -37,7 +37,7 @@ var body = new Bodybuilder().addQuery('match', 'message', 'this is a test');
 
 Use `filter(filterType, fieldToFilter, searchTerm)` to build a filtered query.
 
-```
+```js
 var body = new Bodybuilder().filter('term', 'message', 'test');
 // body == {
 //   query: {

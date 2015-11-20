@@ -8,7 +8,7 @@ elasticsearch with a simple, predictable api.
 ## Compatibility
 
 Currently aims to support the full elasticsearch query DSL for versions 1.x.
-Support for the elasticsearch 2.x query DSL will be added later.
+The elasticsearch 2.x query DSL is not currently supported.
 
 ## Install
 

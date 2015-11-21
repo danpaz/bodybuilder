@@ -8,6 +8,13 @@ describe('BodyBuilder', () => {
     expect(result).to.eql({})
   })
 
+  it('should return a copy of body when build', () => {
+    let body = new BodyBuilder()
+    let result1 = body.build()
+    let result2 = body.build()
+    expect(result1).to.not.equal(result2)
+  })
+
   it('should use default sort direction', () => {
     let result = new BodyBuilder().sort('timestamp').build()
     expect(result).to.eql({
@@ -25,6 +32,19 @@ describe('BodyBuilder', () => {
       sort: {
         timestamp: {
           order: 'desc'
+        }
+      }
+    })
+  })
+
+  it('should overwrite the sort direction', () => {
+    let result = new BodyBuilder().sort('timestamp', 'desc')
+                                  .sort('timestamp', 'asc')
+                                  .build()
+    expect(result).to.eql({
+      sort: {
+        timestamp: {
+          order: 'asc'
         }
       }
     })

@@ -38,16 +38,16 @@ export function boolMerge(type, newObj, currentObj, bool = 'and') {
     return newObj
   }
 
-  // We have a single existing non-bool, need to merge with new.
-  //
   boolNew = typeClass.bool(bool, newObj)
 
+  // We have a single existing non-bool. Make it a bool for merging with new.
+  //
   if (!currentObj.bool) {
     boolCurrent = typeClass.bool(bool, currentObj)
     return mergeConcat({}, boolCurrent, boolNew)
   }
 
-  // We have multiple existing, need to merge with new.
+  // We have multiple existing bools. Now merge with new.
   //
   return mergeConcat({}, currentObj, boolNew)
 }

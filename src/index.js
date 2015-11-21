@@ -55,8 +55,16 @@ function boolMerge(type, newObj, currentObj, bool = 'and') {
 
 export default class BodyBuilder {
 
+  constructor() {
+    this._body = {}
+  }
+
+  build() {
+    return _.clone(this._body)
+  }
+
   sort(field, direction = 'asc') {
-    this.sort = {
+    this._body.sort = {
       [field]: {
         order: direction
       }
@@ -65,17 +73,17 @@ export default class BodyBuilder {
   }
 
   from(quantity) {
-    this.from = quantity
+    this._body.from = quantity
     return this
   }
 
   size(quantity) {
-    this.size = quantity
+    this._body.size = quantity
     return this
   }
 
   rawOption(k, v) {
-    this[k] = v
+    this._body[k] = v
     return this
   }
 
@@ -89,10 +97,10 @@ export default class BodyBuilder {
     }
 
     newFilter = klass(...args)
-    this.query = this.query || {}
-    this.query.filtered = this.query.filtered || {}
-    currentFilter = this.query.filtered.filter
-    this.query.filtered.filter = boolMerge('filter', newFilter, currentFilter, 'and')
+    this._body.query = this._body.query || {}
+    this._body.query.filtered = this._body.query.filtered || {}
+    currentFilter = this._body.query.filtered.filter
+    this._body.query.filtered.filter = boolMerge('filter', newFilter, currentFilter, 'and')
     return this
   }
 
@@ -106,10 +114,10 @@ export default class BodyBuilder {
     }
 
     newFilter = klass(...args)
-    this.query = this.query || {}
-    this.query.filtered = this.query.filtered || {}
-    currentFilter = this.query.filtered.filter
-    this.query.filtered.filter = boolMerge('filter', newFilter, currentFilter, 'or')
+    this._body.query = this._body.query || {}
+    this._body.query.filtered = this._body.query.filtered || {}
+    currentFilter = this._body.query.filtered.filter
+    this._body.query.filtered.filter = boolMerge('filter', newFilter, currentFilter, 'or')
     return this
   }
 
@@ -123,10 +131,10 @@ export default class BodyBuilder {
     }
 
     newFilter = klass(...args)
-    this.query = this.query || {}
-    this.query.filtered = this.query.filtered || {}
-    currentFilter = this.query.filtered.filter
-    this.query.filtered.filter = boolMerge('filter', newFilter, currentFilter, 'not')
+    this._body.query = this._body.query || {}
+    this._body.query.filtered = this._body.query.filtered || {}
+    currentFilter = this._body.query.filtered.filter
+    this._body.query.filtered.filter = boolMerge('filter', newFilter, currentFilter, 'not')
     return this
   }
 
@@ -139,7 +147,7 @@ export default class BodyBuilder {
     }
 
     aggregation = klass(...args)
-    this.aggregations = _.merge({}, this.aggregations, aggregation)
+    this._body.aggregations = _.merge({}, this._body.aggregations, aggregation)
     return this
   }
 
@@ -161,10 +169,10 @@ export default class BodyBuilder {
 
     newQuery = klass(...args)
 
-    this.query = this.query || {}
-    this.query.filtered = this.query.filtered || {}
-    currentQuery = this.query.filtered.query
-    this.query.filtered.query = boolMerge('query', newQuery, currentQuery, 'and')
+    this._body.query = this._body.query || {}
+    this._body.query.filtered = this._body.query.filtered || {}
+    currentQuery = this._body.query.filtered.query
+    this._body.query.filtered.query = boolMerge('query', newQuery, currentQuery, 'and')
     return this
   }
 

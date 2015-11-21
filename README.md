@@ -16,15 +16,15 @@ The elasticsearch 2.x query DSL is not currently supported.
 
 ## Usage
 
-    var Bodybuilder = require('bodybuilder');
-    var body = new Bodybuilder();
+    var Bodybuilder = require('bodybuilder')
+    var body = new Bodybuilder()
 
 ### Queries
 
 Use `addQuery(queryType, fieldToQuery, searchTerm)` to build a query.
 
 ```js
-var body = new Bodybuilder().addQuery('match', 'message', 'this is a test');
+var body = new Bodybuilder().addQuery('match', 'message', 'this is a test')
 // body == {
 //   query: {
 //     filtered: {
@@ -43,7 +43,7 @@ var body = new Bodybuilder().addQuery('match', 'message', 'this is a test');
 Use `filter(filterType, fieldToFilter, searchTerm)` to build a filtered query.
 
 ```js
-var body = new Bodybuilder().filter('term', 'message', 'test');
+var body = new Bodybuilder().filter('term', 'message', 'test').build()
 // body == {
 //   query: {
 //     filtered: {
@@ -64,7 +64,7 @@ aggregation query. The optional aggregation name defaults to
 `agg_<aggType>_<fieldToAgg>`.
 
 ```js
-var body = new BodyBuilder().aggregation('terms', 'user')
+var body = new BodyBuilder().aggregation('terms', 'user').build()
 // body == {
 //   aggregations: {
 //     agg_terms_user: {
@@ -87,7 +87,8 @@ var body = new BodyBuilder().addQuery('match', 'message', 'this is a test')
                             .filter('term', 'user', 'herald')
                             .orFilter('term', 'user', 'johnny')
                             .notFilter('term', 'user', 'cassie')
-                            .aggregation('terms', 'user');
+                            .aggregation('terms', 'user')
+                            .build()
 
  // body == {
  //   query: {
@@ -130,7 +131,8 @@ ascending.
 
 ```js
 var body = new Bodybuilder().filter('term', 'message', 'test')
-                            .sort('date');
+                            .sort('date')
+                            .build()
 // body == {
 //   sort: {
 //     date: {
@@ -157,7 +159,8 @@ returned.
 ```js
 var body = new Bodybuilder().filter('term', 'message', 'test')
                             .size(5)
-                            .from(10);
+                            .from(10)
+                            .build()
 // body == {
 //   size: 5,
 //   from: 10,
@@ -180,7 +183,8 @@ pair to include in the body.
 
 ```js
 var body = new Bodybuilder().filter('term', 'message', 'test')
-                            .rawOption('_sourceExclude', 'verybigfield');
+                            .rawOption('_sourceExclude', 'verybigfield')
+                            .build()
 // body == {
 //   _sourceExclude: 'verybigfield',
 //   query: {

@@ -4,12 +4,12 @@ import {expect} from 'chai'
 describe('BodyBuilder', () => {
 
   it('should default to empty query', () => {
-    let result = new BodyBuilder()
+    let result = new BodyBuilder().build()
     expect(result).to.eql({})
   })
 
   it('should use default sort direction', () => {
-    let result = new BodyBuilder().sort('timestamp')
+    let result = new BodyBuilder().sort('timestamp').build()
     expect(result).to.eql({
       sort: {
         timestamp: {
@@ -20,7 +20,7 @@ describe('BodyBuilder', () => {
   })
 
   it('should set a sort direction', () => {
-    let result = new BodyBuilder().sort('timestamp', 'desc')
+    let result = new BodyBuilder().sort('timestamp', 'desc').build()
     expect(result).to.eql({
       sort: {
         timestamp: {
@@ -31,14 +31,14 @@ describe('BodyBuilder', () => {
   })
 
   it('should set a from value', () => {
-    let result = new BodyBuilder().from(25)
+    let result = new BodyBuilder().from(25).build()
     expect(result).to.eql({
       from: 25
     })
   })
 
   it('should set a size value', () => {
-    let result = new BodyBuilder().size(25)
+    let result = new BodyBuilder().size(25).build()
     expect(result).to.eql({
       size: 25
     })
@@ -46,6 +46,7 @@ describe('BodyBuilder', () => {
 
   it('should set a raw option', () => {
     let result = new BodyBuilder().rawOption('_sourceExclude', 'bigfield')
+                                  .build()
     expect(result).to.eql({
       _sourceExclude: 'bigfield'
     })
@@ -53,6 +54,7 @@ describe('BodyBuilder', () => {
 
   it('should add a filter', () => {
     let result = new BodyBuilder().filter('term', 'user', 'kimchy')
+                                  .build()
     expect(result).to.eql({
       query: {
         filtered: {
@@ -68,6 +70,7 @@ describe('BodyBuilder', () => {
     let result = new BodyBuilder().filter('term', 'user', 'kimchy')
                                   .size(25)
                                   .from(100)
+                                  .build()
     expect(result).to.eql({
       size: 25,
       from: 100,
@@ -84,6 +87,7 @@ describe('BodyBuilder', () => {
   it('should add two filters using bool filter', () => {
     let result = new BodyBuilder().filter('term', 'user', 'kimchy')
                                   .filter('term', 'user', 'herald')
+                                  .build()
     expect(result).to.eql({
       query: {
         filtered: {
@@ -104,6 +108,7 @@ describe('BodyBuilder', () => {
     let result = new BodyBuilder().filter('term', 'user', 'kimchy')
                                   .filter('term', 'user', 'herald')
                                   .filter('term', 'user', 'johnny')
+                                  .build()
     expect(result).to.eql({
       query: {
         filtered: {
@@ -124,6 +129,7 @@ describe('BodyBuilder', () => {
   it('should add an or filter using bool filter', () => {
     let result = new BodyBuilder().filter('term', 'user', 'kimchy')
                                   .orFilter('term', 'user', 'herald')
+                                  .build()
     expect(result).to.eql({
       query: {
         filtered: {
@@ -145,6 +151,7 @@ describe('BodyBuilder', () => {
                                   .filter('term', 'user', 'herald')
                                   .orFilter('term', 'user', 'johnny')
                                   .notFilter('term', 'user', 'cassie')
+                                  .build()
     expect(result).to.eql({
       query: {
         filtered: {
@@ -169,13 +176,13 @@ describe('BodyBuilder', () => {
 
   it('should throw if filter type not found', () => {
     let fn = () => {
-      new BodyBuilder().filter('unknown', 'user', 'kimchy')
+      new BodyBuilder().filter('unknown', 'user', 'kimchy').build()
     }
     expect(fn).to.throw('Filter type unknown not found.')
   })
 
   it('should add an aggregation', () => {
-    let result = new BodyBuilder().aggregation('terms', 'user')
+    let result = new BodyBuilder().aggregation('terms', 'user').build()
     expect(result).to.eql({
       aggregations: {
         agg_terms_user: {
@@ -190,6 +197,7 @@ describe('BodyBuilder', () => {
   it('should add multiple aggregations', () => {
     let result = new BodyBuilder().aggregation('terms', 'user')
                                   .aggregation('terms', 'name')
+                                  .build()
     expect(result).to.eql({
       aggregations: {
         agg_terms_user: {
@@ -209,6 +217,7 @@ describe('BodyBuilder', () => {
   it('should add an aggregation and a filter', () => {
     let result = new BodyBuilder().filter('term', 'user', 'kimchy')
                                   .agg('terms', 'user')
+                                  .build()
     expect(result).to.eql({
       query: {
         filtered: {
@@ -229,6 +238,7 @@ describe('BodyBuilder', () => {
 
   it('should add a query', () => {
     let result = new BodyBuilder().addQuery('match', 'message', 'this is a test')
+                                  .build()
     expect(result).to.eql({
       query: {
         filtered: {
@@ -246,6 +256,7 @@ describe('BodyBuilder', () => {
     let result = new BodyBuilder().addQuery('match', 'message', 'this is a test')
                                   .addQuery('match', 'message', 'another test')
                                   .addQuery('match', 'title', 'test')
+                                  .build()
     expect(result).to.eql({
       query: {
         filtered: {
@@ -266,6 +277,7 @@ describe('BodyBuilder', () => {
   it('should add a query with a filter', () => {
     let result = new BodyBuilder().addQuery('match', 'message', 'this is a test')
                                   .filter('term', 'user', 'kimchy')
+                                  .build()
     expect(result).to.eql({
       query: {
         filtered: {

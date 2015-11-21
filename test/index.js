@@ -257,7 +257,7 @@ describe('BodyBuilder', () => {
   })
 
   it('should add a query', () => {
-    let result = new BodyBuilder().addQuery('match', 'message', 'this is a test')
+    let result = new BodyBuilder().query('match', 'message', 'this is a test')
                                   .build()
     expect(result).to.eql({
       query: {
@@ -273,9 +273,9 @@ describe('BodyBuilder', () => {
   })
 
   it('should add multiple queries', () => {
-    let result = new BodyBuilder().addQuery('match', 'message', 'this is a test')
-                                  .addQuery('match', 'message', 'another test')
-                                  .addQuery('match', 'title', 'test')
+    let result = new BodyBuilder().query('match', 'message', 'this is a test')
+                                  .query('match', 'message', 'another test')
+                                  .query('match', 'title', 'test')
                                   .build()
     expect(result).to.eql({
       query: {
@@ -295,7 +295,7 @@ describe('BodyBuilder', () => {
   })
 
   it('should add a query with a filter', () => {
-    let result = new BodyBuilder().addQuery('match', 'message', 'this is a test')
+    let result = new BodyBuilder().query('match', 'message', 'this is a test')
                                   .filter('term', 'user', 'kimchy')
                                   .build()
     expect(result).to.eql({

@@ -21,10 +21,10 @@ The elasticsearch 2.x query DSL is not currently supported.
 
 ### Queries
 
-Use `addQuery(queryType, fieldToQuery, searchTerm)` to build a query.
+Use `query(queryType, fieldToQuery, searchTerm)` to build a query.
 
 ```js
-var body = new Bodybuilder().addQuery('match', 'message', 'this is a test')
+var body = new Bodybuilder().query('match', 'message', 'this is a test')
 // body == {
 //   query: {
 //     filtered: {
@@ -82,7 +82,7 @@ Multiple queries and filters are merged using the boolean query or filter (see
 [Combining Filters](https://www.elastic.co/guide/en/elasticsearch/guide/current/combining-filters.html)).
 
 ```js
-var body = new BodyBuilder().addQuery('match', 'message', 'this is a test')
+var body = new BodyBuilder().query('match', 'message', 'this is a test')
                             .filter('term', 'user', 'kimchy')
                             .filter('term', 'user', 'herald')
                             .orFilter('term', 'user', 'johnny')

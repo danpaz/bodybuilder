@@ -218,7 +218,7 @@ export default class BodyBuilder {
    * @param  {...args} args Arguments passed to query builder.
    * @return {BodyBuilder}
    */
-  addQuery(type, ...args) {
+  query(type, ...args) {
     let klass = queries[type]
     let newQuery
     let currentQuery
@@ -236,4 +236,10 @@ export default class BodyBuilder {
     return this
   }
 
+  /**
+   * Alias to BodyBuilder#query.
+   */
+  addQuery(...args) {
+    return this.query(...args)
+  }
 }

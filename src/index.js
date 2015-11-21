@@ -59,10 +59,23 @@ export default class BodyBuilder {
     this._body = {}
   }
 
+  /**
+   * Returns a copy of the elasticsearch query body in its current state.
+   *
+   * @return {Object} Query body.
+   */
   build() {
     return _.clone(this._body)
   }
 
+  /**
+   * Set a sort direction on a given field.
+   *
+   * @param  {String} field     Field name.
+   * @param  {String} direction (Optional) A valid direction: 'asc' or 'desc'.
+   *                            Defaults to 'asc'.
+   * @return {BodyBuilder}
+   */
   sort(field, direction = 'asc') {
     this._body.sort = {
       [field]: {
@@ -72,21 +85,50 @@ export default class BodyBuilder {
     return this
   }
 
+  /**
+   * Set a *from* offset value, for paginating a query.
+   *
+   * @param  {Number} quantity The offset from the first result you want to
+   *                           fetch.
+   * @return {BodyBuilder}
+   */
   from(quantity) {
     this._body.from = quantity
     return this
   }
 
+  /**
+   * Set a *size* value for maximum results to return.
+   *
+   * @param  {Number} quantity Maximum number of results to return.
+   * @return {BodyBuilder}
+   */
   size(quantity) {
     this._body.size = quantity
     return this
   }
 
+  /**
+   * Set any key-value on the elasticsearch body.
+   *
+   * @param  {String} k Key.
+   * @param  {String} v Value.
+   * @return {BodyBuilder}
+   */
   rawOption(k, v) {
     this._body[k] = v
     return this
   }
 
+  /**
+   * Apply a filter of a given type providing all the necessary arguments,
+   * passing these arguments directly to the specified filter builder. Merges
+   * existing filter(s) with the new filter.
+   *
+   * @param  {String}  type Name of the filter type.
+   * @param  {...args} args Arguments passed to filter builder.
+   * @return {BodyBuilder}
+   */
   filter(type, ...args) {
     let klass = filters[type]
     let newFilter
@@ -138,6 +180,15 @@ export default class BodyBuilder {
     return this
   }
 
+  /**
+   * Apply a aggregation of a given type providing all the necessary arguments,
+   * passing these arguments directly to the specified aggregation builder.
+   * Merges existing aggregation(s) with the new aggregation.
+   *
+   * @param  {String}  type Name of the aggregation type.
+   * @param  {...args} args Arguments passed to aggregation builder.
+   * @return {BodyBuilder}
+   */
   aggregation(type, ...args) {
     let klass = aggregations[type]
     let aggregation
@@ -158,6 +209,15 @@ export default class BodyBuilder {
     return this.aggregation(...args)
   }
 
+  /**
+   * Apply a query of a given type providing all the necessary arguments,
+   * passing these arguments directly to the specified query builder. Merges
+   * existing query(s) with the new query.
+   *
+   * @param  {String}  type Name of the query type.
+   * @param  {...args} args Arguments passed to query builder.
+   * @return {BodyBuilder}
+   */
   addQuery(type, ...args) {
     let klass = queries[type]
     let newQuery

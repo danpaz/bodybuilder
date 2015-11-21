@@ -82,6 +82,7 @@ export default class BodyBuilder {
    */
   filter(type, ...args) {
     let klass = filters[type]
+    let body = this._body
     let newFilter
     let currentFilter
 
@@ -90,15 +91,15 @@ export default class BodyBuilder {
     }
 
     newFilter = klass(...args)
-    this._body.query = this._body.query || {}
-    this._body.query.filtered = this._body.query.filtered || {}
-    currentFilter = this._body.query.filtered.filter
-    this._body.query.filtered.filter = boolMerge('filter', newFilter, currentFilter, 'and')
+    currentFilter = _.get(body, 'query.filtered.filter')
+    _.set(body, 'query.filtered.filter',
+      boolMerge('filter', newFilter, currentFilter, 'and'))
     return this
   }
 
   orFilter(type, ...args) {
     let klass = filters[type]
+    let body = this._body
     let newFilter
     let currentFilter
 
@@ -107,16 +108,15 @@ export default class BodyBuilder {
     }
 
     newFilter = klass(...args)
-    this._body.query = this._body.query || {}
-    this._body.query.filtered = this._body.query.filtered || {}
-    currentFilter = this._body.query.filtered.filter
-    this._body.query.filtered.filter =
-      boolMerge('filter', newFilter, currentFilter, 'or')
+    currentFilter = _.get(body, 'query.filtered.filter')
+    _.set(body, 'query.filtered.filter',
+      boolMerge('filter', newFilter, currentFilter, 'or'))
     return this
   }
 
   notFilter(type, ...args) {
     let klass = filters[type]
+    let body = this._body
     let newFilter
     let currentFilter
 
@@ -125,11 +125,9 @@ export default class BodyBuilder {
     }
 
     newFilter = klass(...args)
-    this._body.query = this._body.query || {}
-    this._body.query.filtered = this._body.query.filtered || {}
-    currentFilter = this._body.query.filtered.filter
-    this._body.query.filtered.filter =
-      boolMerge('filter', newFilter, currentFilter, 'not')
+    currentFilter = _.get(body, 'query.filtered.filter')
+    _.set(body, 'query.filtered.filter',
+      boolMerge('filter', newFilter, currentFilter, 'not'))
     return this
   }
 
@@ -144,6 +142,7 @@ export default class BodyBuilder {
    */
   aggregation(type, ...args) {
     let klass = aggregations[type]
+    let body = this._body
     let aggregation
 
     if (!klass) {
@@ -151,7 +150,8 @@ export default class BodyBuilder {
     }
 
     aggregation = klass(...args)
-    this._body.aggregations = _.merge({}, this._body.aggregations, aggregation)
+    _.set(body, 'aggregations',
+      _.merge({}, this._body.aggregations, aggregation))
     return this
   }
 
@@ -173,6 +173,41 @@ export default class BodyBuilder {
    */
   query(type, ...args) {
     let klass = queries[type]
+    let body = this._body
+    let newQuery
+    let currentQuery
+
+    if (!klass) {
+      throw new TypeError(`Query type ${type} not found.`)
+    }
+
+    newQuery = klass(...args)
+    currentQuery = _.get(body, 'query.filtered.query')
+    _.set(body, 'query.filtered.query',
+      boolMerge('query', newQuery, currentQuery, 'and'))
+    return this
+  }
+
+  andQuery(type, ...args) {
+    let klass = queries[type]
+    let body = this._body
+    let newQuery
+    let currentQuery
+
+    if (!klass) {
+      throw new TypeError(`Query type ${type} not found.`)
+    }
+
+    newQuery = klass(...args)
+    currentQuery = _.get(body, 'query.filtered.query')
+    _.set(body, 'query.filtered.query',
+      boolMerge('query', newQuery, currentQuery, 'and'))
+    return this
+  }
+
+  orQuery(type, ...args) {
+    let klass = queries[type]
+    let body = this._body
     let newQuery
     let currentQuery
 
@@ -182,11 +217,29 @@ export default class BodyBuilder {
 
     newQuery = klass(...args)
 
-    this._body.query = this._body.query || {}
-    this._body.query.filtered = this._body.query.filtered || {}
-    currentQuery = this._body.query.filtered.query
-    this._body.query.filtered.query =
-      boolMerge('query', newQuery, currentQuery, 'and')
+    newQuery = klass(...args)
+    currentQuery = _.get(body, 'query.filtered.query')
+    _.set(body, 'query.filtered.query',
+      boolMerge('query', newQuery, currentQuery, 'or'))
+    return this
+  }
+
+  notQuery(type, ...args) {
+    let klass = queries[type]
+    let body = this._body
+    let newQuery
+    let currentQuery
+
+    if (!klass) {
+      throw new TypeError(`Query type ${type} not found.`)
+    }
+
+    newQuery = klass(...args)
+
+    newQuery = klass(...args)
+    currentQuery = _.get(body, 'query.filtered.query')
+    _.set(body, 'query.filtered.query',
+      boolMerge('query', newQuery, currentQuery, 'not'))
     return this
   }
 

@@ -294,6 +294,34 @@ describe('BodyBuilder', () => {
     })
   })
 
+  it('should add and, not, and or queries using bool query', () => {
+    let result = new BodyBuilder().query('term', 'user', 'kimchy')
+                                  .query('term', 'user', 'herald')
+                                  .orQuery('term', 'user', 'johnny')
+                                  .notQuery('term', 'user', 'cassie')
+                                  .build()
+    expect(result).to.eql({
+      query: {
+        filtered: {
+          query: {
+            bool: {
+              must: [
+                {term: {user: 'kimchy'}},
+                {term: {user: 'herald'}}
+              ],
+              should: [
+                {term: {user: 'johnny'}}
+              ],
+              must_not: [
+                {term: {user: 'cassie'}}
+              ]
+            }
+          }
+        }
+      }
+    })
+  })
+
   it('should add a query with a filter', () => {
     let result = new BodyBuilder().query('match', 'message', 'this is a test')
                                   .filter('term', 'user', 'kimchy')

@@ -296,7 +296,25 @@ describe('BodyBuilder', () => {
     })
   })
 
-  it('should support starting with should queries', () => {
+  it('should support starting with a should query', () => {
+    let result = new BodyBuilder().orQuery('match', 'message', 'this is a test')
+                                  .build()
+    expect(result).to.eql({
+      query: {
+        filtered: {
+          query: {
+            bool: {
+              should: [
+                {match: {message: 'this is a test'}}
+              ]
+            }
+          }
+        }
+      }
+    })
+  })
+
+  it('should support starting with multiple should queries', () => {
     let result = new BodyBuilder().orQuery('match', 'message', 'this is a test')
                                   .orQuery('match', 'message', 'another test')
                                   .build()

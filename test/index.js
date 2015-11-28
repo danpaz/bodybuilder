@@ -155,8 +155,10 @@ describe('BodyBuilder', () => {
         filtered: {
           filter: {
             bool: {
+              must: [
+                {term: {user: 'kimchy'}}
+              ],
               should: [
-                {term: {user: 'kimchy'}},
                 {term: {user: 'herald'}}
               ]
             }
@@ -286,6 +288,26 @@ describe('BodyBuilder', () => {
                 {match: {message: 'this is a test'}},
                 {match: { message: 'another test'}},
                 {match: {title: 'test'}}
+              ]
+            }
+          }
+        }
+      }
+    })
+  })
+
+  it('should support starting with should queries', () => {
+    let result = new BodyBuilder().orQuery('match', 'message', 'this is a test')
+                                  .orQuery('match', 'message', 'another test')
+                                  .build()
+    expect(result).to.eql({
+      query: {
+        filtered: {
+          query: {
+            bool: {
+              should: [
+                {match: {message: 'this is a test'}},
+                {match: { message: 'another test'}}
               ]
             }
           }

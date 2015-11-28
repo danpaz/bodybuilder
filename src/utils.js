@@ -1,5 +1,4 @@
 import _ from 'lodash'
-import filters from './filters'
 import queries from './queries'
 
 /**
@@ -21,33 +20,27 @@ export function mergeConcat(target) {
 /**
  * Merge two filters or queries using their Boolean counterparts.
  *
- * @param  {String} type        Either 'filter' or 'query'.
  * @param  {Object} newObj      New filter or query to add.
  * @param  {Object} currentObj  Old filter or query to merge into.
- * @param  {String} bool        Type of boolean ('and', 'or', 'not').
+ * @param  {String} boolType    Type of boolean ('and', 'or', 'not').
  * @return {Object}             Combined filter or query.
  */
-export function boolMerge(type, newObj, currentObj, bool = 'and') {
-  let typeClass = type === 'query' ? queries : filters
+export function boolMerge(newObj, currentObj, boolType = 'and') {
   let boolCurrent
   let boolNew
 
   // Only one, no need for bool.
-  //
   if (!currentObj) {
+    // Allow starting with 'or' and 'not' queries.
+    if (boolType !== 'and') {
+      return queries.bool(boolType, newObj)
+    }
     return newObj
   }
 
-  boolNew = typeClass.bool(bool, newObj)
+  // Make bools out of the new and existing filters.
+  boolCurrent = currentObj.bool ? currentObj : queries.bool('must', currentObj)
+  boolNew = newObj.bool ? newObj : queries.bool(boolType, newObj)
 
-  // We have a single existing non-bool. Make it a bool for merging with new.
-  //
-  if (!currentObj.bool) {
-    boolCurrent = typeClass.bool(bool, currentObj)
-    return mergeConcat({}, boolCurrent, boolNew)
-  }
-
-  // We have multiple existing bools. Now merge with new.
-  //
-  return mergeConcat({}, currentObj, boolNew)
+  return mergeConcat({}, boolCurrent, boolNew)
 }

@@ -93,7 +93,7 @@ export default class BodyBuilder {
     newFilter = klass(...args)
     currentFilter = _.get(body, 'query.filtered.filter')
     _.set(body, 'query.filtered.filter',
-      boolMerge('filter', newFilter, currentFilter, 'and'))
+      boolMerge(newFilter, currentFilter, 'and'))
     return this
   }
 
@@ -110,7 +110,7 @@ export default class BodyBuilder {
     newFilter = klass(...args)
     currentFilter = _.get(body, 'query.filtered.filter')
     _.set(body, 'query.filtered.filter',
-      boolMerge('filter', newFilter, currentFilter, 'or'))
+      boolMerge(newFilter, currentFilter, 'or'))
     return this
   }
 
@@ -127,7 +127,7 @@ export default class BodyBuilder {
     newFilter = klass(...args)
     currentFilter = _.get(body, 'query.filtered.filter')
     _.set(body, 'query.filtered.filter',
-      boolMerge('filter', newFilter, currentFilter, 'not'))
+      boolMerge(newFilter, currentFilter, 'not'))
     return this
   }
 
@@ -184,7 +184,7 @@ export default class BodyBuilder {
     newQuery = klass(...args)
     currentQuery = _.get(body, 'query.filtered.query')
     _.set(body, 'query.filtered.query',
-      boolMerge('query', newQuery, currentQuery, 'and'))
+      boolMerge(newQuery, currentQuery, 'and'))
     return this
   }
 
@@ -201,7 +201,7 @@ export default class BodyBuilder {
     newQuery = klass(...args)
     currentQuery = _.get(body, 'query.filtered.query')
     _.set(body, 'query.filtered.query',
-      boolMerge('query', newQuery, currentQuery, 'and'))
+      boolMerge(newQuery, currentQuery, 'and'))
     return this
   }
 
@@ -220,7 +220,7 @@ export default class BodyBuilder {
     newQuery = klass(...args)
     currentQuery = _.get(body, 'query.filtered.query')
     _.set(body, 'query.filtered.query',
-      boolMerge('query', newQuery, currentQuery, 'or'))
+      boolMerge(newQuery, currentQuery, 'or'))
     return this
   }
 
@@ -239,7 +239,7 @@ export default class BodyBuilder {
     newQuery = klass(...args)
     currentQuery = _.get(body, 'query.filtered.query')
     _.set(body, 'query.filtered.query',
-      boolMerge('query', newQuery, currentQuery, 'not'))
+      boolMerge(newQuery, currentQuery, 'not'))
     return this
   }
 

@@ -24,7 +24,7 @@ The elasticsearch 2.x query DSL is not currently supported.
 Use `query(queryType, fieldToQuery, searchTerm)` to build a query.
 
 ```js
-var body = new Bodybuilder().query('match', 'message', 'this is a test')
+var body = new Bodybuilder().query('match', 'message', 'this is a test').build()
 // body == {
 //   query: {
 //     filtered: {

@@ -40,7 +40,7 @@ describe('Utils', () => {
       let q1 = {term: {user: 'you'}}
       let q2 = {term: {user: 'me'}}
       let boolType = 'not'
-      let result = boolMerge(q1, q2, 'not')
+      let result = boolMerge(q1, q2, boolType)
       expect(result).to.eql({
         bool: {
           must: [

@@ -4,8 +4,10 @@
   "description": "An elasticsearch query body builder.",
   "main": "lib/index.js",
   "scripts": {
-    "test": "mocha --recursive --compilers js:babel/register test/",
     "build": "babel src --out-dir lib",
+    "check": "npm run lint && npm test",
+    "lint": "eslint src test",
+    "test": "mocha --recursive --compilers js:babel/register test",
     "watch:build": "babel src --watch --out-dir lib"
   },
   "author": "Daniel Paz-Soldan <daniel.pazsoldan@gmail.com>",

@@ -38,5 +38,5 @@ export default {
   valuecount: valueCountAggregation,
   value_count: valueCountAggregation,
   'value-count': valueCountAggregation,
-  valueCount: valueCountAggregation,
+  valueCount: valueCountAggregation
 }

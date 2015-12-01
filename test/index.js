@@ -276,8 +276,8 @@ describe('BodyBuilder', () => {
 
   it('should add multiple queries', () => {
     let result = new BodyBuilder().query('match', 'message', 'this is a test')
-                                  .query('match', 'message', 'another test')
-                                  .query('match', 'title', 'test')
+                                  .andQuery('match', 'message', 'another test')
+                                  .addQuery('match', 'title', 'test')
                                   .build()
     expect(result).to.eql({
       query: {

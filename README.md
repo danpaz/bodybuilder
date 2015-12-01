@@ -12,6 +12,8 @@ elasticsearch with a simple, predictable api.
 Currently aims to support the full elasticsearch query DSL for versions 1.x.
 The elasticsearch 2.x query DSL is not currently supported.
 
+Contributions are welcome!
+
 ## Install
 
     npm install bodybuilder

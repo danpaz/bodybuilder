@@ -20,12 +20,33 @@ Contributions are welcome!
 
 ## Usage
 
-    var Bodybuilder = require('bodybuilder')
-    var body = new Bodybuilder()
+```js
+var Bodybuilder = require('bodybuilder')
+var body = new Bodybuilder() // A builder instance.
+body.query('match', 'message', 'this is a test').build()
+```
+
+For each elasticsearch query body, create an instance of `Bodybuilder` apply
+desired query/filter/aggregation clauses, and call `build` to retrieve the built
+query body.
 
 ### Queries
 
-Use `query(queryType, fieldToQuery, searchTerm)` to build a query.
+```js
+body.query(queryType, [arguments])
+```
+
+Creates a query of type `queryType`. Currently supported query types are listed
+[here](./src/queries/index.js).
+
+#### Arguments
+
+The specific arguments depend on the type of query, but typically follow this
+pattern:
+
+* `queryType` - The name of the query, such as `'term'` or `'prefix'`.
+* `fieldToQuery` - The name of the field in your index to query over.
+* `searchTerm` - The string to search for.
 
 ```js
 var body = new Bodybuilder().query('match', 'message', 'this is a test').build()
@@ -44,7 +65,21 @@ var body = new Bodybuilder().query('match', 'message', 'this is a test').build()
 
 ### Filters
 
-Use `filter(filterType, fieldToFilter, searchTerm)` to build a filtered query.
+```js
+body.filter(filterType, [arguments])
+```
+
+Creates a filtered query using filter of type `filterType`. Currently supported
+filter types are listed [here](./src/filters/index.js).
+
+#### Arguments
+
+The specific arguments depend on the type of filter, but typically follow this
+pattern:
+
+* `filterType` - The name of the query, such as `'regexp'` or `'exists'`.
+* `fieldToQuery` - The name of the field in your index to filter on.
+* `searchTerm` - The string to search for.
 
 ```js
 var body = new Bodybuilder().filter('term', 'message', 'test').build()
@@ -63,9 +98,22 @@ var body = new Bodybuilder().filter('term', 'message', 'test').build()
 
 ### Aggregations
 
-Use `aggregation(aggType, fieldToAgg, optionalAggName)`, or `agg`, to build an
-aggregation query. The optional aggregation name defaults to
-`agg_<aggType>_<fieldToAgg>`.
+```js
+body.aggregation(aggregationType, [arguments])
+```
+
+Creates an aggregation of type `aggregationType`. Currently supported
+aggregation types are listed [here](./src/aggregation/index.js).
+
+#### Arguments
+
+The specific arguments depend on the type of aggregation, but typically follow
+this pattern:
+
+* `aggregationType` - The name of the aggregation, such as `'sum'` or `'terms'`.
+* `fieldToAggregate` - The name of the field in your index to aggregate over.
+* `aggregationName` - (optional) A custom name for the aggregation. Defaults to
+`agg_<aggregationType>_<fieldToAggregate>`.
 
 ```js
 var body = new BodyBuilder().aggregation('terms', 'user').build()
@@ -94,39 +142,39 @@ var body = new BodyBuilder().query('match', 'message', 'this is a test')
                             .aggregation('terms', 'user')
                             .build()
 
- // body == {
- //   query: {
- //     filtered: {
- //       query: {
- //         match: {
- //           message: 'this is a test'
- //         }
- //       },
- //       filter: {
- //         bool: {
- //           must: [
- //             {term: {user: 'kimchy'}},
- //             {term: {user: 'herald'}}
- //           ],
- //           should: [
- //             {term: {user: 'johnny'}}
- //           ],
- //           must_not: [
- //             {term: {user: 'cassie'}}
- //           ]
- //         }
- //       }
- //     },
- //     aggregations: {
- //       agg_terms_user: {
- //         terms: {
- //           field: 'user'
- //         }
- //       }
- //     }
- //   }
- // }
- ```
+// body == {
+//   query: {
+//     filtered: {
+//       query: {
+//         match: {
+//           message: 'this is a test'
+//         }
+//       },
+//       filter: {
+//         bool: {
+//           must: [
+//             {term: {user: 'kimchy'}},
+//             {term: {user: 'herald'}}
+//           ],
+//           should: [
+//             {term: {user: 'johnny'}}
+//           ],
+//           must_not: [
+//             {term: {user: 'cassie'}}
+//           ]
+//         }
+//       }
+//     },
+//     aggregations: {
+//       agg_terms_user: {
+//         terms: {
+//           field: 'user'
+//         }
+//       }
+//     }
+//   }
+// }
+```
 
 ### Sort
 

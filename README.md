@@ -26,9 +26,9 @@ var body = new Bodybuilder() // A builder instance.
 body.query('match', 'message', 'this is a test').build()
 ```
 
-For each elasticsearch query body, create an instance of `Bodybuilder` apply
-desired query/filter/aggregation clauses, and call `build` to retrieve the built
-query body.
+For each elasticsearch query body, create an instance of `Bodybuilder`, apply
+the desired query/filter/aggregation clauses, and call `build` to retrieve the
+built query body.
 
 ### Queries
 
@@ -103,7 +103,7 @@ body.aggregation(aggregationType, [arguments])
 ```
 
 Creates an aggregation of type `aggregationType`. Currently supported
-aggregation types are listed [here](./src/aggregation/index.js).
+aggregation types are listed [here](./src/aggregations/index.js).
 
 #### Arguments
 

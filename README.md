@@ -52,12 +52,8 @@ pattern:
 var body = new Bodybuilder().query('match', 'message', 'this is a test').build()
 // body == {
 //   query: {
-//     filtered: {
-//       query: {
-//         match: {
-//           message: 'this is a test'
-//         }
-//       }
+//     match: {
+//       message: 'this is a test'
 //     }
 //   }
 // }

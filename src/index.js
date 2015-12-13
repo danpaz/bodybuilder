@@ -8,15 +8,38 @@ export default class BodyBuilder {
 
   constructor() {
     this._body = {}
+    this._filters = {}
+    this._queries = {}
+    this._aggreggations = {}
   }
 
   /**
-   * Returns a copy of the elasticsearch query body in its current state.
+   * Constructs the elasticsearch query body in its current state.
    *
    * @return {Object} Query body.
    */
   build() {
-    return _.clone(this._body)
+    let body = _.clone(this._body)
+    const filters = this._filters
+    const queries = this._queries
+    const aggregations = this._aggreggations
+
+    if (!_.isEmpty(filters)) {
+      _.set(body, 'query.filtered.filter', filters)
+
+      if (!_.isEmpty(queries)) {
+        _.set(body, 'query.filtered.query', queries)
+      }
+
+    } else if (!_.isEmpty(queries)) {
+      _.set(body, 'query', queries)
+    }
+
+    if (!_.isEmpty(aggregations)) {
+      _.set(body, 'aggregations', aggregations)
+    }
+
+    return body
   }
 
   /**
@@ -83,18 +106,15 @@ export default class BodyBuilder {
    */
   _filter(boolType, filterType, ...args) {
     let klass = filters[filterType]
-    let body = this._body
     let newFilter
-    let currentFilter
 
     if (!klass) {
       throw new TypeError(`Filter type ${filterType} not found.`)
     }
 
     newFilter = klass(...args)
-    currentFilter = _.get(body, 'query.filtered.filter')
-    _.set(body, 'query.filtered.filter',
-      boolMerge(newFilter, currentFilter, boolType))
+    this._filters = boolMerge(newFilter, this._filters, boolType)
+    return this
   }
 
   filter(type, ...args) {
@@ -106,7 +126,7 @@ export default class BodyBuilder {
    * Alias to BodyBuilder#filter.
    */
   andFilter(...args) {
-    return this.filter(...args)
+    return this._filter(...args)
   }
 
   orFilter(type, ...args) {
@@ -131,18 +151,15 @@ export default class BodyBuilder {
    */
   _query(boolType, queryType, ...args) {
     let klass = queries[queryType]
-    let body = this._body
     let newQuery
-    let currentQuery
 
     if (!klass) {
       throw new TypeError(`Query type ${queryType} not found.`)
     }
 
     newQuery = klass(...args)
-    currentQuery = _.get(body, 'query.filtered.query')
-    _.set(body, 'query.filtered.query',
-      boolMerge(newQuery, currentQuery, boolType))
+    this._queries = boolMerge(newQuery, this._queries, boolType)
+    return this
   }
 
   query(...args) {
@@ -185,7 +202,6 @@ export default class BodyBuilder {
    */
   aggregation(type, ...args) {
     let klass = aggregations[type]
-    let body = this._body
     let aggregation
 
     if (!klass) {
@@ -193,8 +209,7 @@ export default class BodyBuilder {
     }
 
     aggregation = klass(...args)
-    _.set(body, 'aggregations',
-      _.merge({}, this._body.aggregations, aggregation))
+    this._aggreggations = _.merge({}, this._aggreggations, aggregation)
     return this
   }
 

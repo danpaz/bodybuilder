@@ -30,7 +30,7 @@ export function boolMerge(newObj, currentObj, boolType = 'and') {
   let boolNew
 
   // Only one, no need for bool.
-  if (!currentObj) {
+  if (_.isEmpty(currentObj)) {
     // Allow starting with 'or' and 'not' queries.
     if (boolType !== 'and') {
       return queries.bool(boolType, newObj)

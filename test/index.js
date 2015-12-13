@@ -263,12 +263,8 @@ describe('BodyBuilder', () => {
                                   .build()
     expect(result).to.eql({
       query: {
-        filtered: {
-          query: {
-            match: {
-              message: 'this is a test'
-            }
-          }
+        match: {
+          message: 'this is a test'
         }
       }
     })
@@ -281,16 +277,12 @@ describe('BodyBuilder', () => {
                                   .build()
     expect(result).to.eql({
       query: {
-        filtered: {
-          query: {
-            bool: {
-              must: [
-                {match: {message: 'this is a test'}},
-                {match: { message: 'another test'}},
-                {match: {title: 'test'}}
-              ]
-            }
-          }
+        bool: {
+          must: [
+            {match: {message: 'this is a test'}},
+            {match: { message: 'another test'}},
+            {match: {title: 'test'}}
+          ]
         }
       }
     })
@@ -301,14 +293,10 @@ describe('BodyBuilder', () => {
                                   .build()
     expect(result).to.eql({
       query: {
-        filtered: {
-          query: {
-            bool: {
-              should: [
-                {match: {message: 'this is a test'}}
-              ]
-            }
-          }
+        bool: {
+          should: [
+            {match: {message: 'this is a test'}}
+          ]
         }
       }
     })
@@ -320,15 +308,11 @@ describe('BodyBuilder', () => {
                                   .build()
     expect(result).to.eql({
       query: {
-        filtered: {
-          query: {
-            bool: {
-              should: [
-                {match: {message: 'this is a test'}},
-                {match: { message: 'another test'}}
-              ]
-            }
-          }
+        bool: {
+          should: [
+            {match: {message: 'this is a test'}},
+            {match: { message: 'another test'}}
+          ]
         }
       }
     })
@@ -342,21 +326,17 @@ describe('BodyBuilder', () => {
                                   .build()
     expect(result).to.eql({
       query: {
-        filtered: {
-          query: {
-            bool: {
-              must: [
-                {term: {user: 'kimchy'}},
-                {term: {user: 'herald'}}
-              ],
-              should: [
-                {term: {user: 'johnny'}}
-              ],
-              must_not: [
-                {term: {user: 'cassie'}}
-              ]
-            }
-          }
+        bool: {
+          must: [
+            {term: {user: 'kimchy'}},
+            {term: {user: 'herald'}}
+          ],
+          should: [
+            {term: {user: 'johnny'}}
+          ],
+          must_not: [
+            {term: {user: 'cassie'}}
+          ]
         }
       }
     })
@@ -377,6 +357,26 @@ describe('BodyBuilder', () => {
           filter: {
             term: {user: 'kimchy'}
           }
+        }
+      }
+    })
+  })
+
+  it('should add multiples different queries', () => {
+    let result = new BodyBuilder().query('match', 'title', 'quick')
+                                  .notQuery('match', 'title', 'lazy')
+                                  .orQuery('match', 'title', 'brown')
+                                  .orQuery('match', 'title', 'dog')
+                                  .build()
+    expect(result).to.eql({
+      "query": {
+        "bool": {
+          "must":     [  { "match": { "title": "quick" }} ],
+          "must_not": [  { "match": { "title": "lazy"  }} ],
+          "should":   [
+                        { "match": { "title": "brown" }},
+                        { "match": { "title": "dog"   }}
+                      ]
         }
       }
     })

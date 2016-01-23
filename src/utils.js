@@ -3,6 +3,11 @@ import queries from './queries'
 
 /**
  * Extends lodash's merge by allowing array concatenation.
+ *
+ * @private
+ *
+ * @param {Object} target Target.
+ * @returns {Object} Merged object.
  */
 export function mergeConcat(target) {
   let args = Array.prototype.slice.call(arguments, 1)
@@ -20,10 +25,12 @@ export function mergeConcat(target) {
 /**
  * Merge two filters or queries using their Boolean counterparts.
  *
+ * @private
+ *
  * @param  {Object} newObj      New filter or query to add.
  * @param  {Object} currentObj  Old filter or query to merge into.
  * @param  {String} boolType    Type of boolean ('and', 'or', 'not').
- * @return {Object}             Combined filter or query.
+ * @returns {Object} Combined filter or query.
  */
 export function boolMerge(newObj, currentObj, boolType = 'and') {
   let boolCurrent

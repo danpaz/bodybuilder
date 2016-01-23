@@ -6,5 +6,8 @@
   },
   "ecmaFeatures": {
     "modules": true
+  },
+  "rules": {
+    "valid-jsdoc": 2
   }
 }

@@ -17,7 +17,7 @@ Contributions are welcome!
 
 ## Install
 
-    npm install bodybuilder
+    npm install bodybuilder --save
 
 ## Usage
 

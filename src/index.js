@@ -4,6 +4,9 @@ import aggregations from './aggregations'
 import queries from './queries'
 import { boolMerge } from './utils'
 
+/**
+ * The main builder class.
+ */
 export default class BodyBuilder {
 
   constructor() {
@@ -16,7 +19,7 @@ export default class BodyBuilder {
   /**
    * Constructs the elasticsearch query body in its current state.
    *
-   * @return {Object} Query body.
+   * @returns {Object} Query body.
    */
   build() {
     let body = _.clone(this._body)
@@ -48,7 +51,7 @@ export default class BodyBuilder {
    * @param  {String} field     Field name.
    * @param  {String} direction (Optional) A valid direction: 'asc' or 'desc'.
    *                            Defaults to 'asc'.
-   * @return {BodyBuilder}
+   * @returns {BodyBuilder} Builder class.
    */
   sort(field, direction = 'asc') {
     this._body.sort = {
@@ -64,7 +67,7 @@ export default class BodyBuilder {
    *
    * @param  {Number} quantity The offset from the first result you want to
    *                           fetch.
-   * @return {BodyBuilder}
+   * @returns {BodyBuilder} Builder class.
    */
   from(quantity) {
     this._body.from = quantity
@@ -75,7 +78,7 @@ export default class BodyBuilder {
    * Set a *size* value for maximum results to return.
    *
    * @param  {Number} quantity Maximum number of results to return.
-   * @return {BodyBuilder}
+   * @returns {BodyBuilder} Builder class.
    */
   size(quantity) {
     this._body.size = quantity
@@ -87,7 +90,7 @@ export default class BodyBuilder {
    *
    * @param  {String} k Key.
    * @param  {String} v Value.
-   * @return {BodyBuilder}
+   * @returns {BodyBuilder} Builder class.
    */
   rawOption(k, v) {
     this._body[k] = v
@@ -102,7 +105,7 @@ export default class BodyBuilder {
    * @param  {String}  boolType   Whether to combine as 'and', 'or', or 'not'.
    * @param  {String}  filterType Name of the filter type.
    * @param  {...args} args       Arguments passed to filter builder.
-   * @return {BodyBuilder}
+   * @returns {BodyBuilder} Builder class.
    */
   _filter(boolType, filterType, ...args) {
     let klass = filters[filterType]
@@ -124,6 +127,8 @@ export default class BodyBuilder {
 
   /**
    * Alias to BodyBuilder#filter.
+   *
+   * @returns {BodyBuilder} Builder class.
    */
   andFilter(...args) {
     return this._filter(...args)
@@ -147,7 +152,7 @@ export default class BodyBuilder {
    * @param  {String}  boolType  Whether to combine as 'and', 'or', or 'not'.
    * @param  {String}  queryType Name of the query type.
    * @param  {...args} args      Arguments passed to query builder.
-   * @return {BodyBuilder}
+   * @returns {BodyBuilder} Builder class.
    */
   _query(boolType, queryType, ...args) {
     let klass = queries[queryType]
@@ -169,6 +174,8 @@ export default class BodyBuilder {
 
   /**
    * Alias to BodyBuilder#query.
+   *
+   * @returns {BodyBuilder} Builder class.
    */
   andQuery(...args) {
     return this.query(...args)
@@ -176,6 +183,8 @@ export default class BodyBuilder {
 
   /**
    * Alias to BodyBuilder#query.
+   *
+   * @returns {BodyBuilder} Builder class.
    */
   addQuery(...args) {
     return this.query(...args)
@@ -198,7 +207,7 @@ export default class BodyBuilder {
    *
    * @param  {String}  type Name of the aggregation type.
    * @param  {...args} args Arguments passed to aggregation builder.
-   * @return {BodyBuilder}
+   * @returns {BodyBuilder} Builder class.
    */
   aggregation(type, ...args) {
     let klass = aggregations[type]
@@ -215,6 +224,8 @@ export default class BodyBuilder {
 
   /**
    * Alias to BodyBuilder#aggregation.
+   *
+   * @returns {BodyBuilder} Builder class.
    */
   agg(...args) {
     return this.aggregation(...args)

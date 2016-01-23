@@ -6,6 +6,11 @@ import { boolMerge } from './utils'
 
 /**
  * The main builder class.
+ *
+ * @example
+ * var body = new Bodybuilder()
+ *   .query('match', 'text', 'this is a test')
+ *   .build()
  */
 export default class BodyBuilder {
 
@@ -48,9 +53,8 @@ export default class BodyBuilder {
   /**
    * Set a sort direction on a given field.
    *
-   * @param  {String} field     Field name.
-   * @param  {String} direction (Optional) A valid direction: 'asc' or 'desc'.
-   *                            Defaults to 'asc'.
+   * @param  {String} field             Field name.
+   * @param  {String} [direction='asc'] A valid direction: 'asc' or 'desc'.
    * @returns {BodyBuilder} Builder class.
    */
   sort(field, direction = 'asc') {
@@ -107,6 +111,11 @@ export default class BodyBuilder {
    * @param  {...args} args       Arguments passed to filter builder.
    * @returns {BodyBuilder} Builder class.
    */
+  filter(type, ...args) {
+    this._filter('and', type, ...args)
+    return this
+  }
+
   _filter(boolType, filterType, ...args) {
     let klass = filters[filterType]
     let newFilter
@@ -120,13 +129,10 @@ export default class BodyBuilder {
     return this
   }
 
-  filter(type, ...args) {
-    this._filter('and', type, ...args)
-    return this
-  }
-
   /**
    * Alias to BodyBuilder#filter.
+   *
+   * @private
    *
    * @returns {BodyBuilder} Builder class.
    */
@@ -154,6 +160,11 @@ export default class BodyBuilder {
    * @param  {...args} args      Arguments passed to query builder.
    * @returns {BodyBuilder} Builder class.
    */
+  query(...args) {
+    this._query('and', ...args)
+    return this
+  }
+
   _query(boolType, queryType, ...args) {
     let klass = queries[queryType]
     let newQuery
@@ -167,13 +178,10 @@ export default class BodyBuilder {
     return this
   }
 
-  query(...args) {
-    this._query('and', ...args)
-    return this
-  }
-
   /**
    * Alias to BodyBuilder#query.
+   *
+   * @private
    *
    * @returns {BodyBuilder} Builder class.
    */
@@ -183,6 +191,8 @@ export default class BodyBuilder {
 
   /**
    * Alias to BodyBuilder#query.
+   *
+   * @private
    *
    * @returns {BodyBuilder} Builder class.
    */
@@ -224,6 +234,8 @@ export default class BodyBuilder {
 
   /**
    * Alias to BodyBuilder#aggregation.
+   *
+   * @private
    *
    * @returns {BodyBuilder} Builder class.
    */

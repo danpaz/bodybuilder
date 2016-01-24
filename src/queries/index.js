@@ -7,6 +7,14 @@ import rangeQuery from './range-query'
 import termQuery from './term-query'
 import termsQuery from './terms-query'
 
+/**
+ * Use these keys to select the query type when building a query clause.
+ *
+ * @example
+ * var body = new Bodybuilder()
+ *   .query('query_string', 'this AND that')
+ *   .build()
+ */
 export default {
   bool: boolQuery,
   boolean: boolQuery,

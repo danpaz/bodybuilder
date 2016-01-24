@@ -12,6 +12,15 @@ import sumAggregation from './sum-aggregation'
 import termsAggregation from './terms-aggregation'
 import valueCountAggregation from './value-count-aggregation'
 
+/**
+ * Use these keys to select the aggregation type when building an aggregation
+ * clause.
+ *
+ * @example
+ * var body = new Bodybuilder()
+ *   .aggregation('sum', 'grade')
+ *   .build()
+ */
 export default {
   average: avgAggregation,
   avg: avgAggregation,

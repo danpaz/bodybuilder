@@ -37,9 +37,7 @@ existing filter(s) with the new filter.
 
 **Parameters**
 
--   `boolType` **String** Whether to combine as 'and', 'or', or 'not'.
--   `filterType` **String** Name of the filter type.
--   `type`  
+-   `type` **String** Name of the filter type.
 -   `args` **...args** Arguments passed to filter builder.
 
 Returns **BodyBuilder** Builder class.
@@ -63,8 +61,7 @@ existing query(s) with the new query.
 
 **Parameters**
 
--   `boolType` **String** Whether to combine as 'and', 'or', or 'not'.
--   `queryType` **String** Name of the query type.
+-   `type` **String** Name of the query type.
 -   `args` **...args** Arguments passed to query builder.
 
 Returns **BodyBuilder** Builder class.

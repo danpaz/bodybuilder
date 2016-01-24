@@ -10,6 +10,14 @@ import termFilter from './term-filter'
 import termsFilter from './terms-filter'
 import typeFilter from './type-filter'
 
+/**
+ * Use these keys to select the filter type when building a filter clause.
+ *
+ * @example
+ * var body = new Bodybuilder()
+ *   .filter('missing', 'user', 'kimchy')
+ *   .build()
+ */
 export default {
   bool: boolFilter,
   boolean: boolFilter,

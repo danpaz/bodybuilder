@@ -106,9 +106,8 @@ export default class BodyBuilder {
    * passing these arguments directly to the specified filter builder. Merges
    * existing filter(s) with the new filter.
    *
-   * @param  {String}  boolType   Whether to combine as 'and', 'or', or 'not'.
-   * @param  {String}  filterType Name of the filter type.
-   * @param  {...args} args       Arguments passed to filter builder.
+   * @param  {String}  type Name of the filter type.
+   * @param  {...args} args Arguments passed to filter builder.
    * @returns {BodyBuilder} Builder class.
    */
   filter(type, ...args) {
@@ -155,13 +154,12 @@ export default class BodyBuilder {
    * passing these arguments directly to the specified query builder. Merges
    * existing query(s) with the new query.
    *
-   * @param  {String}  boolType  Whether to combine as 'and', 'or', or 'not'.
-   * @param  {String}  queryType Name of the query type.
-   * @param  {...args} args      Arguments passed to query builder.
+   * @param  {String}  type Name of the query type.
+   * @param  {...args} args Arguments passed to query builder.
    * @returns {BodyBuilder} Builder class.
    */
-  query(...args) {
-    this._query('and', ...args)
+  query(type, ...args) {
+    this._query('and', type, ...args)
     return this
   }
 

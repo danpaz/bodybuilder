@@ -31,6 +31,16 @@ For each elasticsearch query body, create an instance of `Bodybuilder`, apply
 the desired query/filter/aggregation clauses, and call `build` to retrieve the
 built query body.
 
+## REPL
+
+Try it out on the command line using the node repl:
+
+    # Start the repl
+    node repl.js
+    # The Bodybuilder class is available in the context variable Bodybuilder
+    bodybuilder > var body = new Bodybuilder()
+    bodybuilder > body.query('match', 'message', 'this is a test').build()
+
 ### Queries
 
 ```js

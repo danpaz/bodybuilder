@@ -18,7 +18,7 @@ export default class BodyBuilder {
     this._body = {}
     this._filters = {}
     this._queries = {}
-    this._aggreggations = {}
+    this._aggregations = {}
   }
 
   /**
@@ -30,7 +30,7 @@ export default class BodyBuilder {
     let body = _.clone(this._body)
     const filters = this._filters
     const queries = this._queries
-    const aggregations = this._aggreggations
+    const aggregations = this._aggregations
 
     if (!_.isEmpty(filters)) {
       _.set(body, 'query.filtered.filter', filters)
@@ -226,7 +226,7 @@ export default class BodyBuilder {
     }
 
     aggregation = klass(...args)
-    this._aggreggations = _.merge({}, this._aggreggations, aggregation)
+    this._aggregations = _.merge({}, this._aggregations, aggregation)
     return this
   }
 

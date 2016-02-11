@@ -8,17 +8,19 @@
     "check": "npm run lint && npm test",
     "docs": "documentation -o docs/API.md -f md src/index.js --shallow",
     "lint": "eslint src test",
-    "test": "mocha --recursive --compilers js:babel/register test",
+    "test": "mocha --require babel-core/register --recursive test",
     "watch:build": "babel src --watch --out-dir lib"
   },
   "author": "Daniel Paz-Soldan <daniel.pazsoldan@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "babel": "5.8.21",
+    "babel-cli": "6.5.1",
+    "babel-core": "6.5.1",
+    "babel-preset-es2015": "6.5.0",
     "chai": "3.2.0",
     "documentation": "3.0.4",
     "eslint": "1.10.2",
-    "mocha": "2.2.5"
+    "mocha": "2.4.5"
   },
   "dependencies": {
     "lodash": "3.10.1"

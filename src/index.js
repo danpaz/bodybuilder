@@ -26,9 +26,8 @@ export default class BodyBuilder {
    *
    * @returns {Object} Query body.
    */
-  build() {
-    let v = arguments[0];
-    if (!_.isUndefined(v) || v === 'v2') return this._buildV2();
+  build(version) {
+    if (!_.isUndefined(version) && version === 'v2') return this._buildV2();
     return this._buildV1();
   }
 

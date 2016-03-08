@@ -23,7 +23,7 @@ export default class BodyBuilder {
 
   /**
    * Constructs the elasticsearch query body in its current state.
-   *
+   * @param  {String} version             Version to generate.
    * @returns {Object} Query body.
    */
   build(version) {

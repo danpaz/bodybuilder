@@ -23,10 +23,15 @@ export default class BodyBuilder {
 
   /**
    * Constructs the elasticsearch query body in its current state.
-   *
+   * @param  {String} version             Version to generate.
    * @returns {Object} Query body.
    */
-  build() {
+  build(version) {
+    if (!_.isUndefined(version) && version === 'v2') return this._buildV2();
+    return this._buildV1();
+  }
+
+  _buildV1() {
     let body = _.clone(this._body)
     const filters = this._filters
     const queries = this._queries
@@ -45,6 +50,29 @@ export default class BodyBuilder {
 
     if (!_.isEmpty(aggregations)) {
       _.set(body, 'aggregations', aggregations)
+    }
+
+    return body
+  }
+
+  _buildV2() {
+    let body = _.clone(this._body)
+    const filters = this._filters
+    const queries = this._queries
+    const aggregations = this._aggregations
+
+    if (!_.isEmpty(filters)) {
+      _.set(body, 'query.bool.filter', filters)
+      if (!_.isEmpty(queries)) {
+        _.set(body, 'query.bool.must', queries)
+      }
+
+    } else if (!_.isEmpty(queries)) {
+      _.set(body, 'query', queries)
+    }
+
+    if (!_.isEmpty(aggregations)) {
+      _.set(body, 'aggs', aggregations)
     }
 
     return body

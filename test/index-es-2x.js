@@ -362,6 +362,44 @@ describe('BodyBuilder ES 2x', () => {
     })
   })
 
+  it('should add queries with filters ES 2x', () => {
+    let result = new BodyBuilder().query('match', 'message', 'this is a test')
+                                  .andQuery('match', 'other', 'this is another test')
+                                  .filter('term', 'user', 'kimchy')
+                                  .filter('term', 'is_active', true)
+                                  .build('v2')
+    expect(result).to.eql({
+      query: {
+        bool: {
+          must: [
+            {
+              match: {
+                message: 'this is a test'
+              }
+            },
+            {
+              match: {
+                other: 'this is another test'
+              }
+            }
+          ],
+          filter: {
+            bool: {
+              must: [
+                {
+                  term: {user: 'kimchy'}
+                },
+                {
+                  term: {is_active: true}
+                }
+              ]
+            }
+          }
+        }
+      }
+    })
+  })
+
   it('should add multiples different queries ES 2x', () => {
     let result = new BodyBuilder().query('match', 'title', 'quick')
                                   .notQuery('match', 'title', 'lazy')

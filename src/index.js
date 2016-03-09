@@ -62,11 +62,15 @@ export default class BodyBuilder {
     const aggregations = this._aggregations
 
     if (!_.isEmpty(filters)) {
-      _.set(body, 'query.bool.filter', filters)
-      if (!_.isEmpty(queries)) {
-        _.set(body, 'query.bool.must', queries)
+      let filterBody = {};
+      let queryBody = {};
+      _.set(filterBody, 'query.bool.filter', filters)
+      if (!_.isEmpty(queries.bool)) {
+        _.set(queryBody, 'query.bool', queries.bool)
+      } else if (!_.isEmpty(queries)) {
+        _.set(queryBody, 'query.bool.must', queries)
       }
-
+      _.merge(body, filterBody, queryBody);
     } else if (!_.isEmpty(queries)) {
       _.set(body, 'query', queries)
     }

@@ -405,7 +405,7 @@ describe('BodyBuilder ES 2x', () => {
                                   .notQuery('match', 'title', 'lazy')
                                   .orQuery('match', 'title', 'brown')
                                   .orQuery('match', 'title', 'dog')
-                                  .build()
+                                  .build('v2')
     expect(result).to.eql({
       "query": {
         "bool": {
@@ -415,6 +415,19 @@ describe('BodyBuilder ES 2x', () => {
                         { "match": { "title": "brown" }},
                         { "match": { "title": "dog"   }}
                       ]
+        }
+      }
+    })
+  })
+
+  it('should add query_string queries ES 2x', () => {
+    let result = new BodyBuilder().query('queryString', ['title'], 'this AND that OR thus')
+                                  .build('v2')
+    expect(result).to.eql({
+      "query": {
+        "query_string": {
+          "query": "this AND that OR thus",
+          "fields": ["title"]
         }
       }
     })

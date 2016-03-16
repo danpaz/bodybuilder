@@ -12,7 +12,7 @@ import { boolMerge } from './utils'
  *   .query('match', 'text', 'this is a test')
  *   .build()
  */
-export default class BodyBuilder {
+class BodyBuilder {
 
   constructor() {
     this._body = {}
@@ -242,3 +242,5 @@ export default class BodyBuilder {
   }
 
 }
+
+module.exports = BodyBuilder;

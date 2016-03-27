@@ -62,15 +62,15 @@ export default class BodyBuilder {
     const aggregations = this._aggregations
 
     if (!_.isEmpty(filters)) {
-      let filterBody = {};
-      let queryBody = {};
+      let filterBody = {}
+      let queryBody = {}
       _.set(filterBody, 'query.bool.filter', filters)
       if (!_.isEmpty(queries.bool)) {
         _.set(queryBody, 'query.bool', queries.bool)
       } else if (!_.isEmpty(queries)) {
         _.set(queryBody, 'query.bool.must', queries)
       }
-      _.merge(body, filterBody, queryBody);
+      _.merge(body, filterBody, queryBody)
     } else if (!_.isEmpty(queries)) {
       _.set(body, 'query', queries)
     }

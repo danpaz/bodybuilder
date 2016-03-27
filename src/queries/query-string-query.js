@@ -14,7 +14,7 @@ export default function queryStringQuery(fields, term) {
     }
   }
 
-  if (fields.length > 0) queryString.query_string.fields = fields;
+  if (fields.length > 0) queryString.query_string.fields = fields
 
-  return queryString;
+  return queryString
 }

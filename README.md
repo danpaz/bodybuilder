@@ -115,6 +115,8 @@ body.aggregation(aggregationType, [arguments])
 Creates an aggregation of type `aggregationType`. Currently supported
 aggregation types are listed [here](./src/aggregations/index.js).
 
+**Note**: nested aggregations are not currently supported.
+
 #### Arguments
 
 The specific arguments depend on the type of aggregation, but typically follow

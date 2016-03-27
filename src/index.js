@@ -12,7 +12,7 @@ import { boolMerge } from './utils'
  *   .query('match', 'text', 'this is a test')
  *   .build()
  */
-export default class BodyBuilder {
+class BodyBuilder {
 
   constructor() {
     this._body = {}
@@ -27,8 +27,8 @@ export default class BodyBuilder {
    * @returns {Object} Query body.
    */
   build(version) {
-    if (!_.isUndefined(version) && version === 'v2') return this._buildV2();
-    return this._buildV1();
+    if (version === 'v2') return this._buildV2()
+    return this._buildV1()
   }
 
   _buildV1() {
@@ -62,15 +62,15 @@ export default class BodyBuilder {
     const aggregations = this._aggregations
 
     if (!_.isEmpty(filters)) {
-      let filterBody = {};
-      let queryBody = {};
+      let filterBody = {}
+      let queryBody = {}
       _.set(filterBody, 'query.bool.filter', filters)
       if (!_.isEmpty(queries.bool)) {
         _.set(queryBody, 'query.bool', queries.bool)
       } else if (!_.isEmpty(queries)) {
         _.set(queryBody, 'query.bool.must', queries)
       }
-      _.merge(body, filterBody, queryBody);
+      _.merge(body, filterBody, queryBody)
     } else if (!_.isEmpty(queries)) {
       _.set(body, 'query', queries)
     }
@@ -274,3 +274,5 @@ export default class BodyBuilder {
   }
 
 }
+
+module.exports = BodyBuilder;

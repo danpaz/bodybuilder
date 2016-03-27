@@ -6,15 +6,15 @@
  * @return {Object}       Query String query.
  */
 export default function queryStringQuery(fields, term) {
-  let query = Array.isArray(fields) ? term : fields;
-  fields = Array.isArray(fields) ? fields : [];
+  let query = Array.isArray(fields) ? term : fields
+  fields = Array.isArray(fields) ? fields : []
   let queryString = {
     query_string: {
-      query: query
+      query
     }
   }
 
-  if (fields.length > 0) queryString.query_string.fields = fields;
+  if (fields.length > 0) queryString.query_string.fields = fields
 
-  return queryString;
+  return queryString
 }

@@ -27,6 +27,10 @@ Returns **BodyBuilder** Builder class.
 
 Constructs the elasticsearch query body in its current state.
 
+**Parameters**
+
+-   `version` **String** Version to generate.
+
 Returns **Object** Query body.
 
 ## filter

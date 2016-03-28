@@ -11,7 +11,8 @@ elasticsearch with a simple, predictable api.
 ## Compatibility
 
 Currently aims to support the full elasticsearch query DSL for versions 1.x.
-The elasticsearch 2.x query DSL is not currently supported.
+The elasticsearch 2.x query DSL is supported by providing a `v2` arguments
+when calling `build` function.
 
 Contributions are welcome!
 
@@ -24,7 +25,9 @@ Contributions are welcome!
 ```js
 var Bodybuilder = require('bodybuilder')
 var body = new Bodybuilder() // A builder instance.
-body.query('match', 'message', 'this is a test').build()
+body.query('match', 'message', 'this is a test')
+body.build() // Build 1.x DSL
+body.build('v2') // Build 2.x DSL
 ```
 
 For each elasticsearch query body, create an instance of `Bodybuilder`, apply

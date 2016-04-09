@@ -10,16 +10,24 @@ import queries from './queries'
  * @returns {Object} Merged object.
  */
 export function mergeConcat(target) {
-  let args = Array.prototype.slice.call(arguments, 1)
-
-  args.unshift(target)
-  args.push(function concatArray(a, b) {
-    if (Array.isArray(a)) {
-      return a.concat(b)
+  var output = Object(target)
+  for (var index = 1; index < arguments.length; index++) {
+    var source = arguments[index]
+    if (source !== undefined && source !== null) {
+      for (var nextKey in source) {
+        if (source.hasOwnProperty(nextKey)) {
+           if (_.isPlainObject(output[nextKey])) {
+            output[nextKey] = mergeConcat(output[nextKey], source[nextKey])
+          } else if (_.isArray(output[nextKey])) {
+            output[nextKey] = output[nextKey].concat(source[nextKey])
+          } else {
+            output[nextKey] = source[nextKey]
+          }
+        }
+      }
     }
-  })
-
-  return _.merge.apply(null, args)
+  }
+  return output;
 }
 
 /**

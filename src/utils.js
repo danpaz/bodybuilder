@@ -2,7 +2,8 @@ import _ from 'lodash'
 import queries from './queries'
 
 /**
- * Extends lodash's merge by allowing array concatenation.
+ * Extends lodash's assignWith by allowing array concatenation
+ * and deep merging.
  *
  * @private
  *
@@ -10,24 +11,19 @@ import queries from './queries'
  * @returns {Object} Merged object.
  */
 export function mergeConcat(target) {
-  var output = Object(target)
-  for (var index = 1; index < arguments.length; index++) {
-    var source = arguments[index]
-    if (source !== undefined && source !== null) {
-      for (var nextKey in source) {
-        if (source.hasOwnProperty(nextKey)) {
-           if (_.isPlainObject(output[nextKey])) {
-            output[nextKey] = mergeConcat(output[nextKey], source[nextKey])
-          } else if (_.isArray(output[nextKey])) {
-            output[nextKey] = output[nextKey].concat(source[nextKey])
-          } else {
-            output[nextKey] = source[nextKey]
-          }
-        }
-      }
+  let args = Array.prototype.slice.call(arguments, 1)
+
+  args.unshift(target)
+  args.push(function customizer(a, b) {
+    if (_.isPlainObject(a)) {
+      return _.assignWith(a, b, customizer)
+    } else if (_.isArray(a)) {
+      return a.concat(b)
+    } else {
+      return b;
     }
-  }
-  return output;
+  })
+  return _.assignWith.apply(null, args)
 }
 
 /**

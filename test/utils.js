@@ -12,6 +12,32 @@ describe('Utils', () => {
       expect(result).to.eql({ k: { k: ['a', 'b'] } })
     })
 
+    it('should merge properties of nested objects', () => {
+      let a = { k: { k: { p: 'q' } } }
+      let b = { k: { k: { j: 'm' } } }
+      let result = mergeConcat({}, a, b)
+      expect(result).to.eql({ k: { k: { p: 'q', j: 'm' } } })
+    })
+
+    it('should allow prevalecence of attributes on rightmost objects', () => {
+      let a = { k: { k: { p: 'x', x: 1 } } }
+      let b = { k: { k: { p: 'y', y: 2 } } }
+      let c = { k: { k: { p: 'z', z: 3 } } }
+      let result = mergeConcat({}, a, b, c)
+      expect(result).to.eql({ k: { k: { p: 'z', x: 1, y: 2, z: 3} } })
+    })
+
+    it('should return an empty object if there\'s nothing to merge', () => {
+      let result = mergeConcat(undefined, null, false, 0)
+      expect(result).to.eql({ })
+    })
+
+    it('should do nothing on a single object', () => {
+      let a = { k: { k: { p: 'x', x: 1 } } }
+      let result = mergeConcat(a)
+      expect(result).to.eql(a)
+    })
+
   })
 
   describe('boolMerge', () => {

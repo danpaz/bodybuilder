@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import filters from './filters'
-import aggregations from './aggregations'
+import AggregationBuilder from './aggregations/aggregation-builder'
 import queries from './queries'
 import { boolMerge } from './utils'
 
@@ -18,7 +18,7 @@ class BodyBuilder {
     this._body = {}
     this._filters = {}
     this._queries = {}
-    this._aggregations = {}
+    this._aggBuilder = Object.create(AggregationBuilder);
   }
 
   /**
@@ -35,7 +35,7 @@ class BodyBuilder {
     let body = _.clone(this._body)
     const filters = this._filters
     const queries = this._queries
-    const aggregations = this._aggregations
+    const aggregations = this._aggBuilder.aggregations
 
     if (!_.isEmpty(filters)) {
       _.set(body, 'query.filtered.filter', filters)
@@ -59,7 +59,7 @@ class BodyBuilder {
     let body = _.clone(this._body)
     const filters = this._filters
     const queries = this._queries
-    const aggregations = this._aggregations
+    const aggregations = this._aggBuilder.aggregations
 
     if (!_.isEmpty(filters)) {
       let filterBody = {}
@@ -243,22 +243,31 @@ class BodyBuilder {
   /**
    * Apply a aggregation of a given type providing all the necessary arguments,
    * passing these arguments directly to the specified aggregation builder.
-   * Merges existing aggregation(s) with the new aggregation.
+   * Merges existing aggregation(s) with the new aggregation. You may nest
+   * aggregations by passing in a `Function` callback as the last parameter.
+   * The callback will receive the newly built aggregation upon which you can
+   * keep calling `aggregation(type, ...args)`.
+   *
+   * @example
+   * var body = new Bodybuilder()
+   *   .query('match', 'text', 'this is a test')
+   *   .aggregation('terms', 'someField', 'bySomeField',
+   *     // Nest aggregations on "bySomeField"
+   *     agg =>
+   *       agg
+   *         .agregation('max', 'someOtherField')
+   *         .aggregation('missing', 'anotherField')
+   *    )
+   *   .build()
+   *
    *
    * @param  {String}  type Name of the aggregation type.
-   * @param  {...args} args Arguments passed to aggregation builder.
+   * @param  {...args} args Arguments passed to aggregation builder. May include
+   *                        am optional nesting function as its last element.
    * @returns {BodyBuilder} Builder class.
    */
   aggregation(type, ...args) {
-    let klass = aggregations[type]
-    let aggregation
-
-    if (!klass) {
-      throw new TypeError(`Aggregation type ${type} not found.`)
-    }
-
-    aggregation = klass(...args)
-    this._aggregations = _.merge({}, this._aggregations, aggregation)
+    this._aggBuilder.add(type, ...args)
     return this
   }
 

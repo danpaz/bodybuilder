@@ -14,19 +14,28 @@ const AggregationBuilder = {
    */
   aggregation(type, ...args) {
     let klass = aggregations[type]
-    let aggregation
+    let aggregation = Object.create(AggregationBuilder)
 
     if (!klass) {
       throw new TypeError(`Aggregation type ${type} not found.`)
     }
 
+    // If last argument is a nesting function, remove it
+    // from `args` before building the aggregation
     let nest = _.last(args)
     args = _.isFunction(nest) ? _.initial(args) : args
-    aggregation = klass(...args)
+
+    // Mixin to assign newly built aggregation properties
+    // to the `AggregationBuilder`
+    _.extend(aggregation, klass(...args))
+
+    // Extend the current aggregation object with the
+    // recently built aggregation
     this._aggs = _.assign(this._aggs, aggregation)
 
     if (_.isFunction(nest)) {
-      Object.setPrototypeOf(aggregation, AggregationBuilder)
+      // Resolve the nested aggregation and set it as a
+      // children of the current aggregation
       this._aggs[_.findKey(aggregation)].aggs = nest(aggregation)._aggs
     }
     return this
@@ -44,11 +53,11 @@ const AggregationBuilder = {
 
   /**
    * Get the built aggregation object at its current state.
-   * @return {Object} A read-only object describing the aggregations
-   *                    built by this builder so far.
+   * @return {Object} A shallow copy of the internal object describing
+   *                    the aggregations built by this builder so far.
    */
   get aggregations() {
-    return Object.freeze(this._aggs)
+    return _.clone(this._aggs)
   }
 }
 

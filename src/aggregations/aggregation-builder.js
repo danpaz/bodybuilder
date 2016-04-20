@@ -27,7 +27,7 @@ const AggregationBuilder = {
 
     // Mixin to assign newly built aggregation properties
     // to the `AggregationBuilder`
-    _.extend(aggregation, klass(...args))
+    _.assign(aggregation, klass(...args))
 
     // Extend the current aggregation object with the
     // recently built aggregation
@@ -35,7 +35,7 @@ const AggregationBuilder = {
 
     if (_.isFunction(nest)) {
       // Resolve the nested aggregation and set it as a
-      // children of the current aggregation
+      // child of the current aggregation
       this._aggs[_.findKey(aggregation)].aggs = nest(aggregation)._aggs
     }
     return this

@@ -3,7 +3,7 @@
  *
  * @param  {Array}  fields  The field names to query over.
  * @param  {String} query   The query string.
- * @param  {String} type    The type of multi_match query (optional).
+ * @param  {String} [type='best_fields']  The type of multi_match query.
  * @return {Object}         Multi Match query.
  */
 export default function multiMatchQuery(fields, query, type='best_fields') {

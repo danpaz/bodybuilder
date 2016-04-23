@@ -115,8 +115,6 @@ body.aggregation(aggregationType, [arguments])
 Creates an aggregation of type `aggregationType`. Currently supported
 aggregation types are listed [here](./src/aggregations/index.js).
 
-**Note**: nested aggregations are not currently supported.
-
 #### Arguments
 
 The specific arguments depend on the type of aggregation, but typically follow
@@ -126,6 +124,7 @@ this pattern:
 * `fieldToAggregate` - The name of the field in your index to aggregate over.
 * `aggregationName` - (optional) A custom name for the aggregation. Defaults to
 `agg_<aggregationType>_<fieldToAggregate>`.
+* `nestingFunction` - (optional) A function used to define aggregations as children of the one being created. This _must_ be the last parameter set.
 
 ```js
 var body = new BodyBuilder().aggregation('terms', 'user').build()
@@ -138,6 +137,37 @@ var body = new BodyBuilder().aggregation('terms', 'user').build()
 //     }
 //   }
 // }
+```
+
+#### Nested aggregations
+
+To nest aggregations, pass a `function` as the last parameter in `[arguments]`. The `function` receives the recently built aggregation instance and is expected to return an `Object` which will be assigned to `.aggs` on the current aggregation. Aggregations in this scope behave like builders and you can call the chainable method `.aggregation(aggregationType, [arguments])` on them just as you would on the main `BodyBuilder`.
+
+```js
+var body = new BodyBuilder().aggregation('terms', 'code', null, {
+      order: { _term: 'desc' },
+      size: 1
+    }, agg => agg.aggregation('terms', 'name')).build()
+// body == {
+//   "aggregations": {
+//       "agg_terms_code": {
+//           "terms": {
+//               "field": "code",
+//               "order": {
+//                   "_term": "desc"
+//               },
+//               "size": 1
+//           },
+//           "aggs": {
+//               "agg_terms_name": {
+//                   "terms": {
+//                       "field": "name"
+//                   }
+//               }
+//           }
+//       }
+//   }
+//}
 ```
 
 ### Combining queries, filters, and aggregations

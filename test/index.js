@@ -50,6 +50,22 @@ describe('BodyBuilder', () => {
     })
   })
 
+  it('should set a list of sorts', () => {
+    let result = new BodyBuilder().sorts([
+      {"channel": "desc"},
+      {"categories": "desc"},
+      {"content": "asc"}
+    ]).build()
+    expect(result).to.eql({
+      sort : [
+        {"channel": "desc"},
+        {"categories": "desc"},
+        {"content": "asc"}
+      ]
+    }
+    )
+  })
+
   it('should set a from value', () => {
     let result = new BodyBuilder().from(25).build()
     expect(result).to.eql({

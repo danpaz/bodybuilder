@@ -13,6 +13,10 @@
     "watch:build": "babel src --watch --out-dir lib"
   },
   "author": "Daniel Paz-Soldan <daniel.pazsoldan@gmail.com>",
+  "contributors": [
+    "Nicolás Fantone",
+    "Nauval Atmaja"
+  ],
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "6.5.1",

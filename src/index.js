@@ -98,6 +98,18 @@ class BodyBuilder {
     return this
   }
 
+
+  /**
+   * Add one or more sort on specific fields.
+   *
+   * @param  {String} sorts             Array of sorts.
+   * @returns {BodyBuilder} Builder class.
+   */
+  sorts(sorts) {
+    this._body.sort = sorts;
+    return this
+  }
+
   /**
    * Set a *from* offset value, for paginating a query.
    *

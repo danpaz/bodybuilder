@@ -4,13 +4,13 @@
   "description": "An elasticsearch query body builder.",
   "main": "lib/index.js",
   "scripts": {
-    "build": "babel src --out-dir lib",
-    "build:browser": "webpack lib browser/bodybuilder.min.js",
-    "check": "npm run lint && npm test",
-    "docs": "documentation -o docs/API.md -f md src/index.js --shallow",
+    "build:babel": "babel src --out-dir lib",
+    "build:umd": "webpack lib browser/bodybuilder.min.js",
+    "build:docs": "documentation -o docs/API.md -f md src/index.js --shallow",
+    "build": "npm run build:babel && npm run build:umd && npm run build:docs",
     "lint": "eslint src test",
     "test": "mocha --require babel-core/register --recursive test",
-    "watch:build": "babel src --watch --out-dir lib"
+    "check": "npm run lint && npm test"
   },
   "author": "Daniel Paz-Soldan <daniel.pazsoldan@gmail.com>",
   "contributors": [

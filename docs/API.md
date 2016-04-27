@@ -14,12 +14,31 @@ var body = new Bodybuilder()
 
 Apply a aggregation of a given type providing all the necessary arguments,
 passing these arguments directly to the specified aggregation builder.
-Merges existing aggregation(s) with the new aggregation.
+Merges existing aggregation(s) with the new aggregation. You may nest
+aggregations by passing in a `Function` callback as the last parameter.
+The callback will receive the newly built aggregation upon which you can
+keep calling `aggregation(type, ...args)`.
 
 **Parameters**
 
 -   `type` **String** Name of the aggregation type.
--   `args` **...args** Arguments passed to aggregation builder.
+-   `args` **...args** Arguments passed to aggregation builder. May include
+                           am optional nesting function as its last element.
+
+**Examples**
+
+```javascript
+var body = new Bodybuilder()
+  .query('match', 'text', 'this is a test')
+  .aggregation('terms', 'someField', 'bySomeField',
+    // Nest aggregations on "bySomeField"
+    agg =>
+      agg
+        .agregation('max', 'someOtherField')
+        .aggregation('missing', 'anotherField')
+   )
+  .build()
+```
 
 Returns **BodyBuilder** Builder class.
 

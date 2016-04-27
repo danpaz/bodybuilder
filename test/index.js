@@ -18,22 +18,26 @@ describe('BodyBuilder', () => {
   it('should use default sort direction', () => {
     let result = new BodyBuilder().sort('timestamp').build()
     expect(result).to.eql({
-      sort: {
-        timestamp: {
-          order: 'asc'
+      "sort": [
+        {
+          "timestamp": {
+            "order": "asc"
+          }
         }
-      }
+      ]
     })
   })
 
   it('should set a sort direction', () => {
     let result = new BodyBuilder().sort('timestamp', 'desc').build()
     expect(result).to.eql({
-      sort: {
-        timestamp: {
-          order: 'desc'
+      "sort": [
+        {
+          "timestamp": {
+            "order": "desc"
+          }
         }
-      }
+      ]
     })
   })
 
@@ -42,11 +46,11 @@ describe('BodyBuilder', () => {
                                   .sort('timestamp', 'asc')
                                   .build()
     expect(result).to.eql({
-      sort: {
+      sort: [{
         timestamp: {
           order: 'asc'
         }
-      }
+      }]
     })
   })
 

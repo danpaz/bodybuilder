@@ -224,15 +224,41 @@ Set a sort direction using `sort(field, direction)`, where direction defaults to
 ascending.
 
 ```js
-var body = new Bodybuilder().filter('term', 'message', 'test')
-                            .sort('date')
-                            .build()
+var body  = new BodyBuilder().filter('term', 'message', 'test')
+    .sort('timestamp', 'desc')
+    .sort([{
+      "channel": {
+        "order": "desc"
+      }
+    }])
+    .sort([
+      {"categories": "desc"},
+      {"content": "asc"}
+    ])
+    .build()
+
 // body == {
-//   sort: {
-//     date: {
-//       order: 'asc'
+//   sort: [{
+//       "timestamp": {
+//         "order": "desc"
+//       }
+//     },
+//     {
+//       "channel": {
+//         "order": "desc"
+//       }
+//     },
+//     {
+//       "categories": {
+//         "order": "desc"
+//       }
+//     },
+//     {
+//       "content": {
+//         "order": "asc"
+//       }
 //     }
-//   },
+//   ],
 //   query: {
 //     filtered: {
 //       filter: {

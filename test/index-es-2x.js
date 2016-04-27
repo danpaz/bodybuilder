@@ -18,22 +18,32 @@ describe('BodyBuilder ES 2x', () => {
   it('should use default sort direction', () => {
     let result = new BodyBuilder().sort('timestamp').build('v2')
     expect(result).to.eql({
-      sort: {
-        timestamp: {
-          order: 'asc'
+      "sort": [
+        {
+          "timestamp": {
+            "order": "asc"
+          }
         }
-      }
+      ]
     })
   })
 
   it('should set a sort direction', () => {
-    let result = new BodyBuilder().sort('timestamp', 'desc').build('v2')
+    let result = new BodyBuilder().sort('timestamp', 'desc')
+                                  .sort('channel', 'desc').build('v2')
     expect(result).to.eql({
-      sort: {
-        timestamp: {
-          order: 'desc'
+      "sort": [
+        {
+          "timestamp": {
+            "order": "desc"
+          }
+        },
+        {
+          "channel": {
+            "order": "desc"
+          }
         }
-      }
+      ]
     })
   })
 
@@ -42,11 +52,85 @@ describe('BodyBuilder ES 2x', () => {
                                   .sort('timestamp', 'asc')
                                   .build('v2')
     expect(result).to.eql({
-      sort: {
+      sort: [{
         timestamp: {
           order: 'asc'
         }
-      }
+      }]
+    })
+  })
+
+  it('should append and overwrite the sort', () => {
+    let result = new BodyBuilder().sort('timestamp', 'desc')
+        .sort([
+          {"channel": "desc"},
+          {"categories": "desc"},
+          {"content": "asc"}
+        ])
+        .sort('timestamp', 'asc')
+        .sort('timestamp', 'desc')
+        .build('v2')
+    expect(result).to.eql({
+      sort: [
+        {
+          "timestamp": {
+            "order": "desc"
+          }
+        },
+        {
+          "channel": {
+            "order": "desc"
+          }
+        },
+        {
+          "categories": {
+            "order": "desc"
+          }
+        },
+        {
+          "content": {
+            "order": "asc"
+          }
+        }
+      ]
+    })
+  })
+
+  it('sort function form #3', () => {
+    let result = new BodyBuilder().sort('timestamp', 'desc')
+        .sort([{
+          "channel": {
+            "order": "desc"
+          }
+        }])
+        .sort([
+          {"categories": "desc"},
+          {"content": "asc"}
+        ])
+        .build('v2')
+    expect(result).to.eql({
+      sort: [
+        {
+          "timestamp": {
+            "order": "desc"
+          }
+        },
+        {
+          "channel": {
+            "order": "desc"
+          }
+        },
+        {
+          "categories": {
+            "order": "desc"
+          }
+        },
+        {
+          "content": {
+            "order": "asc"
+          }
+        }
+      ]
     })
   })
 

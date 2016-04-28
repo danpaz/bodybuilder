@@ -6,6 +6,7 @@ import nestedFilter from './nested-filter'
 import prefixFilter from './prefix-filter'
 import rangeFilter from './range-filter'
 import regexpFilter from './regexp-filter'
+import wildcardFilter from './wildcard-filter'
 import termFilter from './term-filter'
 import termsFilter from './terms-filter'
 import typeFilter from './type-filter'
@@ -32,6 +33,7 @@ export default {
   prefix: prefixFilter,
   range: rangeFilter,
   regexp: regexpFilter,
+  wildcard: wildcardFilter,
   term: termFilter,
   terms: termsFilter,
   type: typeFilter

@@ -11,7 +11,7 @@
     "lint": "eslint src test",
     "test": "mocha --require babel-core/register --recursive test",
     "check": "npm run lint && npm test",
-    "prepublish": "npm run check && npm run build"
+    "preversion": "npm run check && npm run build"
   },
   "author": "Daniel Paz-Soldan <daniel.pazsoldan@gmail.com>",
   "contributors": [

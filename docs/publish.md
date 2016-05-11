@@ -7,7 +7,7 @@ to npm. Currently, @danpaz is the only one doing this.
 1. Ensure logged in as the expected npm user `npm whoami`.
 1. Bump the npm version `npm version major|minor|patch`. This will also:
   - Run tests and style checks locally.
-  - Generate built files `npm run build`.
+  - Generate built files.
 1. Commit changes to master branch.
-1. Push updates to github, including the new npm version tag `git push --tags`.
+1. Push updates to github, including the new npm version tag `git push && git push --tags`.
   - Travis CI will automatically publish to npm.

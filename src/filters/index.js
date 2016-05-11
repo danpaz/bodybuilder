@@ -1,7 +1,6 @@
 import boolFilter from './bool-filter'
 import existsFilter from './exists-filter'
 import fuzzyFilter from './fuzzy-filter'
-import matchFilter from './match-filter'
 import matchAllFilter from './match-all-filter'
 import missingFilter from './missing-filter'
 import nestedFilter from './nested-filter'
@@ -27,7 +26,6 @@ export default {
   exists: existsFilter,
   exist: existsFilter,
   fuzzy: fuzzyFilter,
-  match: matchFilter,
   matchAll: matchAllFilter,
   matchall: matchAllFilter,
   'match-all': matchAllFilter,

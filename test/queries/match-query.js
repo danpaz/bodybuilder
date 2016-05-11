@@ -13,7 +13,7 @@ describe('matchQuery', () => {
   })
 
   it('should create a match phrase query', () => {
-    let result = matchQuery('user', 'kimchy', true)
+    let result = matchQuery('user', 'kimchy', { type: 'phrase' })
     expect(result).to.eql({
       match: {
         user: {

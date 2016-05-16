@@ -1,4 +1,5 @@
 import avgAggregation from './avg-aggregation'
+import cardinalityAggregation from './cardinality-aggregation'
 import dateHistogramAggregation from './date-histogram-aggregation'
 import extendedStatsAggregation from './extended-stats-aggregation'
 import histogramAggregation from './histogram-aggregation'
@@ -25,6 +26,7 @@ import topHitsAggregation from './top-hits-aggregation'
 export default {
   average: avgAggregation,
   avg: avgAggregation,
+  cardinality: cardinalityAggregation,
   datehistogram: dateHistogramAggregation,
   date_histogram: dateHistogramAggregation,
   'date-histogram': dateHistogramAggregation,

@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="codemirror.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="bb_headers">
+      <img class="bb_logo" src="ic-logo.png" alt="bodybuilder">
+      <h1 class="bb_h1">Bodybuilder</h1>
+
+      <h2 class="bb_h2">
+        An elasticsearch query body builder.
+
+        Easily build complex queries for elasticsearch with a simple, predictable api.
+      </h2>
+
+      <a class="bb_button-github" href="https://github.com/danpaz/bodybuilder">
+        <img class="bb_icon-github" src="ic-github.png" alt="github">
+        View on GitHub
+      </a>
+    </div>
+    <div>
+      <div id="input_textarea" class="bb_textarea"></div>
+      <div id="output_textarea" class="bb_textarea"></div>
+    </div>
+
+    <script type="text/javascript" src="../browser/bodybuilder.min.js" charset="utf-8"></script>
+    <script src="codemirror-compressed.js"></script>
+    <script>
+      var inputTextarea = document.getElementById('input_textarea');
+      var outputTextarea = document.getElementById('output_textarea');
+      var inputEditor = CodeMirror(inputTextarea, {
+        lineNumbers: true,
+        placeholder: 'Type a query...',
+      });
+      var outputEditor = CodeMirror(outputTextarea, {
+        lineNumbers: true,
+      });
+
+      function onInputChange(cm, change) {
+        var input = inputEditor.getValue().trim();
+        try {
+          var newOutput = eval(input);
+          var json = JSON.stringify(newOutput, null, 2);
+          outputEditor.setValue(json);
+        } catch (err) {
+          console.error('invalid input', err);
+        }
+      }
+
+      inputEditor.on('change', onInputChange);
+      inputEditor.setValue(`new Bodybuilder()
+        .query("match", "message", "test")
+        .build()`);
+    </script>
+  </body>
+</html>

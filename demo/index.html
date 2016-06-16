@@ -16,12 +16,16 @@
 
       <a class="bb_button-github" href="https://github.com/danpaz/bodybuilder">
         <img class="bb_icon-github" src="ic-github.png" alt="github">
-        View on GitHub
+        <span>View on GitHub</span>
       </a>
     </div>
-    <div>
-      <div id="input_textarea" class="bb_textarea"></div>
-      <div id="output_textarea" class="bb_textarea"></div>
+    <div class="bb_textareas">
+      <div class="bb_textarea">
+        <div id="input_textarea"></div>
+      </div>
+      <div class="bb_textarea">
+        <div id="output_textarea"></div>
+      </div>
     </div>
 
     <script type="text/javascript" src="../browser/bodybuilder.min.js" charset="utf-8"></script>
@@ -50,7 +54,12 @@
 
       inputEditor.on('change', onInputChange);
       inputEditor.setValue(`new Bodybuilder()
-        .query("match", "message", "test")
+        .query('match', 'message', 'this is a test')
+        .filter('term', 'user', 'kimchy')
+        .filter('term', 'user', 'herald')
+        .orFilter('term', 'user', 'johnny')
+        .notFilter('term', 'user', 'cassie')
+        .aggregation('terms', 'user')
         .build()`);
     </script>
   </body>

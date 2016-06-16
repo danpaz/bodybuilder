@@ -1,6 +1,7 @@
 body {
   font-family: "Helvetica Neue", "Segoe UI";
   text-align: center;
+  margin-top: 30px;
 }
 
 .bb_headers {
@@ -29,10 +30,10 @@ body {
 .bb_button-github {
   display: inline-block;
   width: 183px;
-  height: 39px;
-  line-height: 39px;
-  background-color: #FBFBFB;
+  padding: 7px 0;
+  background-color: #f7f7f7;
   border: 1px solid #D5D5D5;
+  border-radius: 4px;
   text-decoration: none;
   font-size: 14px;
   font-weight: bold;
@@ -41,12 +42,35 @@ body {
 
 .bb_icon-github {
   width: 24px;
+  vertical-align: middle;
+  margin-right: 2px;
 }
 
+.bb_textareas {
+  display: flex;
+  justify-content: center;
+}
 
 .bb_textarea {
-  display: inline-block;
+  position: relative;
   text-align: left;
-  width: 500px;
   margin: 0 20px;
+  width: 40%;
+}
+
+.CodeMirror {
+  background-color: #F7F7F7;
+  height: 400px;
+}
+
+@media (max-width: 600px) {
+  .CodeMirror {
+    height: 200px;
+  }
+}
+
+.CodeMirror-gutters {
+  background-color: #F1F1F1;
+  border: none;
+  width: 34px;
 }

@@ -2,7 +2,7 @@ import _ from 'lodash'
 import filters from './filters'
 import AggregationBuilder from './aggregations/aggregation-builder'
 import queries from './queries'
-import { boolMerge } from './utils'
+import { boolMerge, sortMerge } from './utils'
 
 /**
  * The main builder class.
@@ -18,7 +18,7 @@ class BodyBuilder {
     this._body = {}
     this._filters = {}
     this._queries = {}
-    this._aggBuilder = Object.create(AggregationBuilder);
+    this._aggBuilder = Object.create(AggregationBuilder)
   }
 
   /**
@@ -90,10 +90,24 @@ class BodyBuilder {
    * @returns {BodyBuilder} Builder class.
    */
   sort(field, direction = 'asc') {
-    this._body.sort = {
-      [field]: {
-        order: direction
-      }
+    this._body.sort = this._body.sort || []
+
+    if (_.isArray(field)) {
+
+        if(_.isPlainObject(this._body.sort)) {
+            this._body.sort = [this._body.sort]
+        }
+
+        if(_.isArray(this._body.sort)) {
+            _.each(field, (sorts) => {
+                _.each(sorts, (value, key) => {
+                    sortMerge(this._body.sort, key, value)
+                })
+            })
+
+        }
+    } else {
+      sortMerge(this._body.sort, field, direction)
     }
     return this
   }
@@ -284,4 +298,4 @@ class BodyBuilder {
 
 }
 
-module.exports = BodyBuilder;
+module.exports = BodyBuilder

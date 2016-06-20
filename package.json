@@ -16,7 +16,8 @@
   "author": "Daniel Paz-Soldan <daniel.pazsoldan@gmail.com>",
   "contributors": [
     "Nicolás Fantone",
-    "Nauval Atmaja"
+    "Nauval Atmaja",
+    "Ferron Hanse"
   ],
   "license": "MIT",
   "devDependencies": {

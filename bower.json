@@ -1,0 +1,29 @@
+{
+  "name": "bodybuilder",
+  "description": "An elasticsearch query body builder.",
+  "main": "lib/index.js",
+  "authors": [
+    "Nicolás Fantone",
+    "Nauval Atmaja",
+    "Ferron Hanse"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "elasticsearch",
+    "bodybuilder",
+    "querying",
+    "queries",
+    "query",
+    "elastic",
+    "search",
+    "dsl"
+  ],
+  "homepage": "https://github.com/danpaz/bodybuilder",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

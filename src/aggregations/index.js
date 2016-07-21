@@ -7,6 +7,7 @@ import maxAggregation from './max-aggregation'
 import minAggregation from './min-aggregation'
 import missingAggregation from './missing-aggregation'
 import percentilesAggregation from './percentiles-aggregation'
+import rangeAggregation from './range-aggregation'
 import significantTermsAggregation from './significant-terms-aggregation'
 import statsAggregation from './stats-aggregation'
 import sumAggregation from './sum-aggregation'
@@ -40,6 +41,7 @@ export default {
   min: minAggregation,
   missing: missingAggregation,
   percentiles: percentilesAggregation,
+  range: rangeAggregation,
   significantterms: significantTermsAggregation,
   significant_terms: significantTermsAggregation,
   'significant-terms': significantTermsAggregation,

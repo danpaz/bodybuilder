@@ -4,10 +4,10 @@ import {expect} from 'chai'
 describe('existsFilter', () => {
 
   it('should create a simple exists filter', () => {
-    let result = existsFilter('user', 'kimchy')
+    let result = existsFilter('user')
     expect(result).to.eql({
       exists: {
-        user: 'kimchy'
+        field: 'user'
       }
     })
   })

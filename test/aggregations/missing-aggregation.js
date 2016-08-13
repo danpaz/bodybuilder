@@ -3,7 +3,7 @@ import {expect} from 'chai'
 
 describe('missingAggregation', () => {
 
-  it('should create a min aggregation', () => {
+  it('should create a missing aggregation', () => {
     let result = missingAggregation('user', 'agg_name')
     expect(result).to.eql({
       agg_name: {

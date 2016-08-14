@@ -6,6 +6,7 @@ import queryStringQuery from './query-string-query'
 import rangeQuery from './range-query'
 import termQuery from './term-query'
 import matchPhrasePrefix from './match-phrase-prefix'
+import customQuery from './custom-query'
 
 /**
  * Use these keys to select the query type when building a query clause.
@@ -27,5 +28,6 @@ export default {
   queryString: queryStringQuery,
   range: rangeQuery,
   term: termQuery,
-  matchPhrasePrefix: matchPhrasePrefix
+  matchPhrasePrefix: matchPhrasePrefix,
+  customQuery: customQuery
 }

@@ -5,7 +5,7 @@ import multiMatchQuery from './multi-match-query'
 import queryStringQuery from './query-string-query'
 import rangeQuery from './range-query'
 import termQuery from './term-query'
-import termsQuery from './terms-query'
+import matchPhrasePrefix from './match-phrase-prefix'
 
 /**
  * Use these keys to select the query type when building a query clause.
@@ -27,5 +27,5 @@ export default {
   queryString: queryStringQuery,
   range: rangeQuery,
   term: termQuery,
-  terms: termsQuery
+  matchPhrasePrefix: matchPhrasePrefix
 }

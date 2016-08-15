@@ -25,8 +25,9 @@ describe('multiMatchQuery', () => {
     })
   });
 
-  it('should create a multi match query with extra options', () => {
-    const result = multiMatchQuery(['subject', 'message'], 'this is a test', 'phrase_prefix', {
+  it('should create a multi match query with options', () => {
+    const result = multiMatchQuery(['subject', 'message'], 'this is a test', {
+      type: 'phrase_prefix',
       analyzer: 'standard',
       tie_breaker: 0.3
     });

@@ -18,6 +18,7 @@ export default function multiMatchQuery(fields, query, options = defaultOptions)
       type: options
     }
   }
+  options.type = options.type || defaultOptions.type;
 
   return {
     multi_match: assign({

@@ -1,14 +1,13 @@
 /**
  * Construct an Exists filter.
  *
- * @param  {String} field Field name to query over.
- * @param  {String} term  Query value.
+ * @param  {String} field Field name to check existence.
  * @return {Object}       Exists filter.
  */
-export default function existsFilter(field, term) {
+export default function existsFilter(field) {
   return {
     exists: {
-      [field]: term
+      field
     }
   }
 }

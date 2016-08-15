@@ -24,4 +24,38 @@ describe('multiMatchQuery', () => {
       }
     })
   });
+
+  it('should create a multi match query with options', () => {
+    const result = multiMatchQuery(['subject', 'message'], 'this is a test', {
+      type: 'phrase_prefix',
+      analyzer: 'standard',
+      tie_breaker: 0.3
+    });
+    expect(result).to.eql({
+      multi_match: {
+        query: 'this is a test',
+        type: 'phrase_prefix',
+        fields: ['subject', 'message'],
+        analyzer: 'standard',
+        tie_breaker: 0.3
+      }
+    })
+  })
+
+  it('should create a multi match query with type=best_fields as the default', () => {
+    const result = multiMatchQuery(['subject', 'message'], 'this is a test', {
+      analyzer: 'standard',
+      tie_breaker: 0.3
+    });
+    expect(result).to.eql({
+      multi_match: {
+        query: 'this is a test',
+        type: 'best_fields',
+        fields: ['subject', 'message'],
+        analyzer: 'standard',
+        tie_breaker: 0.3
+      }
+    })
+  })
+
 })

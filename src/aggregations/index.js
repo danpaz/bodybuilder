@@ -14,6 +14,7 @@ import sumAggregation from './sum-aggregation'
 import termsAggregation from './terms-aggregation'
 import valueCountAggregation from './value-count-aggregation'
 import topHitsAggregation from './top-hits-aggregation'
+import geohashAggregation from './geohash-aggregation'
 
 /**
  * Use these keys to select the aggregation type when building an aggregation
@@ -55,5 +56,6 @@ export default {
   valueCount: valueCountAggregation,
   topHits: topHitsAggregation,
   top_hits: topHitsAggregation,
-  'top-hits': topHitsAggregation
+  'top-hits': topHitsAggregation,
+  geohash: geohashAggregation
 }

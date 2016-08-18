@@ -9,9 +9,7 @@ export default function childrenAggregation(type, name) {
   name = name || `agg_children_${type}`
   return {
     [name]: {
-      children: {
-        type: type
-      }
+      children: { type }
     }
   }
 }

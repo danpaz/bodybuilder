@@ -14,4 +14,28 @@ describe('statsAggregation', () => {
     })
   })
 
+  it('should include additional options', () => {
+    let result = statsAggregation('grade', {
+      script: {
+        inline: '_value * correction',
+        params: {
+          correction: 1.2
+        }
+      }
+    })
+    expect(result).to.eql({
+      agg_stats_grade: {
+        stats: {
+          field: 'grade',
+          script: {
+            inline: '_value * correction',
+            params: {
+              correction: 1.2
+            }
+          }
+        }
+      }
+    })
+  })
+
 })

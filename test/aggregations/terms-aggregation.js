@@ -34,4 +34,24 @@ describe('termsAggregation', () => {
     })
   })
 
+  it('should allow name argument to be optional', () => {
+    let result = termsAggregation('user', {
+      order: {
+        timestamp: 'asc'
+      },
+      size: 0
+    })
+    expect(result).to.eql({
+      agg_terms_user: {
+        terms: {
+          field: 'user',
+          order: {
+            timestamp: 'asc'
+          },
+          size: 0
+        }
+      }
+    })
+  })
+
 })

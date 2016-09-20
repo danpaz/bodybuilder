@@ -13,7 +13,7 @@ describe('topHitsAggregation', () => {
   })
 
   it('should create a top_hits aggregation with custom name', () => {
-    let result = topHitsAggregation(undefined, 'agg_name')
+    let result = topHitsAggregation('agg_name')
     expect(result).to.eql({
       agg_name: {
         top_hits: {}
@@ -38,6 +38,19 @@ describe('topHitsAggregation', () => {
               'title'
             ]
           },
+          size: 10
+        }
+      }
+    })
+  })
+
+  it('should create a top_hits aggregation with custom options and name', () => {
+    let result = topHitsAggregation('agg_name', {
+      size: 10
+    })
+    expect(result).to.eql({
+      agg_name: {
+        top_hits: {
           size: 10
         }
       }

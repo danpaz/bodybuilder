@@ -14,4 +14,28 @@ describe('valueCountAggregation', () => {
     })
   })
 
+  it('should include additional options', () => {
+    let result = valueCountAggregation('grade', {
+      script: {
+        file: 'my_script',
+        params: {
+          field: 'grade'
+        }
+      }
+    })
+    expect(result).to.eql({
+      agg_value_count_grade: {
+        value_count: {
+          field: 'grade',
+          script: {
+            file: 'my_script',
+            params: {
+              field: 'grade'
+            }
+          }
+        }
+      }
+    })
+  })
+
 })

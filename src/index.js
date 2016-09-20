@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import filters from './filters'
-import AggregationBuilder from './aggregations/aggregation-builder'
 import queries from './queries'
+import AggregationBuilder from './aggregations/aggregation-builder'
 import { boolMerge, sortMerge } from './utils'
 
 /**
@@ -12,7 +12,7 @@ import { boolMerge, sortMerge } from './utils'
  *   .query('match', 'text', 'this is a test')
  *   .build()
  */
-class BodyBuilder {
+class Bodybuilder {
 
   constructor() {
     this._body = {}
@@ -87,7 +87,7 @@ class BodyBuilder {
    *
    * @param  {String} field             Field name.
    * @param  {String} [direction='asc'] A valid direction: 'asc' or 'desc'.
-   * @returns {BodyBuilder} Builder class.
+   * @returns {Bodybuilder} Builder class.
    */
   sort(field, direction = 'asc') {
     this._body.sort = this._body.sort || []
@@ -117,7 +117,7 @@ class BodyBuilder {
    *
    * @param  {Number} quantity The offset from the first result you want to
    *                           fetch.
-   * @returns {BodyBuilder} Builder class.
+   * @returns {Bodybuilder} Builder class.
    */
   from(quantity) {
     this._body.from = quantity
@@ -128,7 +128,7 @@ class BodyBuilder {
    * Set a *size* value for maximum results to return.
    *
    * @param  {Number} quantity Maximum number of results to return.
-   * @returns {BodyBuilder} Builder class.
+   * @returns {Bodybuilder} Builder class.
    */
   size(quantity) {
     this._body.size = quantity
@@ -140,7 +140,7 @@ class BodyBuilder {
    *
    * @param  {String} k Key.
    * @param  {String} v Value.
-   * @returns {BodyBuilder} Builder class.
+   * @returns {Bodybuilder} Builder class.
    */
   rawOption(k, v) {
     this._body[k] = v
@@ -154,7 +154,7 @@ class BodyBuilder {
    *
    * @param  {String}  type Name of the filter type.
    * @param  {...args} args Arguments passed to filter builder.
-   * @returns {BodyBuilder} Builder class.
+   * @returns {Bodybuilder} Builder class.
    */
   filter(type, ...args) {
     this._filter('and', type, ...args)
@@ -175,11 +175,11 @@ class BodyBuilder {
   }
 
   /**
-   * Alias to BodyBuilder#filter.
+   * Alias to Bodybuilder#filter.
    *
    * @private
    *
-   * @returns {BodyBuilder} Builder class.
+   * @returns {Bodybuilder} Builder class.
    */
   andFilter(...args) {
     return this._filter(...args)
@@ -202,7 +202,7 @@ class BodyBuilder {
    *
    * @param  {String}  type Name of the query type.
    * @param  {...args} args Arguments passed to query builder.
-   * @returns {BodyBuilder} Builder class.
+   * @returns {Bodybuilder} Builder class.
    */
   query(type, ...args) {
     this._query('and', type, ...args)
@@ -223,22 +223,22 @@ class BodyBuilder {
   }
 
   /**
-   * Alias to BodyBuilder#query.
+   * Alias to Bodybuilder#query.
    *
    * @private
    *
-   * @returns {BodyBuilder} Builder class.
+   * @returns {Bodybuilder} Builder class.
    */
   andQuery(...args) {
     return this.query(...args)
   }
 
   /**
-   * Alias to BodyBuilder#query.
+   * Alias to Bodybuilder#query.
    *
    * @private
    *
-   * @returns {BodyBuilder} Builder class.
+   * @returns {Bodybuilder} Builder class.
    */
   addQuery(...args) {
     return this.query(...args)
@@ -278,7 +278,7 @@ class BodyBuilder {
    * @param  {String}  type Name of the aggregation type.
    * @param  {...args} args Arguments passed to aggregation builder. May include
    *                        am optional nesting function as its last element.
-   * @returns {BodyBuilder} Builder class.
+   * @returns {Bodybuilder} Builder class.
    */
   aggregation(type, ...args) {
     this._aggBuilder.add(type, ...args)
@@ -286,11 +286,11 @@ class BodyBuilder {
   }
 
   /**
-   * Alias to BodyBuilder#aggregation.
+   * Alias to Bodybuilder#aggregation.
    *
    * @private
    *
-   * @returns {BodyBuilder} Builder class.
+   * @returns {Bodybuilder} Builder class.
    */
   agg(...args) {
     return this.aggregation(...args)
@@ -298,4 +298,4 @@ class BodyBuilder {
 
 }
 
-module.exports = BodyBuilder
+module.exports = Bodybuilder

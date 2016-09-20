@@ -1,6 +1,8 @@
 /**
  * Construct a Min aggregation.
  *
+ * @memberof Aggregations
+ *
  * @param  {String} field Field name to aggregate over.
  * @param  {String} name  Aggregation name. Defaults to agg_min_<field>.
  * @return {Object}       Min aggregation.

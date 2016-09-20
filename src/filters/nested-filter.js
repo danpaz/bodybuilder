@@ -3,7 +3,9 @@ import filters from './index'
 /**
  * Construct a Nested filter: a filter inside a filter.
  *
- * elastic.co/guide/en/elasticsearch/reference/current/query-dsl-nested-filter.html
+ * See: elastic.co/guide/en/elasticsearch/reference/current/query-dsl-nested-filter.html
+ *
+ * @memberof Filters
  *
  * @param  {String} path  Name of the field containing the nested fields.
  * @param  {String} type  Name of the desired nested filter.

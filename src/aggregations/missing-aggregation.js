@@ -1,6 +1,8 @@
 /**
  * Construct a Missing aggregation.
  *
+ * @memberof Aggregations
+ *
  * @param  {String} field Field name to aggregate over.
  * @param  {String} name  Aggregation name. Defaults to agg_missing_<field>.
  * @return {Object}       Missing Aggregation.

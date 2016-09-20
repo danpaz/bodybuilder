@@ -3,6 +3,8 @@ import {assign} from 'lodash';
 /**
  * Construct a Query String query.
  *
+ * @memberof Queries
+ *
  * @param  {Array}  fields  The field names to query over.
  * @param  {String} term  Query value.
  * @param {Object} options See docs for possible options https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html

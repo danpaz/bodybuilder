@@ -15,7 +15,9 @@ import termsFilter from './terms-filter'
 import typeFilter from './type-filter'
 
 /**
- * Use these keys to select the filter type when building a filter clause.
+ * Construct elasticsearch filters.
+ *
+ * @namespace Filters
  *
  * @example
  * var body = new Bodybuilder()

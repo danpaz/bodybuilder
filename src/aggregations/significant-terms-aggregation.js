@@ -1,6 +1,8 @@
 /**
  * Construct a Significant Terms aggregation.
  *
+ * @memberof Aggregations
+ *
  * @param  {String} field Field name to aggregate over.
  * @param  {String} name  Aggregation name. Defaults to agg_significant_terms_<field>.
  * @return {Object}       Significant Terms aggregation.

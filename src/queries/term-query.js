@@ -1,6 +1,8 @@
 /**
  * Construct a Term query.
  *
+ * @memberof Queries
+ *
  * @param  {String} field Field name to query over.
  * @param  {String} term  Query value.
  * @return {Object}       Term query.

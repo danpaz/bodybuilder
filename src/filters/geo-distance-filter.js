@@ -1,6 +1,8 @@
 /**
  * Construct a Geo distance filter.
  *
+ * @memberof Filters
+ *
  * @param  {String} field    Field name to query over.
  * @param  {String} distance Distance.
  * @param  {Object} point    Geo point coordinates (conform with GeoJSON).

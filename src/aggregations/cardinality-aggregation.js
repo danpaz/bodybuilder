@@ -3,6 +3,8 @@ import _ from 'lodash'
 /**
  * Construct a Cardinality aggregation
  *
+ * @memberof Aggregations
+ *
  * @param  {String} field Field name to aggregate over.
  * @param  {String} opts  Additional options to include in the aggregation.
  * @param  {String} name  Aggregation name. Defaults to agg_cardinality_<field>.

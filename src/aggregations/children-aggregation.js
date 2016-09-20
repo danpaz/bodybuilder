@@ -1,6 +1,8 @@
 /**
  * Construct a Children aggregation.
  *
+ * @memberof Aggregations
+ *
  * @param  {String} type  Document type on which to join.
  * @param  {String} name  Aggregation name. Defaults to agg_histogram_<field>.
  * @return {Object}       Children aggregation.

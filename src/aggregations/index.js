@@ -18,8 +18,9 @@ import geohashAggregation from './geohash-aggregation'
 import childrenAggregation from './children-aggregation'
 
 /**
- * Use these keys to select the aggregation type when building an aggregation
- * clause.
+ * Construct elasticsearch aggregations.
+ *
+ * @namespace Aggregations
  *
  * @example
  * var body = new Bodybuilder()

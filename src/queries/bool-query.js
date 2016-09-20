@@ -11,6 +11,9 @@ const CONDITIONS_MAP = {
 /**
  * Construct a Boolean query.
  *
+ * @private
+ * @memberof Queries
+ *
  * @param  {String} condition Boolean condition: must, must_not, should.
  * @param  {Object} query     Fully-formed query.
  * @return {Object}           Boolean query.

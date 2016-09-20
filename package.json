@@ -6,7 +6,7 @@
   "scripts": {
     "build:babel": "babel src --out-dir lib",
     "build:umd": "webpack lib browser/bodybuilder.min.js",
-    "build:docs": "documentation -o docs/API.md -f md src/index.js --shallow",
+    "build:docs": "documentation build src/index.js -o docs -f html",
     "build": "npm run build:babel && npm run build:umd && npm run build:docs",
     "lint": "eslint src test",
     "test": "mocha --require babel-core/register --recursive test",

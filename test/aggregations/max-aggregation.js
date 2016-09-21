@@ -14,4 +14,18 @@ describe('maxAggregation', () => {
     })
   })
 
+  it('should include additional options', () => {
+    let result = maxAggregation('grade', {
+      missing: 10
+    })
+    expect(result).to.eql({
+      agg_max_grade: {
+        max: {
+          field: 'grade',
+          missing: 10
+        }
+      }
+    })
+  })
+
 })

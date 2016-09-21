@@ -14,4 +14,18 @@ describe('significantTermsAggregation', () => {
     })
   })
 
+  it('should include additional options', () => {
+    let result = significantTermsAggregation('user', {
+      size: 10
+    })
+    expect(result).to.eql({
+      agg_significant_terms_user: {
+        significant_terms: {
+          field: 'user',
+          size: 10
+        }
+      }
+    })
+  })
+
 })

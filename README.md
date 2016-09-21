@@ -124,7 +124,10 @@ this pattern:
 * `fieldToAggregate` - The name of the field in your index to aggregate over.
 * `aggregationName` - (optional) A custom name for the aggregation. Defaults to
 `agg_<aggregationType>_<fieldToAggregate>`.
-* `nestingFunction` - (optional) A function used to define aggregations as children of the one being created. This _must_ be the last parameter set.
+* `aggregationOptions` - (optional) Additional key-value pairs to include in the
+aggregation object.
+* `nestingFunction` - (optional) A function used to define aggregations as
+children of the one being created. This _must_ be the last parameter set.
 
 ```js
 var body = new BodyBuilder().aggregation('terms', 'user').build()

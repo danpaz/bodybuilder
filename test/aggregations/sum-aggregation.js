@@ -14,4 +14,20 @@ describe('sumAggregation', () => {
     })
   })
 
+  it('should allow a script property', () => {
+    let result = sumAggregation('funds', 'Balance', {
+      script: "doc['DEBIT_DC'].value + doc['CREDIT_DC'].value",
+      lang: "expression"
+    })
+    expect(result).to.eql({
+      Balance: {
+        sum: {
+          field: 'funds',
+          script: "doc['DEBIT_DC'].value + doc['CREDIT_DC'].value",
+          lang: "expression"
+        }
+      }
+    })
+  })
+
 })

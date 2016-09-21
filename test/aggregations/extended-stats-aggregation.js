@@ -14,4 +14,18 @@ describe('extendedStatsAggregation', () => {
     })
   })
 
+  it('should include custom options', () => {
+    let result = extendedStatsAggregation('grade', {
+      size: 10
+    })
+    expect(result).to.eql({
+      agg_extended_stats_grade: {
+        extended_stats: {
+          field: 'grade',
+          size: 10
+        }
+      }
+    })
+  })
+
 })

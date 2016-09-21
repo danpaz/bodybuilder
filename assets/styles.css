@@ -33,12 +33,33 @@ body {
   font-size: 14px;
 }
 
+.bb_buttons {
+  display: flex;
+  width: 381px;
+  justify-content: space-between;
+}
+
 .bb_button-github {
   display: inline-block;
+  line-height: 22px;
   width: 183px;
   padding: 7px 0;
   background-color: #f7f7f7;
   border: 1px solid #D5D5D5;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+}
+
+.bb_button-docs {
+  display: inline-block;
+  line-height: 22px;
+  width: 183px;
+  padding: 7px 0;
+  background-color: #FEDA68;
+  border: 1px solid #FEDA68;
   border-radius: 4px;
   text-decoration: none;
   font-size: 14px;

@@ -1,0 +1,118 @@
+body {
+  font-family: "Helvetica Neue", "Segoe UI";
+  text-align: center;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bb_headers {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  max-width: 550px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.bb_logo {
+  width: 48px;
+  height: 48px;
+}
+
+.bb_h1 {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.bb_h2 {
+  color: #888888;
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.bb_buttons {
+  display: flex;
+  width: 381px;
+  justify-content: space-between;
+}
+
+.bb_button-github {
+  display: inline-block;
+  line-height: 22px;
+  width: 183px;
+  padding: 7px 0;
+  background-color: #f7f7f7;
+  border: 1px solid #D5D5D5;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+}
+
+.bb_button-docs {
+  display: inline-block;
+  line-height: 22px;
+  width: 183px;
+  padding: 7px 0;
+  background-color: #FEDA68;
+  border: 1px solid #FEDA68;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+}
+
+.bb_icon-github {
+  width: 24px;
+  vertical-align: middle;
+  margin-right: 2px;
+}
+
+.bb_textareas {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  max-width: 1800px;
+  margin-bottom: 20px;
+}
+
+.bb_textarea {
+  flex-grow: 1;
+  position: relative;
+  text-align: left;
+  margin: 10px 20px;
+  width: 40%;
+}
+
+.CodeMirror {
+  background-color: #F7F7F7;
+  height: 50%;
+  max-height: 800px;
+}
+
+@media (max-width: 800px) {
+  .bb_textareas {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .bb_textarea {
+    width: 100%;
+    margin: 10px 0px;
+  }
+
+  .CodeMirror {
+    height: 250px;
+  }
+}
+
+.CodeMirror-gutters {
+  background-color: #F1F1F1;
+  border: none;
+  width: 34px;
+}

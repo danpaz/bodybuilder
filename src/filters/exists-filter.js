@@ -1,6 +1,8 @@
 /**
  * Construct an Exists filter.
  *
+ * @memberof Filters
+ *
  * @param  {String} field Field name to check existence.
  * @return {Object}       Exists filter.
  */

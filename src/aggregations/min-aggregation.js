@@ -3,6 +3,8 @@ import _ from 'lodash'
 /**
  * Construct a Min aggregation.
  *
+ * @memberof Aggregations
+ *
  * @param  {String} field  Field name to aggregate over.
  * @param  {String} [name] Aggregation name. Defaults to agg_min_<field>.
  * @param  {Object} opts   Additional options to include in the aggregation.

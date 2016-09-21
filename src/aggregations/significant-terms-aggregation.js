@@ -3,6 +3,8 @@ import _ from 'lodash'
 /**
  * Construct a Significant Terms aggregation.
  *
+ * @memberof Aggregations
+ *
  * @param  {String} field  Field name to aggregate over.
  * @param  {String} [name] Aggregation name. Defaults to agg_significant_terms_<field>.
  * @param  {Object} opts   Additional options to include in the aggregation.

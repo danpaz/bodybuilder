@@ -7,6 +7,8 @@ const AggregationBuilder = {
    * passing these arguments directly to the specified aggregation builder.
    * Merges existing aggregation(s) with the new aggregation.
    *
+   * @private
+   *
    * @param  {String}  type Name of the aggregation type.
    * @param  {...args} args Arguments passed to aggregation builder. May include
    *                        a nest function as the last item.
@@ -44,6 +46,8 @@ const AggregationBuilder = {
   /**
    * Alias for `aggregation`.
    *
+   * @private
+   *
    * @param {...[Object]} args Arguments for `aggregation`.
    * @returns {AggregationBuilder} Builder object.
    */
@@ -53,6 +57,9 @@ const AggregationBuilder = {
 
   /**
    * Get the built aggregation object at its current state.
+   *
+   * @private
+   *
    * @return {Object} A shallow copy of the internal object describing
    *                    the aggregations built by this builder so far.
    */

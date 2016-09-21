@@ -1,6 +1,8 @@
 /**
  * Construct a Range filter.
  *
+ * @memberof Filters
+ *
  * @param  {String} field  Field name to query over.
  * @param  {Object} ranges One or more range queries.
  * @return {Object}        Range filter.

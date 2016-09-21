@@ -11,6 +11,9 @@ const CONDITIONS_MAP = {
 /**
  * Construct a Boolean composite filter.
  *
+ * @private
+ * @memberof Filters
+ *
  * @param  {String} condition Boolean condition: must, must_not, should.
  * @param  {Object} filter    Fully-formed filter.
  * @return {Object}           Boolean filter.

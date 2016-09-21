@@ -8,7 +8,9 @@ import termQuery from './term-query'
 import termsQuery from './terms-query'
 
 /**
- * Use these keys to select the query type when building a query clause.
+ * Construct elasticsearch queries.
+ *
+ * @namespace Queries
  *
  * @example
  * var body = new Bodybuilder()

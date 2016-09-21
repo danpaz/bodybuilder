@@ -14,4 +14,18 @@ describe('minAggregation', () => {
     })
   })
 
+  it('should include additional options', () => {
+    let result = minAggregation('grade', {
+      missing: 10
+    })
+    expect(result).to.eql({
+      agg_min_grade: {
+        min: {
+          field: 'grade',
+          missing: 10
+        }
+      }
+    })
+  })
+
 })

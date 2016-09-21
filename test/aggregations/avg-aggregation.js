@@ -14,4 +14,18 @@ describe('avgAggregation', () => {
     })
   })
 
+  it('should include additional options', () => {
+    let result = avgAggregation('grade', {
+      missing: 10
+    })
+    expect(result).to.eql({
+      agg_avg_grade: {
+        avg: {
+          field: 'grade',
+          missing: 10
+        }
+      }
+    })
+  })
+
 })

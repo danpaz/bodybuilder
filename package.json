@@ -7,7 +7,7 @@
     "browser/",
     "lib/",
     "src/",
-    "repl.js",
+    "repl.js"
   ],
   "scripts": {
     "build:babel": "babel src --out-dir lib",

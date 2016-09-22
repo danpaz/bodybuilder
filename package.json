@@ -3,6 +3,12 @@
   "version": "1.15.1",
   "description": "An elasticsearch query body builder.",
   "main": "lib/index.js",
+  "files": [
+    "browser/",
+    "lib/",
+    "src/",
+    "repl.js"
+  ],
   "scripts": {
     "build:babel": "babel src --out-dir lib",
     "build:umd": "webpack lib browser/bodybuilder.min.js",

@@ -199,6 +199,16 @@
               
                 
                 <li><a
+                  href='#idsfilter'
+                  class="">
+                  idsFilter
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#queries'
                   class=" toggle-sibling">
                   Queries
@@ -2131,6 +2141,71 @@ am optional nesting function as its last element.
 
   
   <div class='clearfix'>
+    <h3 class='fl m0' id='idsfilter'>
+      idsFilter
+    </h3>
+    
+  </div>
+  
+
+  <p>Construct an Ids filter.</p>
+
+
+  <div class='pre p1 fill-light mt0'>idsFilter(values: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>values</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code> Ids
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        Ids filter.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
     <h3 class='fl m0' id='queries'>
       Queries
     </h3>
@@ -2781,7 +2856,7 @@ am optional nesting function as its last element.
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>avgAggregation(field, name)</span>
+            <span class='code strong strong truncate'>avgAggregation(field, [name], opts)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -2792,7 +2867,7 @@ am optional nesting function as its last element.
   <p>Construct a Avg aggregation.</p>
 
 
-  <div class='pre p1 fill-light mt0'>avgAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>avgAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>], opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
 
   
 
@@ -2816,10 +2891,18 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Aggregation name. Defaults to agg
+            <span class='code bold'>name</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>])</code> Aggregation name. Defaults to agg
 <em>avg</em>
 <field>
 .
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> Additional options to include in the aggregation.
 
           </div>
           
@@ -2858,7 +2941,7 @@ am optional nesting function as its last element.
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>cardinalityAggregation(field, opts, name)</span>
+            <span class='code strong strong truncate'>cardinalityAggregation(field, [name], opts)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -2869,7 +2952,7 @@ am optional nesting function as its last element.
   <p>Construct a Cardinality aggregation</p>
 
 
-  <div class='pre p1 fill-light mt0'>cardinalityAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>cardinalityAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>], opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
 
   
 
@@ -2893,7 +2976,10 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Additional options to include in the aggregation.
+            <span class='code bold'>name</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>])</code> Aggregation name. Defaults to agg
+<em>cardinality</em>
+<field>
+.
 
           </div>
           
@@ -2901,10 +2987,7 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Aggregation name. Defaults to agg
-<em>cardinality</em>
-<field>
-.
+            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> Additional options to include in the aggregation.
 
           </div>
           
@@ -2943,7 +3026,7 @@ am optional nesting function as its last element.
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>dateHistogramAggregation(field, opts, name)</span>
+            <span class='code strong strong truncate'>dateHistogramAggregation(field, [name], opts)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -2954,7 +3037,7 @@ am optional nesting function as its last element.
   <p>Construct a Date Histogram aggregation.</p>
 
 
-  <div class='pre p1 fill-light mt0'>dateHistogramAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>dateHistogramAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>], opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
 
   
 
@@ -2978,7 +3061,10 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Additional options to include in the aggregation.
+            <span class='code bold'>name</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>])</code> Aggregation name. Defaults to agg
+<em>date_histogram</em>
+<field>
+.
 
           </div>
           
@@ -2986,10 +3072,7 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Aggregation name. Defaults to agg
-<em>date_histogram</em>
-<field>
-.
+            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> Additional options to include in the aggregation.
 
           </div>
           
@@ -3028,7 +3111,7 @@ am optional nesting function as its last element.
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>extendedStatsAggregation(field, name)</span>
+            <span class='code strong strong truncate'>extendedStatsAggregation(field, [name], opts)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -3039,7 +3122,7 @@ am optional nesting function as its last element.
   <p>Construct a Extended Stats aggregation.</p>
 
 
-  <div class='pre p1 fill-light mt0'>extendedStatsAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>extendedStatsAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>], opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
 
   
 
@@ -3063,10 +3146,18 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Aggregation name. Defaults to agg
+            <span class='code bold'>name</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>])</code> Aggregation name. Defaults to agg
 <em>extended_stats</em>
 <field>
 .
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> Additional options to include in the aggregation.
 
           </div>
           
@@ -3105,7 +3196,7 @@ am optional nesting function as its last element.
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>histogramAggregation(field, opts, name)</span>
+            <span class='code strong strong truncate'>histogramAggregation(field, [name], opts)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -3116,7 +3207,7 @@ am optional nesting function as its last element.
   <p>Construct a Histogram aggregation.</p>
 
 
-  <div class='pre p1 fill-light mt0'>histogramAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>histogramAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>], opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
 
   
 
@@ -3140,7 +3231,10 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Additional options to include in the aggregation.
+            <span class='code bold'>name</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>])</code> Aggregation name. Defaults to agg
+<em>histogram</em>
+<field>
+.
 
           </div>
           
@@ -3148,10 +3242,7 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Aggregation name. Defaults to agg
-<em>histogram</em>
-<field>
-.
+            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> Additional options to include in the aggregation.
 
           </div>
           
@@ -3190,7 +3281,7 @@ am optional nesting function as its last element.
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>maxAggregation(field, name)</span>
+            <span class='code strong strong truncate'>maxAggregation(field, [name], opts)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -3201,7 +3292,7 @@ am optional nesting function as its last element.
   <p>Construct a Max aggregation.</p>
 
 
-  <div class='pre p1 fill-light mt0'>maxAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>maxAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>], opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
 
   
 
@@ -3225,10 +3316,18 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Aggregation name. Defaults to agg
+            <span class='code bold'>name</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>])</code> Aggregation name. Defaults to agg
 <em>max</em>
 <field>
 .
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> Additional options to include in the aggregation.
 
           </div>
           
@@ -3267,7 +3366,7 @@ am optional nesting function as its last element.
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>minAggregation(field, name)</span>
+            <span class='code strong strong truncate'>minAggregation(field, [name], opts)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -3278,7 +3377,7 @@ am optional nesting function as its last element.
   <p>Construct a Min aggregation.</p>
 
 
-  <div class='pre p1 fill-light mt0'>minAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>minAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>], opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
 
   
 
@@ -3302,10 +3401,18 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Aggregation name. Defaults to agg
+            <span class='code bold'>name</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>])</code> Aggregation name. Defaults to agg
 <em>min</em>
 <field>
 .
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> Additional options to include in the aggregation.
 
           </div>
           
@@ -3421,7 +3528,7 @@ am optional nesting function as its last element.
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>percentilesAggregation(field, opts, name)</span>
+            <span class='code strong strong truncate'>percentilesAggregation(field, [name], opts)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -3432,7 +3539,7 @@ am optional nesting function as its last element.
   <p>Construct a Percentiles aggregation.</p>
 
 
-  <div class='pre p1 fill-light mt0'>percentilesAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>percentilesAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>], opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
 
   
 
@@ -3456,7 +3563,10 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Additional options to include in the aggregation.
+            <span class='code bold'>name</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>])</code> Aggregation name. Defaults to agg
+<em>percentiles</em>
+<field>
+.
 
           </div>
           
@@ -3464,10 +3574,7 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Aggregation name. Defaults to agg
-<em>percentiles</em>
-<field>
-.
+            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> Additional options to include in the aggregation.
 
           </div>
           
@@ -3506,7 +3613,7 @@ am optional nesting function as its last element.
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>rangeAggregation(field, name, opts)</span>
+            <span class='code strong strong truncate'>rangeAggregation(field, [name], opts)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -3517,7 +3624,7 @@ am optional nesting function as its last element.
   <p>Construct a Range aggregation.</p>
 
 
-  <div class='pre p1 fill-light mt0'>rangeAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>rangeAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>], opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
 
   
 
@@ -3541,7 +3648,7 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Aggregation name. Defaults to agg
+            <span class='code bold'>name</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>])</code> Aggregation name. Defaults to agg
 <em>terms</em>
 <field>
 .
@@ -3591,7 +3698,7 @@ am optional nesting function as its last element.
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>significantTermsAggregation(field, name)</span>
+            <span class='code strong strong truncate'>significantTermsAggregation(field, [name], opts)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -3602,7 +3709,7 @@ am optional nesting function as its last element.
   <p>Construct a Significant Terms aggregation.</p>
 
 
-  <div class='pre p1 fill-light mt0'>significantTermsAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>significantTermsAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>], opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
 
   
 
@@ -3626,10 +3733,18 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Aggregation name. Defaults to agg
+            <span class='code bold'>name</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>])</code> Aggregation name. Defaults to agg
 <em>significant_terms</em>
 <field>
 .
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> Additional options to include in the aggregation.
 
           </div>
           
@@ -3668,7 +3783,7 @@ am optional nesting function as its last element.
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>statsAggregation(field, name)</span>
+            <span class='code strong strong truncate'>statsAggregation(field, [name], opts)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -3679,7 +3794,7 @@ am optional nesting function as its last element.
   <p>Construct a Stats aggregation.</p>
 
 
-  <div class='pre p1 fill-light mt0'>statsAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>statsAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>], opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
 
   
 
@@ -3703,10 +3818,18 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Aggregation name. Defaults to agg
+            <span class='code bold'>name</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>])</code> Aggregation name. Defaults to agg
 <em>stats</em>
 <field>
 .
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> Additional options to include in the aggregation.
 
           </div>
           
@@ -3745,7 +3868,7 @@ am optional nesting function as its last element.
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>sumAggregation(field, name)</span>
+            <span class='code strong strong truncate'>sumAggregation(field, [name], opts)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -3756,7 +3879,7 @@ am optional nesting function as its last element.
   <p>Construct a Sum aggregation.</p>
 
 
-  <div class='pre p1 fill-light mt0'>sumAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>sumAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>], opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
 
   
 
@@ -3780,10 +3903,18 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Aggregation name. Defaults to agg
+            <span class='code bold'>name</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>])</code> Aggregation name. Defaults to agg
 <em>sum</em>
 <field>
 .
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> Additional options to include in the aggregation.
 
           </div>
           
@@ -3822,7 +3953,7 @@ am optional nesting function as its last element.
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>termsAggregation(field, name, opts)</span>
+            <span class='code strong strong truncate'>termsAggregation(field, [name], opts)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -3833,7 +3964,7 @@ am optional nesting function as its last element.
   <p>Construct a Terms aggregation.</p>
 
 
-  <div class='pre p1 fill-light mt0'>termsAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>termsAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>], opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
 
   
 
@@ -3857,7 +3988,7 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Aggregation name. Defaults to agg
+            <span class='code bold'>name</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>])</code> Aggregation name. Defaults to agg
 <em>terms</em>
 <field>
 .
@@ -3907,7 +4038,7 @@ am optional nesting function as its last element.
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>valueCountAggregation(field, name)</span>
+            <span class='code strong strong truncate'>valueCountAggregation(field, [name], opts)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -3918,7 +4049,7 @@ am optional nesting function as its last element.
   <p>Construct a Value Count aggregation.</p>
 
 
-  <div class='pre p1 fill-light mt0'>valueCountAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>valueCountAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>], opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
 
   
 
@@ -3942,10 +4073,18 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Aggregation name. Defaults to agg
+            <span class='code bold'>name</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>])</code> Aggregation name. Defaults to agg
 <em>value_count</em>
 <field>
 .
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> Additional options to include in the aggregation.
 
           </div>
           
@@ -3984,7 +4123,7 @@ am optional nesting function as its last element.
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>topHitsAggregation([opts], name)</span>
+            <span class='code strong strong truncate'>topHitsAggregation([name], opts)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -3995,7 +4134,7 @@ am optional nesting function as its last element.
   <p>Construct a Top hits aggregation.</p>
 
 
-  <div class='pre p1 fill-light mt0'>topHitsAggregation(opts: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default {}), name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>topHitsAggregation(name: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>], opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
 
   
 
@@ -4011,7 +4150,9 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>opts</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default {}))</code> Options to include in the aggregation. Defaults to {}.
+            <span class='code bold'>name</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>])</code> Aggregation name. Defaults to &#x27;agg
+<em>top_hits</em>
+{count}&#x27;.
 
           </div>
           
@@ -4019,9 +4160,7 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Aggregation name. Defaults to &#x27;agg
-<em>top_hits</em>
-{count}&#x27;.
+            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> Options to include in the aggregation.
 
           </div>
           
@@ -4060,7 +4199,7 @@ am optional nesting function as its last element.
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>geohashAggregation(field, opts, name)</span>
+            <span class='code strong strong truncate'>geohashAggregation(field, [name], opts)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -4071,7 +4210,7 @@ am optional nesting function as its last element.
   <p>Construct a Geohash grid aggregation.</p>
 
 
-  <div class='pre p1 fill-light mt0'>geohashAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>geohashAggregation(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>], opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
 
   
 
@@ -4095,7 +4234,10 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Additional options to include in the aggregation.
+            <span class='code bold'>name</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>])</code> Aggregation name. Defaults to agg
+<em>histogram</em>
+<field>
+.
 
           </div>
           
@@ -4103,10 +4245,7 @@ am optional nesting function as its last element.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Aggregation name. Defaults to agg
-<em>histogram</em>
-<field>
-.
+            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> Additional options to include in the aggregation.
 
           </div>
           

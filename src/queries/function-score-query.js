@@ -1,3 +1,5 @@
+const assign = require('lodash/assign');
+
 /**
  * Construct a function_score query
  * https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html
@@ -7,7 +9,7 @@
  */
 export default function functionScoreQuery(functions, opts = {}) {
   return {
-    function_score: Object.assign({}, {
+    function_score: assign({
       functions
     }, opts)
   }

@@ -6,6 +6,7 @@ import queryStringQuery from './query-string-query'
 import rangeQuery from './range-query'
 import termQuery from './term-query'
 import termsQuery from './terms-query'
+import functionScoreQuery from './function-score-query'
 
 /**
  * Construct elasticsearch queries.
@@ -29,5 +30,7 @@ export default {
   queryString: queryStringQuery,
   range: rangeQuery,
   term: termQuery,
-  terms: termsQuery
+  terms: termsQuery,
+  function_score: functionScoreQuery,
+  functionScore: functionScoreQuery
 }

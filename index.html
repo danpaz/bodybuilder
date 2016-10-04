@@ -57,6 +57,7 @@
           var json = JSON.stringify(newOutput, null, 2);
           outputEditor.setValue(json);
         } catch (err) {
+          outputEditor.setValue(err.toString());
           console.error('invalid input', err);
         }
       }

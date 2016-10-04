@@ -48,6 +48,7 @@
       });
       var outputEditor = CodeMirror(outputTextarea, {
         lineNumbers: true,
+        readOnly: true,
       });
 
       function onInputChange(cm, change) {

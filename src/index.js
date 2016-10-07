@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import filters from './filters'
+import FilterBuilder from './filters/filter-builder'
 import queries from './queries'
 import AggregationBuilder from './aggregations/aggregation-builder'
 import { boolMerge, sortMerge } from './utils'
@@ -16,7 +16,7 @@ class Bodybuilder {
 
   constructor() {
     this._body = {}
-    this._filters = {}
+    this._filterBuilder = new FilterBuilder()
     this._queries = {}
     this._aggBuilder = Object.create(AggregationBuilder)
   }
@@ -33,7 +33,7 @@ class Bodybuilder {
 
   _buildV1() {
     let body = _.clone(this._body)
-    const filters = this._filters
+    const filters = this._filterBuilder.filters
     const queries = this._queries
     const aggregations = this._aggBuilder.aggregations
 
@@ -57,7 +57,7 @@ class Bodybuilder {
 
   _buildV2() {
     let body = _.clone(this._body)
-    const filters = this._filters
+    const filters = this._filterBuilder.filters
     const queries = this._queries
     const aggregations = this._aggBuilder.aggregations
 
@@ -156,42 +156,23 @@ class Bodybuilder {
    * @param  {...args} args Arguments passed to filter builder.
    * @returns {Bodybuilder} Builder class.
    */
-  filter(type, ...args) {
-    this._filter('and', type, ...args)
+  filter(...args) {
+    this._filterBuilder.filter(...args)
     return this
   }
 
-  _filter(boolType, filterType, ...args) {
-    let klass = filters[filterType]
-    let newFilter
-
-    if (!klass) {
-      throw new TypeError(`Filter type ${filterType} not found.`)
-    }
-
-    newFilter = klass(...args)
-    this._filters = boolMerge(newFilter, this._filters, boolType)
-    return this
-  }
-
-  /**
-   * Alias to Bodybuilder#filter.
-   *
-   * @private
-   *
-   * @returns {Bodybuilder} Builder class.
-   */
   andFilter(...args) {
-    return this._filter(...args)
-  }
-
-  orFilter(type, ...args) {
-    this._filter('or', type, ...args)
+    this._filterBuilder.andFilter(...args)
     return this
   }
 
-  notFilter(type, ...args) {
-    this._filter('not', type, ...args)
+  orFilter(...args) {
+    this._filterBuilder.orFilter(...args)
+    return this
+  }
+
+  notFilter(...args) {
+    this._filterBuilder.notFilter(...args)
     return this
   }
 

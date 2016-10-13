@@ -7,6 +7,7 @@ import rangeQuery from './range-query'
 import termQuery from './term-query'
 import termsQuery from './terms-query'
 import functionScoreQuery from './function-score-query'
+import typeQuery from './type-query'
 
 /**
  * Construct elasticsearch queries.
@@ -32,5 +33,6 @@ export default {
   term: termQuery,
   terms: termsQuery,
   function_score: functionScoreQuery,
-  functionScore: functionScoreQuery
+  functionScore: functionScoreQuery,
+  type: typeQuery
 }

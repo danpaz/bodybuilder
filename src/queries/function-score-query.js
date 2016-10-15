@@ -1,4 +1,4 @@
-const assign = require('lodash/assign');
+const assign = require('lodash/assign')
 
 /**
  * Construct a function_score query

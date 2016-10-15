@@ -1,4 +1,4 @@
-import {assign} from 'lodash';
+import {assign} from 'lodash'
 
 /**
  * Construct a Query String query.
@@ -20,7 +20,7 @@ export default function queryStringQuery(fields, term, options={}) {
   }
 
   if (fields.length > 0) queryString.query_string.fields = fields
-  queryString.query_string = assign(queryString.query_string, options);
+  queryString.query_string = assign(queryString.query_string, options)
 
-  return queryString;
+  return queryString
 }

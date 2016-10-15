@@ -26,7 +26,7 @@ describe('queryStringQuery', () => {
     let result = queryStringQuery(['fields1', 'fields2'], 'this AND that OR thus', {
       analyzer: 'standard',
       fuzzy_max_expansions: 50
-    });
+    })
     expect(result).to.eql({
       query_string: {
         query: 'this AND that OR thus',

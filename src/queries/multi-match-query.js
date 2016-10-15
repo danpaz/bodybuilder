@@ -1,8 +1,8 @@
-import {assign} from 'lodash';
+import {assign} from 'lodash'
 
 const defaultOptions = {
   type: 'best_fields'
-};
+}
 
 /**
  * Construct a Multi Match query. Default type is 'best_fields'.
@@ -20,7 +20,7 @@ export default function multiMatchQuery(fields, query, options = defaultOptions)
       type: options
     }
   }
-  options.type = options.type || defaultOptions.type;
+  options.type = options.type || defaultOptions.type
 
   return {
     multi_match: assign({

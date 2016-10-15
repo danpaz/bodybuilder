@@ -68,4 +68,4 @@ const AggregationBuilder = {
   }
 }
 
-export default AggregationBuilder;
+export default AggregationBuilder

@@ -2,6 +2,7 @@ import boolQuery from './bool-query'
 import fuzzyQuery from './fuzzy-query'
 import matchQuery from './match-query'
 import multiMatchQuery from './multi-match-query'
+import nestedQuery from './nested-query'
 import queryStringQuery from './query-string-query'
 import rangeQuery from './range-query'
 import termQuery from './term-query'
@@ -26,6 +27,7 @@ export default {
   match: matchQuery,
   multi_match: multiMatchQuery,
   multiMatch: multiMatchQuery,
+  nested: nestedQuery, 
   query_string: queryStringQuery,
   'query-string': queryStringQuery,
   queryString: queryStringQuery,

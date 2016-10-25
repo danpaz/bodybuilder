@@ -106,3 +106,26 @@ test('QueryBuilder should nest bool-merged queries', (t) => {
     }
   })
 })
+
+test('QueryBuilder should make filter aggregations', (t) => {
+  t.plan(1)
+
+  const result = new QueryBuilder().aggregation('filter', null, 'red_products', (b) => {
+    return b.filter('term', 'color', 'red').aggregation('avg', 'price', 'avg_price')
+  })
+
+  t.deepEqual(result._aggs, {
+    red_products: {
+      filter: {
+        term: {
+          color: 'red'
+        }
+      },
+      aggs: {
+        avg_price: {
+          avg: {field: 'price'}
+        }
+      }
+    }
+  })
+})

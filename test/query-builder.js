@@ -106,3 +106,74 @@ test('QueryBuilder should nest bool-merged queries', (t) => {
     }
   })
 })
+
+          // .orQuery('nested', 'path', 'document_metadata', (q) => {
+          //   return q.query('constant_score', 'filter', (q) => {
+          //     return q.query('term', 'document_metadata.user_id', 'params.user_id')
+          //   })
+          // })
+          // .orQuery('nested', 'path', 'test', (q) => {
+          //   return q.query('constant_score', 'filter', (q) => {
+          //     return q.query('term', 'tests.created_by.user_id', 'params.user_id')
+          //   })
+          // })
+
+test('QueryBuilder should create this big-ass query', (t) => {
+  t.plan(1)
+
+  const result = new QueryBuilder().query('constant_score', '', '', {}, (q) => {
+    return q.orQuery('term', 'created_by.user_id', 'params.user_id')
+            .orQuery('nested', 'path', 'document_metadata', {}, (q) => {
+              return q.query('constant_score', '', '', {}, (q) => {
+                return q.query('term', 'document_metadata.user_id', 'params.user_id')
+              })
+            })
+            .orQuery('nested', 'path', 'test', {}, (q) => {
+              return q.query('constant_score', '', '', {}, (q) => {
+                return q.query('term', 'tests.created_by.user_id', 'params.user_id')
+              })
+            })
+          })
+
+  t.deepEqual(result._queries, {    
+    constant_score: {
+      filter: {
+        bool: {
+          should: [
+            {
+              term: {
+                'created_by.user_id': 'params.user_id'
+              }
+            }, {
+              nested: {
+                path: 'document_metadata',
+                query: {
+                  constant_score: {
+                    filter: {
+                      term: {
+                        'document_metadata.user_id': 'params.user_id'
+                      }
+                    }
+                  }
+                }
+              }
+            }, {
+              nested: {
+                path: 'tests',
+                query: {
+                  constant_score: {
+                    filter: {
+                      term: {
+                        'tests.created_by.user_id': 'params.user_id'
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  })
+})

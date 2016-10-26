@@ -179,15 +179,22 @@ To add a filter aggregation, the second argument expects a callback. You will be
 ```js
 var body = new BodyBuilder()
   .aggregation('filter', filterBuilder => {
-    return filterBuilder.filter('term', 'user', 'kimchy')
-  }, 'kimchy_filter', nestedAggregationCallback)
+    return filterBuilder.filter('term', 'color', 'red')
+  }, 'red_products', agg => agg.aggregation('avg', 'price', 'avg_price'))
   .build()
 // body == {
-//   aggregations: {
-//     kimchy_filter: {
-//       filter: {
-//         term: {
-//           user: "kimchy"
+//   "aggregations": {
+//     "red_products": {
+//       "filter": {
+//         "term": {
+//           "color": "red"
+//         }
+//       },
+//       "aggs": {
+//         "avg_price": {
+//           "avg": {
+//             "field": "price"
+//           }
 //         }
 //       }
 //     }

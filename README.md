@@ -173,6 +173,35 @@ var body = new BodyBuilder().aggregation('terms', 'code', null, {
 //}
 ```
 
+#### Filter Aggregations
+To add a filter aggregation, the second argument expects a callback. You will be passed a filter-builder with which you can build filters just like you normally do with BodyBuilder. The last argument here is also the callback for nested aggregations.
+
+```js
+var body = new BodyBuilder()
+  .aggregation('filter', filterBuilder => {
+    return filterBuilder.filter('term', 'color', 'red')
+  }, 'red_products', agg => agg.aggregation('avg', 'price', 'avg_price'))
+  .build()
+// body == {
+//   "aggregations": {
+//     "red_products": {
+//       "filter": {
+//         "term": {
+//           "color": "red"
+//         }
+//       },
+//       "aggs": {
+//         "avg_price": {
+//           "avg": {
+//             "field": "price"
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+```
+
 ### Combining queries, filters, and aggregations
 
 Multiple queries and filters are merged using the boolean query or filter (see

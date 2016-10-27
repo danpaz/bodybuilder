@@ -262,6 +262,34 @@ describe('BodyBuilder', () => {
     })
   })
 
+  it('should support nesting aggregations in filter aggregations', () => {
+    let result = new BodyBuilder()
+      .aggregation(
+        'filter',
+        filterBuilder => filterBuilder.filter('term', 'user', 'kimchy'),
+        agg => agg.aggregation('avg', 'value')
+      )
+      .build()
+    expect(result).to.eql({
+      aggregations: {
+        agg_filter: {
+          filter: {
+            term: {
+              user: 'kimchy'
+            }
+          },
+          aggs: {
+            agg_avg_value: {
+              avg: {
+                field: 'value'
+              }
+            }
+          }
+        }
+      }
+    })
+  })
+
   it('should add an aggregation and a filter', () => {
     let result = new BodyBuilder().filter('term', 'user', 'kimchy')
                                   .agg('terms', 'user')

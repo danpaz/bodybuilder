@@ -2,6 +2,7 @@ import avgAggregation from './avg-aggregation'
 import cardinalityAggregation from './cardinality-aggregation'
 import dateHistogramAggregation from './date-histogram-aggregation'
 import extendedStatsAggregation from './extended-stats-aggregation'
+import filterAggregation from './filter-aggregation'
 import histogramAggregation from './histogram-aggregation'
 import maxAggregation from './max-aggregation'
 import minAggregation from './min-aggregation'
@@ -39,6 +40,7 @@ export default {
   extended_stats: extendedStatsAggregation,
   'extended-stats': extendedStatsAggregation,
   extendedStats: extendedStatsAggregation,
+  filter: filterAggregation,
   histogram: histogramAggregation,
   max: maxAggregation,
   min: minAggregation,

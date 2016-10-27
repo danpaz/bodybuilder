@@ -107,25 +107,105 @@ test('QueryBuilder should nest bool-merged queries', (t) => {
   })
 })
 
-test('QueryBuilder should make filter aggregations', (t) => {
+test('QueryBuilder should make this chained nested query', (t) => {
   t.plan(1)
 
-  const result = new QueryBuilder().aggregation('filter', null, 'red_products', (b) => {
-    return b.filter('term', 'color', 'red').aggregation('avg', 'price', 'avg_price')
+  const result = new QueryBuilder().query('match', 'title', 'eggs').query('nested', 'path', 'comments', {score_mode: 'max'} , (q) => {
+      return q.query('match', 'comments.name', 'john').query('match', 'comments.age', 28)    
   })
 
-  t.deepEqual(result._aggs, {
-    red_products: {
-      filter: {
-        term: {
-          color: 'red'
+  t.deepEqual(result._queries, {
+    bool: {
+      must: [
+        {
+          match: {
+            title: 'eggs'
+          }
+        },
+        {
+          nested: {
+            path: 'comments',
+            score_mode: 'max', 
+            query: {
+              bool: {
+                must: [
+                  {
+                    match: {
+                      'comments.name': 'john'
+                    }
+                  },
+                  {
+                    match: {
+                      'comments.age': 28
+                    }
+                  }
+                ]
+              }
+            }
+          }
         }
-      },
-      aggs: {
-        avg_price: {
-          avg: {field: 'price'}
+      ]
+    }
+  })
+})
+
+test('QueryBuilder should create this big-ass query', (t) => {
+  t.plan(1)
+
+  const result = new QueryBuilder().query('constant_score', '', '', {}, (q) => {
+    return q.orFilter('term', 'created_by.user_id', 'abc')
+            .orFilter('nested', 'path', 'doc_meta', {}, (q) => {
+              return q.query('constant_score', '', '', {}, (q) => {
+                return q.filter('term', 'doc_meta.user_id', 'abc')
+              })
+            })
+            .orFilter('nested', 'path', 'tests', {}, (q) => {
+              return q.query('constant_score', '', '', {}, (q) => {
+                return q.filter('term', 'tests.created_by.user_id', 'abc')
+              })
+            })
+          })
+
+  t.deepEqual(result._queries, {    
+    constant_score: {
+      filter: {
+        bool: {
+          should: [
+            {
+              term: {
+                'created_by.user_id': 'abc'
+              }
+            }, {
+              nested: {
+                path: 'doc_meta',
+                query: {
+                  constant_score: {
+                    filter: {
+                      term: {
+                        'doc_meta.user_id': 'abc'
+                      }
+                    }
+                  }
+                }
+              }
+            }, {
+              nested: {
+                path: 'tests',
+                query: {
+                  constant_score: {
+                    filter: {
+                      term: {
+                        'tests.created_by.user_id': 'abc'
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
         }
       }
     }
   })
 })
+

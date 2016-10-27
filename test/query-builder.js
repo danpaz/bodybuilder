@@ -107,33 +107,66 @@ test('QueryBuilder should nest bool-merged queries', (t) => {
   })
 })
 
-          // .orQuery('nested', 'path', 'document_metadata', (q) => {
-          //   return q.query('constant_score', 'filter', (q) => {
-          //     return q.query('term', 'document_metadata.user_id', 'params.user_id')
-          //   })
-          // })
-          // .orQuery('nested', 'path', 'test', (q) => {
-          //   return q.query('constant_score', 'filter', (q) => {
-          //     return q.query('term', 'tests.created_by.user_id', 'params.user_id')
-          //   })
-          // })
+test('QueryBuilder should make this chained nested query', (t) => {
+  t.plan(1)
+
+  const result = new QueryBuilder().query('match', 'title', 'eggs').query('nested', 'path', 'comments', {score_mode: 'max'} , (q) => {
+      return q.query('match', 'comments.name', 'john').query('match', 'comments.age', 28)    
+  })
+
+  t.deepEqual(result._queries, {
+    bool: {
+      must: [
+        {
+          match: {
+            title: 'eggs'
+          }
+        },
+        {
+          nested: {
+            path: 'comments',
+            score_mode: 'max', 
+            query: {
+              bool: {
+                must: [
+                  {
+                    match: {
+                      'comments.name': 'john'
+                    }
+                  },
+                  {
+                    match: {
+                      'comments.age': 28
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  })
+})
 
 test('QueryBuilder should create this big-ass query', (t) => {
   t.plan(1)
 
   const result = new QueryBuilder().query('constant_score', '', '', {}, (q) => {
-    return q.orQuery('term', 'created_by.user_id', 'params.user_id')
-            .orQuery('nested', 'path', 'document_metadata', {}, (q) => {
+    return q.orFilter('term', 'created_by.user_id', 'abc')
+            .orFilter('nested', 'path', 'doc_meta', {}, (q) => {
               return q.query('constant_score', '', '', {}, (q) => {
-                return q.query('term', 'document_metadata.user_id', 'params.user_id')
+                return q.filter('term', 'doc_meta.user_id', 'abc')
               })
             })
-            .orQuery('nested', 'path', 'test', {}, (q) => {
+            .orFilter('nested', 'path', 'tests', {}, (q) => {
               return q.query('constant_score', '', '', {}, (q) => {
-                return q.query('term', 'tests.created_by.user_id', 'params.user_id')
+                return q.filter('term', 'tests.created_by.user_id', 'abc')
               })
             })
           })
+
+  console.log(""+JSON.stringify(result._queries))
 
   t.deepEqual(result._queries, {    
     constant_score: {
@@ -142,16 +175,16 @@ test('QueryBuilder should create this big-ass query', (t) => {
           should: [
             {
               term: {
-                'created_by.user_id': 'params.user_id'
+                'created_by.user_id': 'abc'
               }
             }, {
               nested: {
-                path: 'document_metadata',
+                path: 'doc_meta',
                 query: {
                   constant_score: {
                     filter: {
                       term: {
-                        'document_metadata.user_id': 'params.user_id'
+                        'doc_meta.user_id': 'abc'
                       }
                     }
                   }
@@ -164,7 +197,7 @@ test('QueryBuilder should create this big-ass query', (t) => {
                   constant_score: {
                     filter: {
                       term: {
-                        'tests.created_by.user_id': 'params.user_id'
+                        'tests.created_by.user_id': 'abc'
                       }
                     }
                   }
@@ -177,3 +210,4 @@ test('QueryBuilder should create this big-ass query', (t) => {
     }
   })
 })
+

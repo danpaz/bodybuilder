@@ -166,8 +166,6 @@ test('QueryBuilder should create this big-ass query', (t) => {
             })
           })
 
-  console.log(""+JSON.stringify(result._queries))
-
   t.deepEqual(result._queries, {    
     constant_score: {
       filter: {

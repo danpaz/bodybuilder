@@ -50,7 +50,7 @@ export default class QueryBuilder {
     let clause = {}
 
     if (field && value && opts) {
-      clause = _.merge({[field]: value}, opts)
+      clause = Object.assign({}, opts, {[field]: value})
     } else if (field && value) {
       clause = {[field]: value}
     } else if (field) {
@@ -84,7 +84,7 @@ export default class QueryBuilder {
     let clause = {}
 
     if (field && value && opts) {
-      clause = _.merge({[field]: value}, opts)
+      clause = Object.assign({}, opts, {[field]: value})
     } else if (field && value) {
       clause = {[field]: value}
     } else if (field) {
@@ -123,7 +123,7 @@ export default class QueryBuilder {
 
     return {
       [name]: {
-        [type]: (() => _.assign({field}, opts))()
+        [type]: (() => Object.assign({}, {field}, opts))()
       }
     }
   }

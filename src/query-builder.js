@@ -10,6 +10,8 @@ export default class QueryBuilder {
 
   constructor() {
     this._queries = {}
+    this._filters = {}
+    this._aggs = {}
   }
 
   get queries() {
@@ -25,24 +27,26 @@ export default class QueryBuilder {
    * @param  {...args} args     Arguments passed to query builder.
    * @returns {QueryBuilder}    Builder class.
    */
-  _query(boolType, ...args) {
+  _makeQuery(boolType, ...args) {
     let nested = _.last(args)
 
-    let newQuery = this._build(...args)
+    let newQuery = this._buildQuery(...args)
 
     if (_.isFunction(nested)) {
       let clause = newQuery[_.findKey(newQuery)]
       let builder = new QueryBuilder()
-      clause.query = nested(builder)._queries
-      this._queries = newQuery
-    } else {
-      this._queries = boolMerge(newQuery, this._queries, boolType)
+      let recursiveResult = nested(builder)
+      if (!_.isEmpty(recursiveResult._aggs)) {clause.aggs = recursiveResult._aggs}
+      if (!_.isEmpty(recursiveResult._queries)) {clause.query = recursiveResult._queries}
+      if (!_.isEmpty(recursiveResult._filters)) {clause.filter = recursiveResult._filters}
+
+      return newQuery
     }
 
-    return this
+    return boolMerge(newQuery, this._queries, boolType)
   }
 
-  _build(type, field, value, opts) {
+  _buildQuery(type, field, value, opts) {
     let clause = {}
 
     if (field && value && opts) {
@@ -56,28 +60,127 @@ export default class QueryBuilder {
     return {[type]: clause}
   }
 
+  _makeFilter(boolType, ...args) {
+    let nested = _.last(args)
+
+    let newFilter = this._buildFilter(...args)
+
+    if (_.isFunction(nested)) {
+      let clause = newFilter[_.findKey(newFilter)]
+      let builder = new QueryBuilder()
+      let recursiveResult = nested(builder)
+
+      if (!_.isEmpty(recursiveResult._aggs)) {clause.aggs = recursiveResult._aggs}
+      if (!_.isEmpty(recursiveResult._queries)) {clause.query = recursiveResult._queries}
+      if (!_.isEmpty(recursiveResult._filters)) {clause.filter = recursiveResult._filters}
+
+      return newFilter
+    }
+
+    return boolMerge(newFilter, this._filters, boolType)
+  }
+
+  _buildFilter(type, field, value, opts) {
+    let clause = {}
+
+    if (field && value && opts) {
+      clause = _.merge({[field]: value}, opts)
+    } else if (field && value) {
+      clause = {[field]: value}
+    } else if (field) {
+      clause = {field}
+    }
+
+    return {[type]: clause}
+  }
+
+  _makeAggregation(...args) {
+    let nested = _.last(args)
+
+    let newAggregation = this._buildAggregation(...args)
+
+    if (_.isFunction(nested)) {
+      let clause = newAggregation[_.findKey(newAggregation)]
+      let builder = new QueryBuilder()
+      let recursiveResult = nested(builder)
+      if (!_.isEmpty(recursiveResult._aggs)) {clause.aggs = recursiveResult._aggs}
+      if (!_.isEmpty(recursiveResult._queries)) {clause.query = recursiveResult._queries}
+      if (!_.isEmpty(recursiveResult._filters)) {clause.filter = recursiveResult._filters}
+      return newAggregation
+    }
+
+    return newAggregation
+  }
+
+  _buildAggregation(type, field, name, opts) {
+    if (_.isObject(name)) {
+      let tmp = opts
+      opts = name
+      name = tmp
+    }
+
+    name = name || `agg_${type}_${field}`
+
+    return {
+      [name]: {
+        [type]: (() => _.assign({field}, opts))()
+      }
+    }
+  }
+
   query(...args) {
-    this._query('and', ...args)
+    this._queries = this._makeQuery('and', ...args)
     return this
   }
 
   andQuery(...args) {
-    this._query('and', ...args)
+    this._queries = this._makeQuery('and', ...args)
     return this
   }
 
   addQuery(...args) {
-    this._query('and', ...args)
+    this._queries = this._makeQuery('and', ...args)
     return this
   }
 
   orQuery(...args) {
-    this._query('or', ...args)
+    this._queries = this._makeQuery('or', ...args)
     return this
   }
 
   notQuery(...args) {
-    this._query('not', ...args)
+    this._queries = this._makeQuery('not', ...args)
     return this
   }
+
+  filter(...args) {
+    this._filters = this._makeFilter('and', ...args)
+    return this
+  }
+
+  andFilter(...args) {
+    this._filters = this._makeFilter('and', ...args)
+    return this
+  }
+
+  orFilter(...args) {
+    this._filters = this._makeFilter('or', ...args)
+    return this
+  }
+
+  notFilter(...args) {
+    this._filters = this._makeFilter('not', ...args)
+    return this
+  }
+
+  aggregation(...args) {
+    this._aggs = this._makeAggregation(...args)
+    return this
+  }
+
+  agg(...args) {
+    this._aggs = this.aggregation(...args)
+    return this
+  }
+
 }

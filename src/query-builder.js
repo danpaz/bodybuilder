@@ -39,8 +39,6 @@ export default class QueryBuilder {
       if (!_.isEmpty(recursiveResult._aggs)) {clause.aggs = recursiveResult._aggs}
       if (!_.isEmpty(recursiveResult._queries)) {clause.query = recursiveResult._queries}
       if (!_.isEmpty(recursiveResult._filters)) {clause.filter = recursiveResult._filters}
-
-      // return newQuery
     }
 
     return boolMerge(newQuery, this._queries, boolType)
@@ -73,8 +71,6 @@ export default class QueryBuilder {
       if (!_.isEmpty(recursiveResult._aggs)) {clause.aggs = recursiveResult._aggs}
       if (!_.isEmpty(recursiveResult._queries)) {clause.query = recursiveResult._queries}
       if (!_.isEmpty(recursiveResult._filters)) {clause.filter = recursiveResult._filters}
-
-      // return newFilter
     }
 
     return boolMerge(newFilter, this._filters, boolType)
@@ -106,7 +102,6 @@ export default class QueryBuilder {
       if (!_.isEmpty(recursiveResult._aggs)) {clause.aggs = recursiveResult._aggs}
       if (!_.isEmpty(recursiveResult._queries)) {clause.query = recursiveResult._queries}
       if (!_.isEmpty(recursiveResult._filters)) {clause.filter = recursiveResult._filters}
-      // return newAggregation
     }
 
     return newAggregation

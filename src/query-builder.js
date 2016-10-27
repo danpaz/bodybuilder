@@ -33,7 +33,7 @@ export default class QueryBuilder {
     let newQuery = this._buildQuery(...args)
 
     if (_.isFunction(nested)) {
-      let clause = newQuery[_.findKey(newQuery)]
+      let clause = _.find(newQuery)
       let builder = new QueryBuilder()
       let recursiveResult = nested(builder)
       if (!_.isEmpty(recursiveResult._aggs)) {clause.aggs = recursiveResult._aggs}
@@ -64,7 +64,7 @@ export default class QueryBuilder {
     let newFilter = this._buildFilter(...args)
 
     if (_.isFunction(nested)) {
-      let clause = newFilter[_.findKey(newFilter)]
+      let clause = _.find(newFilter)
       let builder = new QueryBuilder()
       let recursiveResult = nested(builder)
 
@@ -96,7 +96,7 @@ export default class QueryBuilder {
     let newAggregation = this._buildAggregation(...args)
 
     if (_.isFunction(nested)) {
-      let clause = newAggregation[_.findKey(newAggregation)]
+      let clause = _.find(newAggregation)
       let builder = new QueryBuilder()
       let recursiveResult = nested(builder)
       if (!_.isEmpty(recursiveResult._aggs)) {clause.aggs = recursiveResult._aggs}

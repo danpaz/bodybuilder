@@ -11,6 +11,8 @@ export default class FilterBuilder {
    * passing these arguments directly to the specified filter builder. Merges
    * existing filter(s) with the new filter.
    *
+   * @private
+   *
    * @param  {String}  type Name of the filter type.
    * @param  {...args} args Arguments passed to filter builder.
    * @returns {FilterBuilder} Builder class.

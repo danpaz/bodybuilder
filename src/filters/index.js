@@ -3,6 +3,7 @@ import existsFilter from './exists-filter'
 import fuzzyFilter from './fuzzy-filter'
 import geoBoundingBoxFilter from './geo-bounding-box-filter'
 import geoDistanceFilter from './geo-distance-filter'
+import geoShapeFilter from './geo-shape-filter'
 import idsFilter from './ids-filter'
 import matchAllFilter from './match-all-filter'
 import missingFilter from './missing-filter'
@@ -39,6 +40,10 @@ export default {
   geodistance: geoDistanceFilter,
   geoDistance: geoDistanceFilter,
   'geo-distance': geoDistanceFilter,
+  geo_shape: geoShapeFilter,
+  geoshape: geoShapeFilter,
+  geoShape: geoShapeFilter,
+  'geo-shape': geoShapeFilter,
   ids: idsFilter,
   matchAll: matchAllFilter,
   matchall: matchAllFilter,

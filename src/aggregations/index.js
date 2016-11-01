@@ -13,6 +13,7 @@ import missingAggregation from './missing-aggregation'
 import nestedAggregation from './nested-aggregation'
 import percentilesAggregation from './percentiles-aggregation'
 import rangeAggregation from './range-aggregation'
+import reverseNestedAggregation from './reverse-nested-aggregation'
 import significantTermsAggregation from './significant-terms-aggregation'
 import statsAggregation from './stats-aggregation'
 import sumAggregation from './sum-aggregation'
@@ -53,6 +54,10 @@ export default {
   nested: nestedAggregation,
   percentiles: percentilesAggregation,
   range: rangeAggregation,
+  reversenested: reverseNestedAggregation,
+  reverse_nested: reverseNestedAggregation,
+  'reverse-nested': reverseNestedAggregation,
+  reverseNested: reverseNestedAggregation,
   significantterms: significantTermsAggregation,
   significant_terms: significantTermsAggregation,
   'significant-terms': significantTermsAggregation,

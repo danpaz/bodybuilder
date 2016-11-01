@@ -10,6 +10,7 @@ import histogramAggregation from './histogram-aggregation'
 import maxAggregation from './max-aggregation'
 import minAggregation from './min-aggregation'
 import missingAggregation from './missing-aggregation'
+import nestedAggregation from './nested-aggregation'
 import percentilesAggregation from './percentiles-aggregation'
 import rangeAggregation from './range-aggregation'
 import significantTermsAggregation from './significant-terms-aggregation'
@@ -49,6 +50,7 @@ export default {
   max: maxAggregation,
   min: minAggregation,
   missing: missingAggregation,
+  nested: nestedAggregation,
   percentiles: percentilesAggregation,
   range: rangeAggregation,
   significantterms: significantTermsAggregation,

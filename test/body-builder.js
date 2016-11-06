@@ -1,58 +1,58 @@
 import test from 'tape'
-import QueryBuilder from '../src/query-builder'
+import { bodyBuilder } from '../src/body-builder'
 
-test('QueryBuilder should build query with no field', (t) => {
+test('bodyBuilder should build query with no field', (t) => {
   t.plan(1)
 
-  const result = new QueryBuilder().query('match_all')
+  const result = bodyBuilder().query('match_all')
 
-  t.deepEqual(result._queries, {
+  t.deepEqual(result.getQuery(), {
     match_all: {}
   })
 })
 
-test('QueryBuilder should build query with field but no value', (t) => {
+test('bodyBuilder should build query with field but no value', (t) => {
   t.plan(1)
 
-  const result = new QueryBuilder().query('exists', 'user')
+  const result = bodyBuilder().query('exists', 'user')
 
-  t.deepEqual(result._queries, {
+  t.deepEqual(result.getQuery(), {
     exists: {
       field: 'user'
     }
   })
 })
 
-test('QueryBuilder should build query with field and value', (t) => {
+test('bodyBuilder should build query with field and value', (t) => {
   t.plan(1)
 
-  const result = new QueryBuilder().query('term', 'user', 'kimchy')
+  const result = bodyBuilder().query('term', 'user', 'kimchy')
 
-  t.deepEqual(result._queries, {
+  t.deepEqual(result.getQuery(), {
     term: {
       user: 'kimchy'
     }
   })
 })
 
-test('QueryBuilder should build query with field and object value', (t) => {
+test('bodyBuilder should build query with field and object value', (t) => {
   t.plan(1)
 
-  const result = new QueryBuilder().query('range', 'date', {gt: 'now-1d'})
+  const result = bodyBuilder().query('range', 'date', {gt: 'now-1d'})
 
-  t.deepEqual(result._queries, {
+  t.deepEqual(result.getQuery(), {
     range: {
       date: {gt: 'now-1d'}
     }
   })
 })
 
-test('QueryBuilder should build query with more options', (t) => {
+test('bodyBuilder should build query with more options', (t) => {
   t.plan(1)
 
-  const result = new QueryBuilder().query('geo_distance', 'point', {lat: 40, lon: 20}, {distance: '12km'})
+  const result = bodyBuilder().query('geo_distance', 'point', {lat: 40, lon: 20}, {distance: '12km'})
 
-  t.deepEqual(result._queries, {
+  t.deepEqual(result.getQuery(), {
     geo_distance: {
       distance: '12km',
       point: {
@@ -63,12 +63,12 @@ test('QueryBuilder should build query with more options', (t) => {
   })
 })
 
-test('QueryBuilder should build nested queries', (t) => {
+test('bodyBuilder should build nested queries', (t) => {
   t.plan(1)
 
-  const result = new QueryBuilder().query('nested', 'path', 'obj1', (q) => q.query('match', 'obj1.color', 'blue'))
+  const result = bodyBuilder().query('nested', 'path', 'obj1', (q) => q.query('match', 'obj1.color', 'blue'))
 
-  t.deepEqual(result._queries, {
+  t.deepEqual(result.getQuery(), {
     nested: {
       path: 'obj1',
       query: {
@@ -80,14 +80,14 @@ test('QueryBuilder should build nested queries', (t) => {
   })
 })
 
-test('QueryBuilder should nest bool-merged queries', (t) => {
+test('bodyBuilder should nest bool-merged queries', (t) => {
   t.plan(1)
 
-  const result = new QueryBuilder().query('nested', 'path', 'obj1', {score_mode: 'avg'}, (q) => {
+  const result = bodyBuilder().query('nested', 'path', 'obj1', {score_mode: 'avg'}, (q) => {
     return q.query('match', 'obj1.name', 'blue').query('range', 'obj1.count', {gt: 5})
   })
 
-  t.deepEqual(result._queries, {
+  t.deepEqual(result.getQuery(), {
     nested: {
       path: 'obj1',
       score_mode: 'avg',
@@ -107,14 +107,18 @@ test('QueryBuilder should nest bool-merged queries', (t) => {
   })
 })
 
-test('QueryBuilder should make this chained nested query', (t) => {
+test('bodyBuilder should make this chained nested query', (t) => {
   t.plan(1)
 
-  const result = new QueryBuilder().query('match', 'title', 'eggs').query('nested', 'path', 'comments', {score_mode: 'max'} , (q) => {
-      return q.query('match', 'comments.name', 'john').query('match', 'comments.age', 28)    
+  const result = bodyBuilder()
+    .query('match', 'title', 'eggs')
+    .query('nested', 'path', 'comments', {score_mode: 'max'} , (q) => {
+      return q
+        .query('match', 'comments.name', 'john')
+        .query('match', 'comments.age', 28)
   })
 
-  t.deepEqual(result._queries, {
+  t.deepEqual(result.getQuery(), {
     bool: {
       must: [
         {
@@ -125,7 +129,7 @@ test('QueryBuilder should make this chained nested query', (t) => {
         {
           nested: {
             path: 'comments',
-            score_mode: 'max', 
+            score_mode: 'max',
             query: {
               bool: {
                 must: [
@@ -149,24 +153,25 @@ test('QueryBuilder should make this chained nested query', (t) => {
   })
 })
 
-test('QueryBuilder should create this big-ass query', (t) => {
+test('bodyBuilder should create this big-ass query', (t) => {
   t.plan(1)
 
-  const result = new QueryBuilder().query('constant_score', '', '', {}, (q) => {
-    return q.orFilter('term', 'created_by.user_id', 'abc')
-            .orFilter('nested', 'path', 'doc_meta', {}, (q) => {
-              return q.query('constant_score', '', '', {}, (q) => {
-                return q.filter('term', 'doc_meta.user_id', 'abc')
-              })
-            })
-            .orFilter('nested', 'path', 'tests', {}, (q) => {
-              return q.query('constant_score', '', '', {}, (q) => {
-                return q.filter('term', 'tests.created_by.user_id', 'abc')
-              })
-            })
-          })
+  const result = bodyBuilder().query('constant_score', (q) => {
+    return q
+      .orFilter('term', 'created_by.user_id', 'abc')
+      .orFilter('nested', 'path', 'doc_meta', {}, (q) => {
+        return q.query('constant_score', (q) => {
+          return q.filter('term', 'doc_meta.user_id', 'abc')
+        })
+      })
+      .orFilter('nested', 'path', 'tests', {}, (q) => {
+        return q.query('constant_score', (q) => {
+          return q.filter('term', 'tests.created_by.user_id', 'abc')
+        })
+      })
+  })
 
-  t.deepEqual(result._queries, {    
+  t.deepEqual(result.getQuery(), {
     constant_score: {
       filter: {
         bool: {
@@ -208,4 +213,3 @@ test('QueryBuilder should create this big-ass query', (t) => {
     }
   })
 })
-

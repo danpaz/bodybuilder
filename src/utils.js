@@ -10,10 +10,8 @@ import queries from './queries'
  * @param {Object} target Target.
  * @returns {Object} Merged object.
  */
-export function mergeConcat(target) {
-  let args = Array.prototype.slice.call(arguments, 1)
-
-  args.unshift(target)
+export function mergeConcat() {
+  let args = Array.prototype.slice.call(arguments, 0)
   args.push(function customizer(a, b) {
     if (_.isPlainObject(a)) {
       return _.assignWith(a, b, customizer)

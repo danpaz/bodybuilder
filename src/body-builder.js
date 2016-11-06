@@ -1,10 +1,6 @@
 import _ from 'lodash'
 import {boolMerge} from './utils'
 
-const filterBuilderId = Symbol('filterBuilder')
-const queryBuilderId = Symbol('queryBuilder')
-const aggregationBuilderId = Symbol('aggregationBuilder')
-
 function bodyBuilder () {
   return Object.assign(
     { /* sort, from, build, etc. go here */ },
@@ -24,7 +20,7 @@ function bodyBuilder () {
  * @param  {Object} opts
  * @return {Object}       query clause component
  */
-function buildClause(field, value, opts) {
+function buildClause (field, value, opts) {
   const clause = {}
 
   if (field && value && opts) {
@@ -64,34 +60,34 @@ function queryBuilder () {
   }
 
   return {
-    query(...args) {
+    query (...args) {
       makeQuery('and', ...args)
       return this
     },
-    andQuery(...args) {
+    andQuery (...args) {
       return this.query(...args)
     },
-    addQuery(...args) {
+    addQuery (...args) {
       return this.query(...args)
     },
-    orQuery(...args) {
+    orQuery (...args) {
       makeQuery('or', ...args)
       return this
     },
-    notQuery(...args) {
+    notQuery (...args) {
       makeQuery('not', ...args)
       return this
     },
-    getQuery() {
+    getQuery () {
       return query
     }
   }
 }
 
-function filterBuilder() {
+function filterBuilder () {
   let filter = {}
 
-  function makeFilter(boolType, filterType, ...args) {
+  function makeFilter (boolType, filterType, ...args) {
     const nested = {}
     if (_.isFunction(_.last(args))) {
       const nestedCallback = args.pop()
@@ -117,25 +113,25 @@ function filterBuilder() {
   }
 
   return {
-    filter(...args) {
+    filter (...args) {
       makeFilter('and', ...args)
       return this
     },
-    andFilter(...args) {
+    andFilter (...args) {
       return this.filter(...args)
     },
-    addFilter(...args) {
+    addFilter (...args) {
       return this.filter(...args)
     },
-    orFilter(...args) {
+    orFilter (...args) {
       makeFilter('or', ...args)
       return this
     },
-    notFilter(...args) {
+    notFilter (...args) {
       makeFilter('not', ...args)
       return this
     },
-    getFilter() {
+    getFilter () {
       return filter
     }
   }
@@ -157,7 +153,7 @@ function aggregationBuilder () {
     const nestedClause = {}
 
     if (_.isFunction(nested)) {
-      const recursiveResult = nested(Object.assign(
+      const nestedResult = nested(Object.assign(
         {},
         aggregationBuilder(),
         filterBuilder()
@@ -184,7 +180,7 @@ function aggregationBuilder () {
       makeAggregation(...args)
       return this
     },
-    agg(...args) {
+    agg (...args) {
       return this.aggregation(...args)
     },
     getAggregations () {

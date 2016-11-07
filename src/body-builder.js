@@ -44,10 +44,10 @@ function queryBuilder () {
       const nestedResult = nestedCallback(
         Object.assign(queryBuilder(), filterBuilder())
       )
-      if (_.size(nestedResult.getQuery())) {
+      if (nestedResult.hasQuery()) {
         nested.query = nestedResult.getQuery()
       }
-      if (_.size(nestedResult.getFilter())) {
+      if (nestedResult.hasFilter()) {
         nested.filter = nestedResult.getFilter()
       }
     }
@@ -80,6 +80,9 @@ function queryBuilder () {
     },
     getQuery () {
       return query
+    },
+    hasQuery () {
+      return !!_.size(query)
     }
   }
 }
@@ -94,13 +97,13 @@ function filterBuilder () {
       const nestedResult = nestedCallback(
         Object.assign(queryBuilder(), filterBuilder(), aggregationBuilder())
       )
-      if (_.size(nestedResult.getQuery())) {
+      if (nestedResult.hasQuery()) {
         nested.query = nestedResult.getQuery()
       }
-      if (_.size(nestedResult.getFilter())) {
+      if (nestedResult.hasFilter()) {
         nested.filter = nestedResult.getFilter()
       }
-      if (_.size(nestedResult.getAggregations())) {
+      if (nestedResult.hasAggregations()) {
         nested.aggs = nestedResult.getAggregations()
       }
     }
@@ -133,6 +136,9 @@ function filterBuilder () {
     },
     getFilter () {
       return filter
+    },
+    hasFilter () {
+      return !!_.size(filter)
     }
   }
 }
@@ -158,10 +164,10 @@ function aggregationBuilder () {
         aggregationBuilder(),
         filterBuilder()
       ))
-      if (_.size(nestedResult.getFilter())) {
+      if (nestedResult.hasFilter()) {
         nestedClause.filter = nestedResult.getFilter()
       }
-      if (_.size(nestedResult.getAggregations())) {
+      if (nestedResult.hasAggregations()) {
         nestedClause.aggs = nestedResult.getAggregations()
       }
     }
@@ -185,6 +191,9 @@ function aggregationBuilder () {
     },
     getAggregations () {
       return aggregations
+    },
+    hasAggregations () {
+      return !!_.size(aggregations)
     }
   }
 }

@@ -79,3 +79,33 @@ export function sortMerge(current, field, direction) {
 
   return current
 }
+
+/**
+ * Generic builder for filter and query clauses
+ *
+ * @private
+ *
+ * @param  {string} field
+ * @param  {any}    value
+ * @param  {Object} opts
+ * @return {Object}       query clause component
+ */
+export function buildClause (field, value, opts) {
+  const clause = {}
+
+  if (field && value && opts) {
+    Object.assign(clause, opts, {[field]: value})
+  } else if (field && value) {
+    clause[field] = value
+  } else if (field) {
+    clause.field = field
+  }
+
+  return clause
+}
+
+export function buildAggregation (type, field, opts) {
+  return {
+    [type]: Object.assign({field}, opts)
+  }
+}

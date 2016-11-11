@@ -1,5 +1,5 @@
 import test from 'tape'
-import { bodyBuilder } from '../src/body-builder'
+import bodyBuilder from '../src/body-builder'
 
 test('bodyBuilder should build query with no field', (t) => {
   t.plan(1)

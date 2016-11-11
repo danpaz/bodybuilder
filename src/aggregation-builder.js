@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { buildClause } from './utils'
+import { buildAggregation } from './utils'
 import filterBuilder from './filter-builder'
 
 export default function aggregationBuilder () {

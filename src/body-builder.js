@@ -14,7 +14,7 @@ export default function bodyBuilder () {
 }
 
 function builder () {
-  function makeBody(queries, filters, aggregations) {
+  function _buildV1(queries, filters, aggregations) {
     let body = {}
 
     if (!_.isEmpty(filters)) {
@@ -34,13 +34,38 @@ function builder () {
     return body
   }
 
+  function _buildV2(queries, filters, aggregations) {
+    let body = {}
+
+    if (!_.isEmpty(filters)) {
+      let filterBody = {}
+      let queryBody = {}
+      _.set(filterBody, 'query.bool.filter', filters)
+      if (!_.isEmpty(queries.bool)) {
+        _.set(queryBody, 'query.bool', queries.bool)
+      } else if (!_.isEmpty(queries)) {
+        _.set(queryBody, 'query.bool.must', queries)
+      }
+      _.merge(body, filterBody, queryBody)
+    } else if (!_.isEmpty(queries)) {
+      _.set(body, 'query', queries)
+    }
+
+    if (!_.isEmpty(aggregations)) {
+      _.set(body, 'aggs', aggregations)
+    }
+
+    return body
+  }
+
   return {
-    build() {
+    build(version) {
       const queries = this.getQuery()
       const filters = this.getFilter()
       const aggregations = this.getAggregations()
 
-      return makeBody(queries, filters, aggregations)
+      if (version === 'v2') return _buildV2(queries, filters, aggregations)
+      return _buildV1(queries, filters, aggregations)
     }
   }
 }

@@ -85,9 +85,9 @@ export function sortMerge(current, field, direction) {
  *
  * @private
  *
- * @param  {string} field
- * @param  {any}    value
- * @param  {Object} opts
+ * @param  {string} field Field name.
+ * @param  {any}    value Field value.
+ * @param  {Object} opts  Additional key-value pairs.
  * @return {Object}       query clause component
  */
 export function buildClause (field, value, opts) {

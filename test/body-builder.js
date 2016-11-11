@@ -68,6 +68,31 @@ test('bodyBuilder should build a filtered query', (t) => {
   })
 })
 
+
+test('bodyBuilder should build a filtered query for version 2.x', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .query('match', 'message', 'this is a test')
+    .filter('term', 'user', 'kimchy')
+    .build('v2')
+
+  t.deepEqual(result, {
+    query: {
+      bool: {
+        must: {
+          match: {
+            message: 'this is a test'
+          }
+        },
+        filter: {
+          term: {user: 'kimchy'}
+        }
+      }
+    }
+  })
+})
+
 test('bodyBuilder should build query with field and value', (t) => {
   t.plan(1)
 

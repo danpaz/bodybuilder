@@ -23,6 +23,51 @@ test('bodyBuilder should build query with field but no value', (t) => {
   })
 })
 
+test('bodyBuilder should create query and filter', (t) => {
+  t.plan(2)
+
+  const result = bodyBuilder()
+    .query('exists', 'user')
+    .filter('term', 'user', 'kimchy')
+
+  t.deepEqual(result.getQuery(), {
+    exists: {
+      field: 'user'
+    }
+  })
+  t.deepEqual(result.getFilter(), {
+    term: {
+      user: 'kimchy'
+    }
+  })
+})
+
+test('bodyBuilder should build a filtered query', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .query('match', 'message', 'this is a test')
+    .filter('term', 'user', 'kimchy')
+    .build()
+
+  t.deepEqual(result, {
+    query: {
+      filtered: {
+        query: {
+          match: {
+            message: 'this is a test'
+          }
+        },
+        filter: {
+          term: {
+            user: 'kimchy'
+          }
+        }
+      }
+    }
+  })
+})
+
 test('bodyBuilder should build query with field and value', (t) => {
   t.plan(1)
 

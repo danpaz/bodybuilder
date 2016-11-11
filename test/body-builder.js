@@ -93,6 +93,52 @@ test('bodyBuilder should build a filtered query for version 2.x', (t) => {
   })
 })
 
+test('bodyBuilder should sort with default sort direction', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder().sort('timestamp').build()
+
+  t.deepEqual(result, {
+    sort: [
+      {
+        timestamp: {
+          order: 'asc'
+        }
+      }
+    ]
+  })
+})
+
+test('bodyBuilder should set from on body', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder().from(10).build()
+
+  t.deepEqual(result, {
+    from: 10
+  })
+})
+
+test('bodyBuilder should set size on body', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder().size(10).build()
+
+  t.deepEqual(result, {
+    size: 10
+  })
+})
+
+test('bodyBuilder should set any key-value on body', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder().rawOption('a', {b: 'c'}).build()
+
+  t.deepEqual(result, {
+    a: { b: 'c' }
+  })
+})
+
 test('bodyBuilder should build query with field and value', (t) => {
   t.plan(1)
 

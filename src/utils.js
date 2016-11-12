@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import queries from './queries'
+import boolQuery from './bool-query'
 
 /**
  * Extends lodash's assignWith by allowing array concatenation
@@ -42,14 +42,14 @@ export function boolMerge(newObj, currentObj, boolType = 'and') {
   if (_.isEmpty(currentObj)) {
     // Allow starting with 'or' and 'not' queries.
     if (boolType !== 'and') {
-      return queries.bool(boolType, newObj)
+      return boolQuery(boolType, newObj)
     }
     return newObj
   }
 
   // Make bools out of the new and existing filters.
-  boolCurrent = currentObj.bool ? currentObj : queries.bool('must', currentObj)
-  boolNew = newObj.bool ? newObj : queries.bool(boolType, newObj)
+  boolCurrent = currentObj.bool ? currentObj : boolQuery('must', currentObj)
+  boolNew = newObj.bool ? newObj : boolQuery(boolType, newObj)
 
   return mergeConcat({}, boolCurrent, boolNew)
 }

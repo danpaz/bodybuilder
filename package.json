@@ -16,9 +16,7 @@
     "build": "npm run build:babel && npm run build:umd && npm run build:docs",
     "lint": "eslint src test",
     "style": "npm run lint",
-    "test": "mocha --require babel-core/register --recursive test",
-    "test-bb": "babel-tape-runner test/body-builder.js | tap-spec",
-    "watch:test": "mocha --watch --require babel-core/register --recursive test",
+    "test": "babel-tape-runner test/* | tap-spec",
     "check": "npm run lint && npm test",
     "preversion": "npm run check && npm run build"
   },

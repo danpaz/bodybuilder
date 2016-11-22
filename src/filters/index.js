@@ -1,6 +1,7 @@
 import boolFilter from './bool-filter'
 import existsFilter from './exists-filter'
 import fuzzyFilter from './fuzzy-filter'
+import matchFilter from './match-filter'
 import geoBoundingBoxFilter from './geo-bounding-box-filter'
 import geoDistanceFilter from './geo-distance-filter'
 import geoShapeFilter from './geo-shape-filter'
@@ -32,6 +33,7 @@ export default {
   exists: existsFilter,
   exist: existsFilter,
   fuzzy: fuzzyFilter,
+  match: matchFilter,
   geo_bounding_box: geoBoundingBoxFilter,
   geoBoundingBox: geoBoundingBoxFilter,
   geoboundingbox: geoBoundingBoxFilter,

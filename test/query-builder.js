@@ -277,3 +277,354 @@ test('queryBuilder | exists', (t) => {
     }
   })
 })
+
+test('queryBuilder | missing', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('missing', 'user')
+
+  t.deepEqual(result.getQuery(), {
+    missing: {
+      field: 'user'
+    }
+  })
+})
+
+test('queryBuilder | prefix', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('prefix', 'user', 'ki')
+
+  t.deepEqual(result.getQuery(), {
+    prefix: {
+      user: 'ki'
+    }
+  })
+})
+
+test('queryBuilder | prefix with boost', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('prefix', 'user', {value: 'ki', boost: 2})
+
+  t.deepEqual(result.getQuery(), {
+    prefix: {
+      user: {
+        value: 'ki',
+        boost: 2
+      }
+    }
+  })
+})
+
+test('queryBuilder | wildcard', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('wildcard', 'user', 'ki*y')
+
+  t.deepEqual(result.getQuery(), {
+    wildcard: {
+      user: 'ki*y'
+    }
+  })
+})
+
+test('queryBuilder | regexp', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('regexp', 'name.first', 's.*y')
+
+  t.deepEqual(result.getQuery(), {
+    regexp: {
+      'name.first': 's.*y'
+    }
+  })
+})
+
+test('queryBuilder | fuzzy', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('fuzzy', 'user', 'ki')
+
+  t.deepEqual(result.getQuery(), {
+    fuzzy: {
+      user: 'ki'
+    }
+  })
+})
+
+test('queryBuilder | type', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('type', 'value', 'my_type')
+
+  t.deepEqual(result.getQuery(), {
+    type: {
+      value: 'my_type'
+    }
+  })
+})
+
+test('queryBuilder | ids', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('ids', 'type', 'my_ids', {
+    values: ['1', '4', '100']
+  })
+
+  t.deepEqual(result.getQuery(), {
+    ids: {
+      type: 'my_ids',
+      values: ['1', '4', '100']
+    }
+  })
+})
+
+test('queryBuilder | constant_score', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('constant_score', { boost: 1.2 }, (q) => {
+    return q.filter('term', 'user', 'kimchy')
+  })
+
+  t.deepEqual(result.getQuery(), {
+    constant_score: {
+      filter: {
+        term: { user: 'kimchy' }
+      },
+      boost: 1.2
+    }
+  })
+})
+
+test('queryBuilder | nested', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('nested', {path: 'obj1', score_mode: 'avg'}, (q) => {
+    return q.query('match', 'obj1.name', 'blue')
+            .query('range', 'obj1.count', {gt: 5})
+  })
+
+  t.deepEqual(result.getQuery(), {
+    nested: {
+      path: 'obj1',
+      score_mode: 'avg',
+      query: {
+        bool: {
+          must: [
+            {
+              match: {'obj1.name': 'blue'}
+            },
+            {
+              range: {'obj1.count': {gt: 5}}
+            }
+          ]
+        }
+      }
+    }
+  })
+})
+
+test('queryBuilder | has_child', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('has_child', 'type', 'blog_tag', (q) => {
+    return q.query('term', 'tag', 'something')
+  })
+
+  t.deepEqual(result.getQuery(), {
+    has_child: {
+      type: 'blog_tag',
+      query: {
+        term: { tag: 'something' }
+      }
+    }
+  })
+})
+
+test('queryBuilder | has_parent', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('has_parent', 'parent_tag', 'blog', (q) => {
+    return q.query('term', 'tag', 'something')
+  })
+
+  t.deepEqual(result.getQuery(), {
+    has_parent: {
+      parent_tag: 'blog',
+      query: {
+        term: { tag: 'something' }
+      }
+    }
+  })
+})
+
+test('queryBuilder | geo_bounding_box', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('geo_bounding_box', 'pin.location', {
+    top_left: { lat: 40, lon: -74 },
+    bottom_right: { lat: 40, lon: -74 }
+  }, {
+    relation: 'within'
+  })
+
+  t.deepEqual(result.getQuery(), {
+    geo_bounding_box: {
+      relation: 'within',
+      'pin.location': {
+        top_left: { lat: 40, lon: -74 },
+        bottom_right: { lat: 40, lon: -74 }
+      }
+    }
+  })
+})
+
+test('queryBuilder | geo_distance', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('geo_distance', 'pin.location', {
+    lat: 40,
+    lon: -74
+  }, {
+    distance: '200km'
+  })
+
+  t.deepEqual(result.getQuery(), {
+    geo_distance: {
+      distance: '200km',
+      'pin.location': {
+        lat: 40,
+        lon: -74
+      }
+    }
+  })
+})
+
+test('queryBuilder | geo_distance_range', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('geo_distance_range', 'pin.location', {
+    lat: 40,
+    lon: -74
+  }, {
+    from: '100km',
+    to: '200km'
+  })
+
+  t.deepEqual(result.getQuery(), {
+    geo_distance_range: {
+      from: '100km',
+      to: '200km',
+      'pin.location': {
+        lat: 40,
+        lon: -74
+      }
+    }
+  })
+})
+
+test('queryBuilder | geo_polygon', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('geo_polygon', 'person.location', {
+    points: [
+      {lat : 40, lon : -70},
+      {lat : 30, lon : -80},
+      {lat : 20, lon : -90}
+    ]
+  })
+
+  t.deepEqual(result.getQuery(), {
+    geo_polygon: {
+      'person.location': {
+        points: [
+          {lat : 40, lon : -70},
+          {lat : 30, lon : -80},
+          {lat : 20, lon : -90}
+        ]
+      }
+    }
+  })
+})
+
+test('queryBuilder | geohash_cell', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('geohash_cell', 'pin', {
+    lat: 13.4080,
+    lon: 52.5186
+  }, {
+    precision: 3,
+    neighbors: true
+  })
+
+  t.deepEqual(result.getQuery(), {
+    geohash_cell: {
+      pin: {
+        lat: 13.4080,
+        lon: 52.5186
+      },
+      precision: 3,
+      neighbors: true
+    }
+  })
+})
+
+test('queryBuilder | more_like_this', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('more_like_this', {
+    fields: ['title', 'description'],
+    like: "Once upon a time",
+    min_term_freq: 1,
+    max_query_terms: 12
+  })
+
+  t.deepEqual(result.getQuery(), {
+    more_like_this: {
+      fields: ['title', 'description'],
+      like: "Once upon a time",
+      min_term_freq: 1,
+      max_query_terms: 12
+    }
+  })
+})
+
+test('queryBuilder | template', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('template', {
+    inline: { match: { text: '{{query_string}}' }},
+    params: {
+      query_string: 'all about search'
+    }
+  })
+
+  t.deepEqual(result.getQuery(), {
+    template: {
+      inline: { match: { text: '{{query_string}}' }},
+      params: {
+        query_string: 'all about search'
+      }
+    }
+  })
+})
+
+test('queryBuilder | script', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('script', 'script', {
+    inline: "doc['num1'].value > 1",
+    lang: 'painless'
+  })
+
+  t.deepEqual(result.getQuery(), {
+    script: {
+      script: {
+        inline: "doc['num1'].value > 1",
+        lang: 'painless'
+      }
+    }
+  })
+})

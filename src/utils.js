@@ -85,19 +85,25 @@ export function sortMerge(current, field, direction) {
  *
  * @private
  *
- * @param  {string} field Field name.
- * @param  {any}    value Field value.
- * @param  {Object} opts  Additional key-value pairs.
- * @return {Object}       query clause component
+ * @param  {string|Object} field Field name or complete clause.
+ * @param  {string|Object} value Field value or inner clause.
+ * @param  {Object}        opts  Additional key-value pairs.
+ *
+ * @return {Object} Clause
  */
 export function buildClause (field, value, opts) {
-  const clause = {}
+  const hasField = !_.isNil(field)
+  const hasValue = !_.isNil(value)
+  const hasOpts = !_.isNil(opts)
+  let clause = {}
 
-  if (field && value && opts) {
+  if (hasField && hasValue && hasOpts) {
     Object.assign(clause, opts, {[field]: value})
-  } else if (field && value) {
+  } else if (hasField && hasValue) {
     clause[field] = value
-  } else if (field) {
+  } else if (hasField && _.isObject(field)) {
+    clause = field
+  } else if (hasField) {
     clause.field = field
   }
 

@@ -45,6 +45,18 @@ test('queryBuilder | match', (t) => {
   })
 })
 
+test('queryBuilder | match empty string', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('match', 'message', '')
+
+  t.deepEqual(result.getQuery(), {
+    match: {
+      message: ''
+    }
+  })
+})
+
 test('queryBuilder | match with options', (t) => {
   t.plan(1)
 

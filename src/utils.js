@@ -92,15 +92,18 @@ export function sortMerge(current, field, direction) {
  * @return {Object} Clause
  */
 export function buildClause (field, value, opts) {
+  const hasField = !_.isNil(field)
+  const hasValue = !_.isNil(value)
+  const hasOpts = !_.isNil(opts)
   let clause = {}
 
-  if (field && value && opts) {
+  if (hasField && hasValue && hasOpts) {
     Object.assign(clause, opts, {[field]: value})
-  } else if (field && value) {
+  } else if (hasField && hasValue) {
     clause[field] = value
-  } else if (_.isObject(field)) {
+  } else if (hasField && _.isObject(field)) {
     clause = field
-  } else if (field) {
+  } else if (hasField) {
     clause.field = field
   }
 

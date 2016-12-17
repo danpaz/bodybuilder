@@ -4,6 +4,7 @@ import childrenAggregation from './children-aggregation'
 import dateHistogramAggregation from './date-histogram-aggregation'
 import extendedStatsAggregation from './extended-stats-aggregation'
 import filterAggregation from './filter-aggregation'
+import filtersAggregation from './filter-aggregation'
 import geohashAggregation from './geohash-aggregation'
 import globalAggregation from './global-aggregation'
 import histogramAggregation from './histogram-aggregation'
@@ -45,6 +46,7 @@ export default {
   'extended-stats': extendedStatsAggregation,
   extendedStats: extendedStatsAggregation,
   filter: filterAggregation,
+  filters: filtersAggregation,
   geohash: geohashAggregation,
   global: globalAggregation,
   histogram: histogramAggregation,

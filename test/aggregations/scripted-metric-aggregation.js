@@ -19,7 +19,7 @@ describe('scriptedMetricAggregation', () => {
 
   it('should include additional options', () => {
     let result = scriptedMetricAggregation(map_script, 'profit', {
-      init_script: init_script,
+      init_script: init_script
     })
     expect(result).to.eql({
       profit: {

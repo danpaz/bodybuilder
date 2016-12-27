@@ -16,6 +16,90 @@ test('aggregationBuilder | avg aggregation', (t) => {
   })
 })
 
+test('aggregationBuilder | cardinality aggregation', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder().aggregation('cardinality', 'author')
+
+  t.deepEqual(result.getAggregations(), {
+    agg_cardinality_author: {
+      cardinality: {
+        field: 'author'
+      }
+    }
+  })
+})
+
+test('aggregationBuilder | extended_stats aggregation', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder().aggregation('extended_stats', 'grade')
+
+  t.deepEqual(result.getAggregations(), {
+    agg_extended_stats_grade: {
+      extended_stats: {
+        field: 'grade'
+      }
+    }
+  })
+})
+
+test('aggregationBuilder | geo_bounds aggregation', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder().aggregation('geo_bounds', 'location')
+
+  t.deepEqual(result.getAggregations(), {
+    agg_geo_bounds_location: {
+      geo_bounds: {
+        field: 'location'
+      }
+    }
+  })
+})
+
+test('aggregationBuilder | geo_centroid aggregation', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder().aggregation('geo_centroid', 'location')
+
+  t.deepEqual(result.getAggregations(), {
+    agg_geo_centroid_location: {
+      geo_centroid: {
+        field: 'location'
+      }
+    }
+  })
+})
+
+test('aggregationBuilder | max aggregation', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder().aggregation('max', 'price')
+
+  t.deepEqual(result.getAggregations(), {
+    agg_max_price: {
+      max: {
+        field: 'price'
+      }
+    }
+  })
+})
+
+test('aggregationBuilder | min aggregation', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder().aggregation('min', 'price')
+
+  t.deepEqual(result.getAggregations(), {
+    agg_min_price: {
+      min: {
+        field: 'price'
+      }
+    }
+  })
+})
+
 test('aggregationBuilder | percentiles aggregation', (t) => {
   t.plan(1)
 
@@ -55,6 +139,87 @@ test.skip('aggregationBuilder | percentiles script aggregation', (t) => {
             timeUnit: 100
           }
         }
+      }
+    }
+  })
+})
+
+test('aggregationBuilder | percentile_ranks aggregation', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder().aggregation('percentile_ranks', 'load_time', {
+    values: [15, 30]
+  })
+
+  t.deepEqual(result.getAggregations(), {
+    agg_percentile_ranks_load_time: {
+      percentile_ranks: {
+        field: 'load_time',
+        values: [15, 30]
+      }
+    }
+  })
+})
+
+test('aggregationBuilder | scripted_metric aggregation', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder().aggregation('scripted_metric', {
+    init_script: "params._agg.transactions = []",
+    map_script: "params._agg.transactions.add(doc.type.value == 'sale' ? doc.amount.value : -1 * doc.amount.value)",
+    combine_script: "double profit = 0; for (t in params._agg.transactions) { profit += t } return profit",
+    reduce_script: "double profit = 0; for (a in params._aggs) { profit += a } return profit"
+  }, 'agg_scripted_metric')
+
+  t.deepEqual(result.getAggregations(), {
+    agg_scripted_metric: {
+      scripted_metric: {
+        init_script: "params._agg.transactions = []",
+        map_script: "params._agg.transactions.add(doc.type.value == 'sale' ? doc.amount.value : -1 * doc.amount.value)",
+        combine_script: "double profit = 0; for (t in params._agg.transactions) { profit += t } return profit",
+        reduce_script: "double profit = 0; for (a in params._aggs) { profit += a } return profit"
+      }
+    }
+  })
+})
+
+test('aggregationBuilder | stats aggregation', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder().aggregation('stats', 'grade')
+
+  t.deepEqual(result.getAggregations(), {
+    agg_stats_grade: {
+      stats: {
+        field: 'grade'
+      }
+    }
+  })
+})
+
+test('aggregationBuilder | sum aggregation', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder().aggregation('sum', 'change')
+
+  t.deepEqual(result.getAggregations(), {
+    agg_sum_change: {
+      sum: {
+        field: 'change'
+      }
+    }
+  })
+})
+
+test('aggregationBuilder | value_count aggregation', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder().aggregation('value_count', 'grade')
+
+  t.deepEqual(result.getAggregations(), {
+    agg_value_count_grade: {
+      value_count: {
+        field: 'grade'
       }
     }
   })

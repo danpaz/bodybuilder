@@ -81,7 +81,7 @@ export function sortMerge(current, field, direction) {
 }
 
 /**
- * Generic builder for filter and query clauses
+ * Generic builder for query, filter, or aggregation clauses.
  *
  * @private
  *
@@ -94,24 +94,15 @@ export function sortMerge(current, field, direction) {
 export function buildClause (field, value, opts) {
   const hasField = !_.isNil(field)
   const hasValue = !_.isNil(value)
-  const hasOpts = !_.isNil(opts)
-  let clause = {}
+  let mainClause = {}
 
-  if (hasField && hasValue && hasOpts) {
-    Object.assign(clause, opts, {[field]: value})
-  } else if (hasField && hasValue) {
-    clause[field] = value
-  } else if (hasField && _.isObject(field)) {
-    clause = field
+  if (hasValue) {
+    mainClause = {[field]: value}
+  } else if (_.isObject(field)) {
+    mainClause = field
   } else if (hasField) {
-    clause.field = field
+    mainClause = {field}
   }
 
-  return clause
-}
-
-export function buildAggregation (type, field, opts) {
-  return {
-    [type]: Object.assign({field}, opts)
-  }
+  return Object.assign({}, mainClause, opts)
 }

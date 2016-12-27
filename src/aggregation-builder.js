@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { buildAggregation } from './utils'
+import { buildClause } from './utils'
 import filterBuilder from './filter-builder'
 
 export default function aggregationBuilder () {
@@ -7,7 +7,7 @@ export default function aggregationBuilder () {
 
   function makeAggregation (type, field, ...args) {
     const aggName = _.find(args, _.isString) || `agg_${type}_${field}`
-    const opts = _.find(args, _.isPlainObject) || {}
+    const opts = _.find(args, _.isPlainObject)
     const nested = _.find(args, _.isFunction)
     const nestedClause = {}
 
@@ -27,10 +27,11 @@ export default function aggregationBuilder () {
 
     Object.assign(
       aggregations,
-      {[aggName]: Object.assign(
-        buildAggregation(type, field, opts),
-        nestedClause
-      )}
+      {
+        [aggName]: {
+          [type]: Object.assign(buildClause(field, null, opts), nestedClause)
+        }
+      }
     )
   }
 

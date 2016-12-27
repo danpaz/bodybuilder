@@ -71,10 +71,10 @@ test('aggregationBuilder | filters aggregation', (t) => {
       users: f1,
       errors: f2
     }
-  })
+  }, 'agg_name')
 
   t.deepEqual(result.getAggregations(), {
-    'agg_filters_[object Object]': {
+    'agg_name': {
       filters: {
         filters: {
           users: { term: { user: 'John' } },

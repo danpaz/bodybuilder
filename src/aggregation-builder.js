@@ -25,14 +25,13 @@ export default function aggregationBuilder () {
       }
     }
 
-    Object.assign(
-      aggregations,
-      {
-        [aggName]: {
-          [type]: Object.assign(buildClause(field, null, opts), nestedClause)
-        }
-      }
-    )
+    const innerClause = Object.assign({}, {
+      [type]: buildClause(field, null, opts)
+    }, nestedClause)
+
+    Object.assign(aggregations, {
+      [aggName]: innerClause
+    })
   }
 
   return {

@@ -225,6 +225,40 @@ test('aggregationBuilder | value_count aggregation', (t) => {
   })
 })
 
+test('aggregationBuilder | children aggregation', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder().aggregation('terms', 'tags.keyword', { size: 10 }, 'top-tags', (a1) => {
+    return a1.aggregation('children', { type: 'answer' }, 'to-answers', (a2) => {
+      return a2.aggregation('terms', 'owner.display_name.keyword', { size: 10 }, 'top-names')
+    })
+  })
+
+  t.deepEqual(result.getAggregations(), {
+    'top-tags': {
+      terms: {
+        field: 'tags.keyword',
+        size: 10,
+      },
+      aggs: {
+        'to-answers': {
+          children: {
+            type: 'answer'
+          },
+          aggs: {
+            'top-names': {
+              terms: {
+                field: 'owner.display_name.keyword',
+                size: 10
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+})
+
 test('aggregationBuilder | filters aggregation', (t) => {
   t.plan(1)
 

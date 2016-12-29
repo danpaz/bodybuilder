@@ -238,7 +238,7 @@ test('aggregationBuilder | children aggregation', (t) => {
     'top-tags': {
       terms: {
         field: 'tags.keyword',
-        size: 10,
+        size: 10
       },
       aggs: {
         'to-answers': {

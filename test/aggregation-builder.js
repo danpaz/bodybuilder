@@ -259,6 +259,89 @@ test('aggregationBuilder | children aggregation', (t) => {
   })
 })
 
+test('aggregationBuilder | date_histogram aggregation', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder().aggregation('date_histogram', 'grade')
+
+  t.deepEqual(result.getAggregations(), {
+    agg_date_histogram_grade: {
+      date_histogram: {
+        field: 'grade'
+      }
+    }
+  })
+})
+
+test('aggregationBuilder | date_range aggregation', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder().aggregation('date_range', 'date', {
+    format: 'MM-yyy',
+    ranges: [
+      { to: 'now-10M/M' },
+      { from: 'now-10M/M' }
+    ]
+  })
+
+  t.deepEqual(result.getAggregations(), {
+    agg_date_range_date: {
+      date_range: {
+        field: 'date',
+        format: 'MM-yyy',
+        ranges: [
+          { to: 'now-10M/M' },
+          { from: 'now-10M/M' }
+        ]
+      }
+    }
+  })
+})
+
+test('aggregationBuilder | diversified_sampler aggregation', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder().aggregation('diversified_sampler', 'user.id', {
+    shard_size: 200
+  }, (a) => {
+    return a.aggregation('significant_terms', 'text', 'keywords')
+  })
+
+  t.deepEqual(result.getAggregations(), {
+    'agg_diversified_sampler_user.id': {
+      diversified_sampler: {
+        field: 'user.id',
+        shard_size: 200
+      },
+      aggs: {
+        keywords: {
+          significant_terms: {
+            field: 'text'
+          }
+        }
+      }
+    }
+  })
+})
+
+test('aggregationBuilder | filter aggregation', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder().aggregation('filter', 'red_products', (a) => {
+    return a.filter('term', 'color', 'red')
+            .aggregation('avg', 'price', 'avg_price')
+  })
+
+  t.deepEqual(result.getAggregations(), {
+    agg_filter_red_products: {
+      filter: { term: { color: 'red' } },
+      aggs: {
+        avg_price : { avg : { field : 'price' } }
+      }
+    }
+  })
+})
+
 test('aggregationBuilder | filters aggregation', (t) => {
   t.plan(1)
 

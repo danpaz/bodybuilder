@@ -202,6 +202,37 @@ var body = new BodyBuilder()
 // }
 ```
 
+##### Filters Aggregations
+A filters aggregation differs slightly from the filter aggregation in that you can provide multiple filters on which to aggregate. 
+
+```js
+var body = new BodyBuilder()
+  .aggregation('filters', filtersBuilder => {
+    return filtersBuilder.filter('colors','term', 'color', 'red')
+                         .filter('statuses', 'term', 'status', 'success')
+  }, 'products', agg => agg.aggregation('avg', 'price', 'avg_price'))
+  .build()
+// body == {
+//   "aggregations": {
+//     "products": {
+//       "filters": {
+//         "filters": {
+//           "colors": { "term": { "color": "red" } },
+//           "statuses": { "term": { "status": "success" } }
+//         }
+//       },
+//       "aggs": {
+//         "avg_price": {
+//           "avg": {
+//             "field": "price"
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+```
+
 ### Combining queries, filters, and aggregations
 
 Multiple queries and filters are merged using the boolean query or filter (see

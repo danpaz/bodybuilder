@@ -1,6 +1,6 @@
 'use strict'
 
 var repl = require('repl')
-var Bodybuilder = require('./lib/index')
+var bodybuilder = require('./lib/index')
 
-repl.start('bodybuilder > ').context.Bodybuilder = Bodybuilder
+repl.start('bodybuilder > ').context.bodybuilder = bodybuilder

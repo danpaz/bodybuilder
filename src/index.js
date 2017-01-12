@@ -135,3 +135,5 @@ function _build(body, queries, filters, aggregations) {
 
   return clonedBody
 }
+
+module.exports = bodybuilder

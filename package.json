@@ -17,6 +17,7 @@
     "lint": "eslint src test",
     "style": "npm run lint",
     "test": "babel-tape-runner test/* | tap-spec",
+    "watch:test": "tape-watch test/* -r babel-register -p tap-spec",
     "check": "npm run lint && npm test",
     "preversion": "npm run check && npm run build"
   },
@@ -33,11 +34,13 @@
     "babel-core": "6.5.1",
     "babel-plugin-lodash": "2.0.1",
     "babel-preset-es2015": "6.5.0",
+    "babel-register": "6.18.0",
     "babel-tape-runner": "2.0.1",
     "documentation": "4.0.0-beta10",
     "eslint": "1.10.2",
     "tap-spec": "4.1.1",
     "tape": "4.6.2",
+    "tape-watch": "2.2.4",
     "webpack": "1.12.13"
   },
   "dependencies": {

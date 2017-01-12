@@ -23,6 +23,46 @@ test('bodyBuilder should build query with field but no value', (t) => {
   })
 })
 
+test('bodyBuilder should build filter without query', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .filter('term', 'user', 'kimchy')
+    .build()
+
+  t.deepEqual(result, {
+    query: {
+      bool: {
+        filter: {
+          term: {
+            user: 'kimchy'
+          }
+        }
+      }
+    }
+  })
+})
+
+test('bodyBuilder should build v1 filtered query', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .filter('term', 'user', 'kimchy')
+    .build('v1')
+
+  t.deepEqual(result, {
+    query: {
+      filtered: {
+        filter: {
+          term: {
+            user: 'kimchy'
+          }
+        }
+      }
+    }
+  })
+})
+
 test('bodyBuilder should create query and filter', (t) => {
   t.plan(2)
 
@@ -42,13 +82,13 @@ test('bodyBuilder should create query and filter', (t) => {
   })
 })
 
-test('bodyBuilder should build a filtered query', (t) => {
+test('bodyBuilder should build a v1 filtered query', (t) => {
   t.plan(1)
 
   const result = bodyBuilder()
     .query('match', 'message', 'this is a test')
     .filter('term', 'user', 'kimchy')
-    .build()
+    .build('v1')
 
   t.deepEqual(result, {
     query: {
@@ -68,6 +108,31 @@ test('bodyBuilder should build a filtered query', (t) => {
   })
 })
 
+test('bodyBuilder should build a filtered query', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .query('match', 'message', 'this is a test')
+    .filter('term', 'user', 'kimchy')
+    .build()
+
+  t.deepEqual(result, {
+    query: {
+      bool: {
+        must: {
+          match: {
+            message: 'this is a test'
+          }
+        },
+        filter: {
+          term: {
+            user: 'kimchy'
+          }
+        }
+      }
+    }
+  })
+})
 
 test('bodyBuilder should build a filtered query for version 2.x', (t) => {
   t.plan(1)
@@ -275,12 +340,12 @@ test('bodyBuilder should create this big-ass query', (t) => {
   const result = bodyBuilder().query('constant_score', (q) => {
     return q
       .orFilter('term', 'created_by.user_id', 'abc')
-      .orFilter('nested', 'path', 'doc_meta', {}, (q) => {
+      .orFilter('nested', 'path', 'doc_meta', (q) => {
         return q.query('constant_score', (q) => {
           return q.filter('term', 'doc_meta.user_id', 'abc')
         })
       })
-      .orFilter('nested', 'path', 'tests', {}, (q) => {
+      .orFilter('nested', 'path', 'tests', (q) => {
         return q.query('constant_score', (q) => {
           return q.filter('term', 'tests.created_by.user_id', 'abc')
         })

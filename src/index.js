@@ -78,11 +78,11 @@ export default function bodybuilder () {
         const filters = this.getFilter()
         const aggregations = this.getAggregations()
 
-        if (version === 'v2') {
-          return _buildV2(body, queries, filters, aggregations)
+        if (version === 'v1') {
+          return _buildV1(body, queries, filters, aggregations)
         }
 
-        return _buildV1(body, queries, filters, aggregations)
+        return _build(body, queries, filters, aggregations)
       }
 
     },
@@ -112,7 +112,7 @@ function _buildV1(body, queries, filters, aggregations) {
   return clonedBody
 }
 
-function _buildV2(body, queries, filters, aggregations) {
+function _build(body, queries, filters, aggregations) {
   let clonedBody = _.cloneDeep(body)
 
   if (!_.isEmpty(filters)) {

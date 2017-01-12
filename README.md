@@ -50,7 +50,7 @@ Try it out on the command line using the node REPL:
 ### Queries
 
 ```js
-bodybuilder.query([arguments])
+bodybuilder().query([arguments])
 ```
 
 Creates a query of type `queryType`.

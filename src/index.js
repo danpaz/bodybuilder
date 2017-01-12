@@ -4,6 +4,58 @@ import filterBuilder from './filter-builder'
 import aggregationBuilder from './aggregation-builder'
 import { sortMerge } from './utils'
 
+/**
+ * **http://bodybuilder.js.org**
+ *
+ * **https://github.com/danpaz/bodybuilder**
+ *
+ * Bodybuilder is a small library that makes elasticsearch queries easier to
+ * write, read, and maintain 💪. The whole public api is documented here, but
+ * how about a simple example to get started:
+ *
+ * ```
+ * bodybuilder()
+ *   .query('match', 'message', 'this is a test')
+ *   .build()
+ *
+ * // results in:
+ * {
+ *   query: {
+ *     match: {
+ *       message: 'this is a test'
+ *     }
+ *   }
+ * }
+ * ```
+ *
+ * You can chain multiple methods together to build up a more complex query.
+ *
+ * ```
+ * bodybuilder()
+ *   .query('match', 'message', 'this is a test')
+ *   .filter('term', 'user', 'kimchy')
+ *   .notFilter('term', 'user', 'cassie')
+ *   .aggregation('terms', 'user')
+ *   .build()
+ * ```
+ *
+ * For nested sub-queries or sub-aggregations, pass a function as the last
+ * argument and build the nested clause in the body of that function. For
+ * example:
+ *
+ * ```
+ * bodybuilder()
+ *   .query('nested', 'path', 'obj1', (q) => {
+ *     return q.query('match', 'obj1.color', 'blue')
+ *   })
+ *   .build()
+ * ```
+ *
+ * The entire elasticsearch query DSL is available using the bodybuilder api.
+ * There are many more examples in the docs as well as in the tests.
+ *
+ * @return {bodybuilder} Builder.
+ */
 export default function bodybuilder () {
   let body = {}
 
@@ -65,7 +117,7 @@ export default function bodybuilder () {
        * Set any key-value on the elasticsearch body.
        *
        * @param  {String} k Key.
-       * @param  {String} v Value.
+       * @param  {any}    v Value.
        * @returns {bodybuilder} Builder.
        */
       rawOption(k, v) {
@@ -73,6 +125,15 @@ export default function bodybuilder () {
         return this
       },
 
+      /**
+       * Collect all queries, filters, and aggregations and build the entire
+       * elasticsearch query.
+       *
+       * @param  {string} [version] (optional) Pass `'v1'` to build for the
+       *                            elasticsearch 1.x query dsl.
+       *
+       * @return {Object} Elasticsearch query body.
+       */
       build(version) {
         const queries = this.getQuery()
         const filters = this.getFilter()

@@ -8,7 +8,12 @@ elasticsearch with a simple, predictable api.
 
 ![bodybuilder](img/bodybuilder.jpeg)
 
-## Compatibility
+## Upgrading to bodybuilder 2
+
+See the [migration guide](./docs/migrate-to-2.md) if you are upgrading from
+bodybuilder 1 to bodybuilder 2.
+
+## Elasticsearch compatibility
 
 Currently aims to support the full elasticsearch query DSL for versions 1.x,
 2.x, and 5.x.
@@ -23,10 +28,9 @@ when calling the `build` function.
 ## Usage
 
 ```js
-var Bodybuilder = require('bodybuilder')
-var body = new Bodybuilder() // A builder instance.
-body.query('match', 'message', 'this is a test')
-body.build() // Build 2.x DSL
+var bodybuilder = require('bodybuilder')
+var body = bodybuilder().query('match', 'message', 'this is a test')
+body.build() // Build 2.x / 5.x DSL (default)
 body.build('v1') // Build 1.x DSL
 ```
 
@@ -36,22 +40,20 @@ built query body.
 
 ## REPL
 
-Try it out on the command line using the node repl:
+Try it out on the command line using the node REPL:
 
     # Start the repl
-    node repl.js
-    # The Bodybuilder class is available in the context variable Bodybuilder
-    bodybuilder > var body = new Bodybuilder()
-    bodybuilder > body.query('match', 'message', 'this is a test').build()
+    node ./node_modules/bodybuilder/repl.js
+    # The builder is available in the context variable Bodybuilder
+    bodybuilder > bodybuilder().query('match', 'message', 'this is a test').build()
 
 ### Queries
 
 ```js
-body.query(queryType, [arguments])
+bodybuilder.query([arguments])
 ```
 
-Creates a query of type `queryType`. Currently supported query types are listed
-[here](./src/queries/index.js).
+Creates a query of type `queryType`.
 
 #### Arguments
 
@@ -63,7 +65,7 @@ pattern:
 * `searchTerm` - The string to search for.
 
 ```js
-var body = new Bodybuilder().query('match', 'message', 'this is a test').build()
+var body = bodybuilder().query('match', 'message', 'this is a test').build()
 // body == {
 //   query: {
 //     match: {
@@ -76,11 +78,10 @@ var body = new Bodybuilder().query('match', 'message', 'this is a test').build()
 ### Filters
 
 ```js
-body.filter(filterType, [arguments])
+bodybuilder().filter([arguments])
 ```
 
-Creates a filtered query using filter of type `filterType`. Currently supported
-filter types are listed [here](./src/filters/index.js).
+Creates a filtered query using filter of type `filterType`.
 
 #### Arguments
 
@@ -92,7 +93,7 @@ pattern:
 * `searchTerm` - The string to search for.
 
 ```js
-var body = new Bodybuilder().filter('term', 'message', 'test').build()
+bodybuilder().filter('term', 'message', 'test').build()
 // body == {
 //   query: {
 //     bool: {
@@ -109,11 +110,10 @@ var body = new Bodybuilder().filter('term', 'message', 'test').build()
 ### Aggregations
 
 ```js
-body.aggregation(aggregationType, [arguments])
+bodybuilder().aggregation([arguments])
 ```
 
-Creates an aggregation of type `aggregationType`. Currently supported
-aggregation types are listed [here](./src/aggregations/index.js).
+Creates an aggregation of type `aggregationType`.
 
 #### Arguments
 
@@ -130,7 +130,7 @@ aggregation object.
 children of the one being created. This _must_ be the last parameter set.
 
 ```js
-var body = new BodyBuilder().aggregation('terms', 'user').build()
+var body = bodybuilder().aggregation('terms', 'user').build()
 // body == {
 //   aggregations: {
 //     agg_terms_user: {
@@ -144,10 +144,15 @@ var body = new BodyBuilder().aggregation('terms', 'user').build()
 
 #### Nested aggregations
 
-To nest aggregations, pass a `function` as the last parameter in `[arguments]`. The `function` receives the recently built aggregation instance and is expected to return an `Object` which will be assigned to `.aggs` on the current aggregation. Aggregations in this scope behave like builders and you can call the chainable method `.aggregation(aggregationType, [arguments])` on them just as you would on the main `BodyBuilder`.
+To nest aggregations, pass a `function` as the last parameter in `[arguments]`.
+The `function` receives the recently built aggregation instance and is expected
+to return an `Object` which will be assigned to `.aggs` on the current
+aggregation. Aggregations in this scope behave like builders and you can call
+the chainable method `.aggregation([arguments])` on them just as you would on
+the main `bodybuilder`.
 
 ```js
-var body = new BodyBuilder().aggregation('terms', 'code', null, {
+var body = bodybuilder().aggregation('terms', 'code', {
       order: { _term: 'desc' },
       size: 1
     }, agg => agg.aggregation('terms', 'name')).build()
@@ -173,53 +178,25 @@ var body = new BodyBuilder().aggregation('terms', 'code', null, {
 //}
 ```
 
-#### Filter Aggregations
-To add a filter aggregation, the second argument expects a callback. You will be passed a filter-builder with which you can build filters just like you normally do with BodyBuilder. The last argument here is also the callback for nested aggregations.
-
-```js
-var body = new BodyBuilder()
-  .aggregation('filter', filterBuilder => {
-    return filterBuilder.filter('term', 'color', 'red')
-  }, 'red_products', agg => agg.aggregation('avg', 'price', 'avg_price'))
-  .build()
-// body == {
-//   "aggregations": {
-//     "red_products": {
-//       "filter": {
-//         "term": {
-//           "color": "red"
-//         }
-//       },
-//       "aggs": {
-//         "avg_price": {
-//           "avg": {
-//             "field": "price"
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-```
-
 ### Combining queries, filters, and aggregations
 
 Multiple queries and filters are merged using the boolean query or filter (see
 [Combining Filters](https://www.elastic.co/guide/en/elasticsearch/guide/current/combining-filters.html)).
 
 ```js
-var body = new BodyBuilder().query('match', 'message', 'this is a test')
-                            .filter('term', 'user', 'kimchy')
-                            .filter('term', 'user', 'herald')
-                            .orFilter('term', 'user', 'johnny')
-                            .notFilter('term', 'user', 'cassie')
-                            .aggregation('terms', 'user')
-                            .build()
+var body = bodybuilder()
+  .query('match', 'message', 'this is a test')
+  .filter('term', 'user', 'kimchy')
+  .filter('term', 'user', 'herald')
+  .orFilter('term', 'user', 'johnny')
+  .notFilter('term', 'user', 'cassie')
+  .aggregation('terms', 'user')
+  .build()
 
 // body == {
 //   query: {
-//     filtered: {
-//       query: {
+//     bool: {
+//       must: {
 //         match: {
 //           message: 'this is a test'
 //         }
@@ -239,11 +216,11 @@ var body = new BodyBuilder().query('match', 'message', 'this is a test')
 //         }
 //       }
 //     },
-//     aggregations: {
-//       agg_terms_user: {
-//         terms: {
-//           field: 'user'
-//         }
+//   },
+//   aggs: {
+//     agg_terms_user: {
+//       terms: {
+//         field: 'user'
 //       }
 //     }
 //   }
@@ -256,7 +233,8 @@ Set a sort direction using `sort(field, direction)`, where direction defaults to
 ascending.
 
 ```js
-var body  = new BodyBuilder().filter('term', 'message', 'test')
+var body = bodybuilder()
+    .filter('term', 'message', 'test')
     .sort('timestamp', 'desc')
     .sort([{
       "channel": {
@@ -309,10 +287,12 @@ Set `from` and `size` parameters to configure the offset and maximum hits to be
 returned.
 
 ```js
-var body = new Bodybuilder().filter('term', 'message', 'test')
-                            .size(5)
-                            .from(10)
-                            .build()
+var body = bodybuilder()
+  .filter('term', 'message', 'test')
+  .size(5)
+  .from(10)
+  .build()
+
 // body == {
 //   size: 5,
 //   from: 10,
@@ -334,9 +314,11 @@ Set any other search request option using `rawOption` passing in the key-value
 pair to include in the body.
 
 ```js
-var body = new Bodybuilder().filter('term', 'message', 'test')
-                            .rawOption('_sourceExclude', 'verybigfield')
-                            .build()
+var body = bodybuilder()
+  .filter('term', 'message', 'test')
+  .rawOption('_sourceExclude', 'verybigfield')
+  .build()
+
 // body == {
 //   _sourceExclude: 'verybigfield',
 //   query: {

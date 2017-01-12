@@ -366,3 +366,49 @@ test('aggregationBuilder | filters aggregation', (t) => {
     }
   })
 })
+
+test('aggregationBuilder | pipeline aggregation', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder()
+    .aggregation('date_histogram', 'date', { interval: 'month' }, 'sales_per_month', (a) => {
+      return a.aggregation('sum', 'price', 'sales')
+    })
+    .aggregation('max_bucket', { buckets_path: 'sales_per_month>sales' }, 'max_monthly_sales')
+
+  t.deepEqual(result.getAggregations(), {
+    sales_per_month : {
+      date_histogram : {
+        field: 'date',
+        interval: 'month'
+      },
+      aggs: {
+        sales: {
+          sum: {
+            field: 'price'
+          }
+        }
+      }
+    },
+    max_monthly_sales: {
+      max_bucket: {
+        buckets_path: 'sales_per_month>sales'
+      }
+    }
+  })
+})
+
+test('aggregationBuilder | matrix stats', (t) => {
+  t.plan(1)
+
+  const result = aggregationBuilder()
+    .aggregation('matrix_stats', { fields: ['poverty', 'income'] }, 'matrixstats')
+
+  t.deepEqual(result.getAggregations(), {
+    matrixstats: {
+      matrix_stats: {
+        fields: ['poverty', 'income']
+      }
+    }
+  })
+})

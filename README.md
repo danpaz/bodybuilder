@@ -10,11 +10,11 @@ elasticsearch with a simple, predictable api.
 
 ## Compatibility
 
-Currently aims to support the full elasticsearch query DSL for versions 1.x.
-The elasticsearch 2.x query DSL is supported by providing a `v2` arguments
-when calling `build` function.
+Currently aims to support the full elasticsearch query DSL for versions 1.x,
+2.x, and 5.x.
 
-Contributions are welcome!
+The elasticsearch 1.x query DSL is supported by providing a `v1` argument
+when calling the `build` function.
 
 ## Install
 
@@ -26,8 +26,8 @@ Contributions are welcome!
 var Bodybuilder = require('bodybuilder')
 var body = new Bodybuilder() // A builder instance.
 body.query('match', 'message', 'this is a test')
-body.build() // Build 1.x DSL
-body.build('v2') // Build 2.x DSL
+body.build() // Build 2.x DSL
+body.build('v1') // Build 1.x DSL
 ```
 
 For each elasticsearch query body, create an instance of `Bodybuilder`, apply
@@ -95,7 +95,7 @@ pattern:
 var body = new Bodybuilder().filter('term', 'message', 'test').build()
 // body == {
 //   query: {
-//     filtered: {
+//     bool: {
 //       filter: {
 //         term: {
 //           message: 'test'
@@ -292,7 +292,7 @@ var body  = new BodyBuilder().filter('term', 'message', 'test')
 //     }
 //   ],
 //   query: {
-//     filtered: {
+//     bool: {
 //       filter: {
 //         term: {
 //           message: 'test'
@@ -317,7 +317,7 @@ var body = new Bodybuilder().filter('term', 'message', 'test')
 //   size: 5,
 //   from: 10,
 //   query: {
-//     filtered: {
+//     bool: {
 //       filter: {
 //         term: {
 //           message: 'test'
@@ -340,7 +340,7 @@ var body = new Bodybuilder().filter('term', 'message', 'test')
 // body == {
 //   _sourceExclude: 'verybigfield',
 //   query: {
-//     filtered: {
+//     bool: {
 //       filter: {
 //         term: {
 //           message: 'test'

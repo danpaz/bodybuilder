@@ -42,17 +42,28 @@ of in the _deprecated_ filtered query.
 The elasticsearch docs have more information on query and filter context.
 https://www.elastic.co/guide/en/elasticsearch/reference/5.1/query-filter-context.html
 
-Practically, this means if you were doing .build('v2') in your bodybuilder
+Practically, this means if you were doing `.build('v2')` in your bodybuilder
 queries it will have no effect and you will no longer need to do so in
 bodybuilder 2. If you are using build() without the 'v2' argument please be
 aware of this change, and if you  want to preserve the old functionality pass
-the argument 'v1' to build('v1').
+the argument 'v1' as in `build('v1')`. For example:
+
+```js
+// before
+var body = new Bodybuilder().query('match', 'message', 'test').build('v2')
+
+// after, with v2 dsl
+var body = bodybuilder().query('match', 'message', 'test').build()
+
+// or, with v1 dsl
+var body = bodybuilder().query('match', 'message', 'test').build('v1')
+```
 
 ### Nested `path` must be explicit
 
 Previously when using the `nested` filter type, bodybuilder would imply the
 `path` of the parent field to help build the query. This is no longer implicit
-and must be specified in the query:
+and must be specified in the query. For example:
 
 ```js
 // before

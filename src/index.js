@@ -139,7 +139,7 @@ class Bodybuilder {
    * Set any key-value on the elasticsearch body.
    *
    * @param  {String} k Key.
-   * @param  {String} v Value.
+   * @param  {any} v Value.
    * @returns {Bodybuilder} Builder class.
    */
   rawOption(k, v) {

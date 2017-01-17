@@ -470,3 +470,27 @@ test('bodybuilder should allow rebuilding', (t) => {
     }
   })
 })
+
+test('bodybuilder should add a not filter', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .notFilter('match', 'message', 'this is a test')
+    .build()
+
+  t.deepEqual(result, {
+    query: {
+      bool: {
+        filter: {
+          bool: {
+            must_not: [{
+              match: {
+                message: 'this is a test'
+              }
+            }]
+          }
+        }
+      }
+    }
+  })
+})

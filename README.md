@@ -12,7 +12,7 @@ elasticsearch with a simple, predictable api.
 
 Currently aims to support the full elasticsearch query DSL for versions 1.x.
 The elasticsearch 2.x query DSL is supported by providing a `v2` arguments
-when calling `build` function.
+when calling `build` function. In this case, the 5.x query DSL is supported as well.
 
 Contributions are welcome!
 

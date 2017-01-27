@@ -28,7 +28,7 @@ describe('BodyBuilder', () => {
     })
   })
 
-  it('should set a sort direction', () => {
+  it('should set sort direction from string', () => {
     let result = new BodyBuilder().sort('timestamp', 'desc').build()
     expect(result).to.eql({
       "sort": [
@@ -41,7 +41,7 @@ describe('BodyBuilder', () => {
     })
   })
 
-  it('should overwrite the sort direction', () => {
+  it('should overwrite sort direction', () => {
     let result = new BodyBuilder().sort('timestamp', 'desc')
                                   .sort('timestamp', 'asc')
                                   .build()
@@ -52,6 +52,22 @@ describe('BodyBuilder', () => {
         }
       }]
     })
+  })
+
+  it('should set sort options from object', () => {
+      let result = new BodyBuilder().sort('timestamp', {order:'desc', something: 'else', nested: { prop: 'value'}})
+                                    .build()
+      expect(result).to.eql({
+          sort: [{
+              timestamp: {
+                  order: 'desc',
+                  something: 'else',
+                  nested: {
+                      prop: 'value'
+                  }
+              }
+          }]
+      })
   })
 
   it('should set a from value', () => {

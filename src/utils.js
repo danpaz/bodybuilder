@@ -61,22 +61,28 @@ export function boolMerge(newObj, currentObj, boolType = 'and') {
  *
  * @private
  *
- * @param  {Array} current      Array of elasticsearch sorts
- * @param  {String} field             Field name.
- * @param  {String} [direction='asc'] A valid direction: 'asc' or 'desc'.
- * @returns {Array} Array of elasticsearch sorts.
+ * @param  {Array} current Array of Elasticsearch sorts.
+ * @param  {String} field Field to sort.
+ * @param  {String|Object} value A valid direction ('asc', 'desc') or object with sort options
+ * @returns {Array} Array of Elasticsearch sorts.
  */
-export function sortMerge(current, field, direction) {
-  var payload = {[field]: {order: direction.order || direction }}
+export function sortMerge(current, field, value) {
+  let payload
 
-  var idx = _.findIndex(current, function (o) {
-    return o[field] != undefined
+  if (_.isPlainObject(value)) {
+      payload = { [field]: Object.assign({}, value) }
+  } else {
+      payload = { [field]: { order: value } }
+  }
+
+  const idx = _.findIndex(current, function (o) {
+      return o[field] != undefined
   })
 
-  if(idx == -1) {
-    current.push(payload)
+  if (idx == -1) {
+      current.push(payload)
   } else {
-    _.extend(current[idx], payload)
+      _.extend(current[idx], payload)
   }
 
   return current

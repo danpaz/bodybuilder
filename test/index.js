@@ -494,3 +494,27 @@ test('bodybuilder should add a not filter', (t) => {
     }
   })
 })
+
+test('bodybuilder | or filter', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder().filter('or', [
+    {term: {user: 'kimchy'}},
+    {term: {user: 'tony'}}
+  ])
+  .build()
+
+  t.deepEqual(result,
+  {
+    query: {
+      bool: {
+        filter: {
+          or: [
+            {term: {user: 'kimchy'}},
+            {term: {user: 'tony'}}
+          ]
+        }
+      }
+    }
+  })
+})

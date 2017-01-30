@@ -640,3 +640,19 @@ test('queryBuilder | script', (t) => {
     }
   })
 })
+
+test('queryBuilder | or', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('or', [
+    {term: {user: 'kimchy'}},
+    {term: {user: 'tony'}}
+  ])
+
+  t.deepEqual(result.getQuery(), {
+    or: [
+      {term: {user: 'kimchy'}},
+      {term: {user: 'tony'}}
+    ]
+  })
+})

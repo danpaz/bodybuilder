@@ -70,19 +70,19 @@ export function sortMerge(current, field, value) {
   let payload
 
   if (_.isPlainObject(value)) {
-      payload = { [field]: _.assign({}, value) }
+    payload = { [field]: _.assign({}, value) }
   } else {
-      payload = { [field]: { order: value } }
+    payload = { [field]: { order: value } }
   }
 
   const idx = _.findIndex(current, function (o) {
-      return o[field] != undefined
+    return o[field] != undefined
   })
 
   if (idx == -1) {
-      current.push(payload)
+    current.push(payload)
   } else {
-      _.extend(current[idx], payload)
+    _.extend(current[idx], payload)
   }
 
   return current

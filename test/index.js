@@ -55,19 +55,19 @@ describe('BodyBuilder', () => {
   })
 
   it('should set sort options from object', () => {
-      let result = new BodyBuilder().sort('timestamp', {order:'desc', something: 'else', nested: { prop: 'value'}})
-                                    .build()
-      expect(result).to.eql({
-          sort: [{
-              timestamp: {
-                  order: 'desc',
-                  something: 'else',
-                  nested: {
-                      prop: 'value'
-                  }
-              }
-          }]
-      })
+    let result = new BodyBuilder().sort('timestamp', { order: 'desc', something: 'else', nested: { prop: 'value' } })
+                                  .build()
+    expect(result).to.eql({
+      sort: [{
+        timestamp: {
+          order: 'desc',
+          something: 'else',
+          nested: {
+            prop: 'value'
+          }
+        }
+      }]
+    })
   })
 
   it('should set a from value', () => {

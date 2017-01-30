@@ -70,7 +70,7 @@ export function sortMerge(current, field, value) {
   let payload
 
   if (_.isPlainObject(value)) {
-      payload = { [field]: Object.assign({}, value) }
+      payload = { [field]: _.assign({}, value) }
   } else {
       payload = { [field]: { order: value } }
   }

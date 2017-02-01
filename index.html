@@ -70,7 +70,7 @@
       }
 
       inputEditor.on('change', onInputChange);
-      inputEditor.setValue(`new Bodybuilder()
+      inputEditor.setValue(`bodybuilder()
         .query('match', 'message', 'this is a test')
         .filter('term', 'user', 'kimchy')
         .filter('term', 'user', 'herald')

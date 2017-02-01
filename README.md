@@ -8,12 +8,14 @@ elasticsearch with a simple, predictable api.
 
 ![bodybuilder](img/bodybuilder.jpeg)
 
-**Check out the [API documentation](http://bodybuilder.js.org/docs).**
+**Check out the [API reference documentation](http://bodybuilder.js.org/docs).**
 
 ## Upgrading to bodybuilder 2
 
 See the [migration guide](./docs/migrate-to-2.md) if you are upgrading from
 bodybuilder 1 to bodybuilder 2.
+
+The bodybuilder 1 API documentation is [still available for reference](./docs/API.md).
 
 ## Elasticsearch compatibility
 

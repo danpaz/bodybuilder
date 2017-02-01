@@ -4,7 +4,7 @@ var webpack = require('webpack');
 
 module.exports = {
   output: {
-    library: 'Bodybuilder',
+    library: 'bodybuilder',
     libraryTarget: 'umd'
   },
   plugins: [

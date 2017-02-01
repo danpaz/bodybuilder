@@ -282,6 +282,8 @@ var body = bodybuilder()
 //   }
 // }
 ```
+**Advanced usage:** Set a sort configuration object for the given sort field with additional [sort properties](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html).
+`sort(field, { sort: 'asc', mode: 'min', ...})`
 
 ### From / Size
 

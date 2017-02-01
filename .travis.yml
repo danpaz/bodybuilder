@@ -4,11 +4,10 @@ node_js:
   - '5.11'
   - '4.4'
   - '4.2'
-  - '0.12'
-  - '0.10'
 branches:
   only:
   - master
+  - prerelease-bodybuilder-2
 script: npm run check
 deploy:
   provider: npm

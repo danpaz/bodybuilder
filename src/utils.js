@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import queries from './queries'
+import boolQuery from './bool-query'
 
 /**
  * Extends lodash's assignWith by allowing array concatenation
@@ -10,10 +10,8 @@ import queries from './queries'
  * @param {Object} target Target.
  * @returns {Object} Merged object.
  */
-export function mergeConcat(target) {
-  let args = Array.prototype.slice.call(arguments, 1)
-
-  args.unshift(target)
+export function mergeConcat() {
+  let args = Array.prototype.slice.call(arguments, 0)
   args.push(function customizer(a, b) {
     if (_.isPlainObject(a)) {
       return _.assignWith(a, b, customizer)
@@ -44,14 +42,14 @@ export function boolMerge(newObj, currentObj, boolType = 'and') {
   if (_.isEmpty(currentObj)) {
     // Allow starting with 'or' and 'not' queries.
     if (boolType !== 'and') {
-      return queries.bool(boolType, newObj)
+      return boolQuery(boolType, newObj)
     }
     return newObj
   }
 
   // Make bools out of the new and existing filters.
-  boolCurrent = currentObj.bool ? currentObj : queries.bool('must', currentObj)
-  boolNew = newObj.bool ? newObj : queries.bool(boolType, newObj)
+  boolCurrent = currentObj.bool ? currentObj : boolQuery('must', currentObj)
+  boolNew = newObj.bool ? newObj : boolQuery(boolType, newObj)
 
   return mergeConcat({}, boolCurrent, boolNew)
 }
@@ -86,4 +84,31 @@ export function sortMerge(current, field, value) {
   }
 
   return current
+}
+
+/**
+ * Generic builder for query, filter, or aggregation clauses.
+ *
+ * @private
+ *
+ * @param  {string|Object} field Field name or complete clause.
+ * @param  {string|Object} value Field value or inner clause.
+ * @param  {Object}        opts  Additional key-value pairs.
+ *
+ * @return {Object} Clause
+ */
+export function buildClause (field, value, opts) {
+  const hasField = !_.isNil(field)
+  const hasValue = !_.isNil(value)
+  let mainClause = {}
+
+  if (hasValue) {
+    mainClause = {[field]: value}
+  } else if (_.isObject(field)) {
+    mainClause = field
+  } else if (hasField) {
+    mainClause = {field}
+  }
+
+  return Object.assign({}, mainClause, opts)
 }

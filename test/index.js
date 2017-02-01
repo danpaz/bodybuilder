@@ -1,454 +1,520 @@
-import BodyBuilder from '../src/index'
-import {expect} from 'chai'
+import test from 'tape'
+import bodyBuilder from '../src'
 
-describe('BodyBuilder', () => {
+test('bodyBuilder should build query with no field', (t) => {
+  t.plan(1)
 
-  it('should default to empty query', () => {
-    let result = new BodyBuilder().build()
-    expect(result).to.eql({})
+  const result = bodyBuilder().query('match_all')
+
+  t.deepEqual(result.getQuery(), {
+    match_all: {}
   })
+})
 
-  it('should return a copy of body when build', () => {
-    let body = new BodyBuilder()
-    let result1 = body.build()
-    let result2 = body.build()
-    expect(result1).to.not.equal(result2)
+test('bodyBuilder should build query with field but no value', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder().query('exists', 'user')
+
+  t.deepEqual(result.getQuery(), {
+    exists: {
+      field: 'user'
+    }
   })
+})
 
-  it('should use default sort direction', () => {
-    let result = new BodyBuilder().sort('timestamp').build()
-    expect(result).to.eql({
-      "sort": [
-        {
-          "timestamp": {
-            "order": "asc"
+test('bodyBuilder should build filter without query', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .filter('term', 'user', 'kimchy')
+    .build()
+
+  t.deepEqual(result, {
+    query: {
+      bool: {
+        filter: {
+          term: {
+            user: 'kimchy'
           }
         }
-      ]
-    })
+      }
+    }
   })
+})
 
-  it('should set sort direction from string', () => {
-    let result = new BodyBuilder().sort('timestamp', 'desc').build()
-    expect(result).to.eql({
-      "sort": [
-        {
-          "timestamp": {
-            "order": "desc"
+test('bodyBuilder should build v1 filtered query', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .filter('term', 'user', 'kimchy')
+    .build('v1')
+
+  t.deepEqual(result, {
+    query: {
+      filtered: {
+        filter: {
+          term: {
+            user: 'kimchy'
           }
         }
-      ]
-    })
+      }
+    }
   })
+})
 
-  it('should overwrite sort direction', () => {
-    let result = new BodyBuilder().sort('timestamp', 'desc')
-                                  .sort('timestamp', 'asc')
-                                  .build()
-    expect(result).to.eql({
-      sort: [{
+test('bodyBuilder should create query and filter', (t) => {
+  t.plan(2)
+
+  const result = bodyBuilder()
+    .query('exists', 'user')
+    .filter('term', 'user', 'kimchy')
+
+  t.deepEqual(result.getQuery(), {
+    exists: {
+      field: 'user'
+    }
+  })
+  t.deepEqual(result.getFilter(), {
+    term: {
+      user: 'kimchy'
+    }
+  })
+})
+
+test('bodyBuilder should build a v1 filtered query', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .query('match', 'message', 'this is a test')
+    .filter('term', 'user', 'kimchy')
+    .build('v1')
+
+  t.deepEqual(result, {
+    query: {
+      filtered: {
+        query: {
+          match: {
+            message: 'this is a test'
+          }
+        },
+        filter: {
+          term: {
+            user: 'kimchy'
+          }
+        }
+      }
+    }
+  })
+})
+
+test('bodyBuilder should build a filtered query', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .query('match', 'message', 'this is a test')
+    .filter('term', 'user', 'kimchy')
+    .build()
+
+  t.deepEqual(result, {
+    query: {
+      bool: {
+        must: {
+          match: {
+            message: 'this is a test'
+          }
+        },
+        filter: {
+          term: {
+            user: 'kimchy'
+          }
+        }
+      }
+    }
+  })
+})
+
+test('bodyBuilder should build a filtered query for version 2.x', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .query('match', 'message', 'this is a test')
+    .filter('term', 'user', 'kimchy')
+    .build('v2')
+
+  t.deepEqual(result, {
+    query: {
+      bool: {
+        must: {
+          match: {
+            message: 'this is a test'
+          }
+        },
+        filter: {
+          term: {user: 'kimchy'}
+        }
+      }
+    }
+  })
+})
+
+test('bodyBuilder should sort with default sort direction', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder().sort('timestamp').build()
+
+  t.deepEqual(result, {
+    sort: [
+      {
         timestamp: {
           order: 'asc'
         }
-      }]
-    })
-  })
-
-  it('should set sort options from object', () => {
-    let result = new BodyBuilder().sort('timestamp', { order: 'desc', something: 'else', nested: { prop: 'value' } })
-                                  .build()
-    expect(result).to.eql({
-      sort: [{
-        timestamp: {
-          order: 'desc',
-          something: 'else',
-          nested: {
-            prop: 'value'
-          }
-        }
-      }]
-    })
-  })
-
-  it('should set a from value', () => {
-    let result = new BodyBuilder().from(25).build()
-    expect(result).to.eql({
-      from: 25
-    })
-  })
-
-  it('should set a size value', () => {
-    let result = new BodyBuilder().size(25).build()
-    expect(result).to.eql({
-      size: 25
-    })
-  })
-
-  it('should set a raw option', () => {
-    let result = new BodyBuilder().rawOption('_sourceExclude', 'bigfield')
-                                  .build()
-    expect(result).to.eql({
-      _sourceExclude: 'bigfield'
-    })
-  })
-
-  it('should add a filter', () => {
-    let result = new BodyBuilder().filter('term', 'user', 'kimchy')
-                                  .build()
-    expect(result).to.eql({
-      query: {
-        filtered: {
-          filter: {
-            term: {user: 'kimchy'}
-          }
-        }
       }
-    })
+    ]
   })
+})
 
-  it('should add a filter with from and size', () => {
-    let result = new BodyBuilder().filter('term', 'user', 'kimchy')
-                                  .size(25)
-                                  .from(100)
-                                  .build()
-    expect(result).to.eql({
-      size: 25,
-      from: 100,
-      query: {
-        filtered: {
-          filter: {
-            term: {user: 'kimchy'}
-          }
-        }
-      }
-    })
+test('bodyBuilder should set from on body', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder().from(10).build()
+
+  t.deepEqual(result, {
+    from: 10
   })
+})
 
-  it('should add two filters using bool filter', () => {
-    let result = new BodyBuilder().filter('term', 'user', 'kimchy')
-                                  .filter('term', 'user', 'herald')
-                                  .build()
-    expect(result).to.eql({
-      query: {
-        filtered: {
-          filter: {
-            bool: {
-              must: [
-                {term: {user: 'kimchy'}},
-                {term: {user: 'herald'}}
-              ]
-            }
-          }
-        }
-      }
-    })
+test('bodyBuilder should set size on body', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder().size(10).build()
+
+  t.deepEqual(result, {
+    size: 10
   })
+})
 
-  it('should add three filters using bool filter', () => {
-    let result = new BodyBuilder().filter('term', 'user', 'kimchy')
-                                  .filter('term', 'user', 'herald')
-                                  .filter('term', 'user', 'johnny')
-                                  .build()
-    expect(result).to.eql({
-      query: {
-        filtered: {
-          filter: {
-            bool: {
-              must: [
-                {term: {user: 'kimchy'}},
-                {term: {user: 'herald'}},
-                {term: {user: 'johnny'}}
-              ]
-            }
-          }
-        }
-      }
-    })
+test('bodyBuilder should set any key-value on body', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder().rawOption('a', {b: 'c'}).build()
+
+  t.deepEqual(result, {
+    a: { b: 'c' }
   })
+})
 
-  it('should add an or filter using bool filter', () => {
-    let result = new BodyBuilder().filter('term', 'user', 'kimchy')
-                                  .orFilter('term', 'user', 'herald')
-                                  .build()
-    expect(result).to.eql({
-      query: {
-        filtered: {
-          filter: {
-            bool: {
-              must: [
-                {term: {user: 'kimchy'}}
-              ],
-              should: [
-                {term: {user: 'herald'}}
-              ]
-            }
-          }
-        }
-      }
-    })
-  })
+test('bodyBuilder should build query with field and value', (t) => {
+  t.plan(1)
 
-  it('should add and, not, and or filters using bool filter', () => {
-    let result = new BodyBuilder().filter('term', 'user', 'kimchy')
-                                  .filter('term', 'user', 'herald')
-                                  .orFilter('term', 'user', 'johnny')
-                                  .notFilter('term', 'user', 'cassie')
-                                  .build()
-    expect(result).to.eql({
-      query: {
-        filtered: {
-          filter: {
-            bool: {
-              must: [
-                {term: {user: 'kimchy'}},
-                {term: {user: 'herald'}}
-              ],
-              should: [
-                {term: {user: 'johnny'}}
-              ],
-              must_not: [
-                {term: {user: 'cassie'}}
-              ]
-            }
-          }
-        }
-      }
-    })
-  })
+  const result = bodyBuilder().query('term', 'user', 'kimchy')
 
-  it('should throw if filter type not found', () => {
-    let fn = () => {
-      new BodyBuilder().filter('unknown', 'user', 'kimchy').build()
+  t.deepEqual(result.getQuery(), {
+    term: {
+      user: 'kimchy'
     }
-    expect(fn).to.throw('Filter type unknown not found.')
   })
+})
 
-  it('should add an aggregation', () => {
-    let result = new BodyBuilder().aggregation('terms', 'user').build()
-    expect(result).to.eql({
-      aggregations: {
-        agg_terms_user: {
-          terms: {
-            field: 'user'
-          }
-        }
+test('bodyBuilder should build query with field and object value', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder().query('range', 'date', {gt: 'now-1d'})
+
+  t.deepEqual(result.getQuery(), {
+    range: {
+      date: {gt: 'now-1d'}
+    }
+  })
+})
+
+test('bodyBuilder should build query with more options', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder().query('geo_distance', 'point', {lat: 40, lon: 20}, {distance: '12km'})
+
+  t.deepEqual(result.getQuery(), {
+    geo_distance: {
+      distance: '12km',
+      point: {
+        lat: 40,
+        lon: 20
       }
-    })
+    }
   })
+})
 
-  it('should add multiple aggregations', () => {
-    let result = new BodyBuilder().aggregation('terms', 'user')
-                                  .aggregation('terms', 'name')
-                                  .build()
-    expect(result).to.eql({
-      aggregations: {
-        agg_terms_user: {
-          terms: {
-            field: 'user'
-          }
-        },
-        agg_terms_name: {
-          terms: {
-            field: 'name'
-          }
-        }
-      }
-    })
-  })
+test('bodyBuilder should build nested queries', (t) => {
+  t.plan(1)
 
-  it('should support nesting aggregations', () => {
-    let result = new BodyBuilder()
-      .aggregation('terms', 'user', agg => agg.aggregation('avg', 'value'))
-      .build()
-    expect(result).to.eql({
-      aggregations: {
-        agg_terms_user: {
-          terms: {
-            field: 'user'
-          },
-          aggs: {
-            agg_avg_value: {
-              avg: {
-                field: 'value'
-              }
-            }
-          }
-        }
-      }
-    })
-  })
+  const result = bodyBuilder().query('nested', 'path', 'obj1', (q) => q.query('match', 'obj1.color', 'blue'))
 
-  it('should support nesting aggregations in filter aggregations', () => {
-    let result = new BodyBuilder()
-      .aggregation(
-        'filter',
-        filterBuilder => filterBuilder.filter('term', 'user', 'kimchy'),
-        agg => agg.aggregation('avg', 'value')
-      )
-      .build()
-    expect(result).to.eql({
-      aggregations: {
-        agg_filter: {
-          filter: {
-            term: {
-              user: 'kimchy'
-            }
-          },
-          aggs: {
-            agg_avg_value: {
-              avg: {
-                field: 'value'
-              }
-            }
-          }
-        }
-      }
-    })
-  })
-
-  it('should add an aggregation and a filter', () => {
-    let result = new BodyBuilder().filter('term', 'user', 'kimchy')
-                                  .agg('terms', 'user')
-                                  .build()
-    expect(result).to.eql({
-      query: {
-        filtered: {
-          filter: {
-            term: {user: 'kimchy'}
-          }
-        }
-      },
-      aggregations: {
-        agg_terms_user: {
-          terms: {
-            field: 'user'
-          }
-        }
-      }
-    })
-  })
-
-  it('should add a query', () => {
-    let result = new BodyBuilder().query('match', 'message', 'this is a test')
-                                  .build()
-    expect(result).to.eql({
+  t.deepEqual(result.getQuery(), {
+    nested: {
+      path: 'obj1',
       query: {
         match: {
-          message: 'this is a test'
+          'obj1.color': 'blue'
         }
       }
-    })
+    }
+  })
+})
+
+test('bodyBuilder should nest bool-merged queries', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder().query('nested', 'path', 'obj1', {score_mode: 'avg'}, (q) => {
+    return q.query('match', 'obj1.name', 'blue').query('range', 'obj1.count', {gt: 5})
   })
 
-  it('should add multiple queries', () => {
-    let result = new BodyBuilder().query('match', 'message', 'this is a test')
-                                  .andQuery('match', 'message', 'another test')
-                                  .addQuery('match', 'title', 'test')
-                                  .build()
-    expect(result).to.eql({
+  t.deepEqual(result.getQuery(), {
+    nested: {
+      path: 'obj1',
+      score_mode: 'avg',
       query: {
         bool: {
           must: [
-            {match: {message: 'this is a test'}},
-            {match: { message: 'another test'}},
-            {match: {title: 'test'}}
-          ]
-        }
-      }
-    })
-  })
-
-  it('should support starting with a should query', () => {
-    let result = new BodyBuilder().orQuery('match', 'message', 'this is a test')
-                                  .build()
-    expect(result).to.eql({
-      query: {
-        bool: {
-          should: [
-            {match: {message: 'this is a test'}}
-          ]
-        }
-      }
-    })
-  })
-
-  it('should support starting with multiple should queries', () => {
-    let result = new BodyBuilder().orQuery('match', 'message', 'this is a test')
-                                  .orQuery('match', 'message', 'another test')
-                                  .build()
-    expect(result).to.eql({
-      query: {
-        bool: {
-          should: [
-            {match: {message: 'this is a test'}},
-            {match: { message: 'another test'}}
-          ]
-        }
-      }
-    })
-  })
-
-  it('should add and, not, and or queries using bool query', () => {
-    let result = new BodyBuilder().query('term', 'user', 'kimchy')
-                                  .query('term', 'user', 'herald')
-                                  .orQuery('term', 'user', 'johnny')
-                                  .notQuery('term', 'user', 'cassie')
-                                  .build()
-    expect(result).to.eql({
-      query: {
-        bool: {
-          must: [
-            {term: {user: 'kimchy'}},
-            {term: {user: 'herald'}}
-          ],
-          should: [
-            {term: {user: 'johnny'}}
-          ],
-          must_not: [
-            {term: {user: 'cassie'}}
-          ]
-        }
-      }
-    })
-  })
-
-  it('should add a query with a filter', () => {
-    let result = new BodyBuilder().query('match', 'message', 'this is a test')
-                                  .filter('term', 'user', 'kimchy')
-                                  .build()
-    expect(result).to.eql({
-      query: {
-        filtered: {
-          query: {
-            match: {
-              message: 'this is a test'
+            {
+              match: {'obj1.name': 'blue'}
+            },
+            {
+              range: {'obj1.count': {gt: 5}}
             }
-          },
-          filter: {
-            term: {user: 'kimchy'}
+          ]
+        }
+      }
+    }
+  })
+})
+
+test('bodyBuilder should make this chained nested query', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .query('match', 'title', 'eggs')
+    .query('nested', 'path', 'comments', {score_mode: 'max'} , (q) => {
+      return q
+        .query('match', 'comments.name', 'john')
+        .query('match', 'comments.age', 28)
+  })
+
+  t.deepEqual(result.getQuery(), {
+    bool: {
+      must: [
+        {
+          match: {
+            title: 'eggs'
+          }
+        },
+        {
+          nested: {
+            path: 'comments',
+            score_mode: 'max',
+            query: {
+              bool: {
+                must: [
+                  {
+                    match: {
+                      'comments.name': 'john'
+                    }
+                  },
+                  {
+                    match: {
+                      'comments.age': 28
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  })
+})
+
+test('bodyBuilder should create this big-ass query', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder().query('constant_score', (q) => {
+    return q
+      .orFilter('term', 'created_by.user_id', 'abc')
+      .orFilter('nested', 'path', 'doc_meta', (q) => {
+        return q.query('constant_score', (q) => {
+          return q.filter('term', 'doc_meta.user_id', 'abc')
+        })
+      })
+      .orFilter('nested', 'path', 'tests', (q) => {
+        return q.query('constant_score', (q) => {
+          return q.filter('term', 'tests.created_by.user_id', 'abc')
+        })
+      })
+  })
+
+  t.deepEqual(result.getQuery(), {
+    constant_score: {
+      filter: {
+        bool: {
+          should: [
+            {
+              term: {
+                'created_by.user_id': 'abc'
+              }
+            }, {
+              nested: {
+                path: 'doc_meta',
+                query: {
+                  constant_score: {
+                    filter: {
+                      term: {
+                        'doc_meta.user_id': 'abc'
+                      }
+                    }
+                  }
+                }
+              }
+            }, {
+              nested: {
+                path: 'tests',
+                query: {
+                  constant_score: {
+                    filter: {
+                      term: {
+                        'tests.created_by.user_id': 'abc'
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  })
+})
+
+test('bodyBuilder should combine queries, filters, aggregations', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .query('match', 'message', 'this is a test')
+    .filter('term', 'user', 'kimchy')
+    .filter('term', 'user', 'herald')
+    .orFilter('term', 'user', 'johnny')
+    .notFilter('term', 'user', 'cassie')
+    .aggregation('terms', 'user')
+    .build()
+
+  t.deepEqual(result, {
+    query: {
+      bool: {
+        must: {
+          match: {
+            message: 'this is a test'
+          }
+        },
+        filter: {
+          bool: {
+            must: [
+              {term: {user: 'kimchy'}},
+              {term: {user: 'herald'}}
+            ],
+            should: [
+              {term: {user: 'johnny'}}
+            ],
+            must_not: [
+              {term: {user: 'cassie'}}
+            ]
           }
         }
       }
-    })
-  })
-
-  it('should add multiples different queries', () => {
-    let result = new BodyBuilder().query('match', 'title', 'quick')
-                                  .notQuery('match', 'title', 'lazy')
-                                  .orQuery('match', 'title', 'brown')
-                                  .orQuery('match', 'title', 'dog')
-                                  .build()
-    expect(result).to.eql({
-      "query": {
-        "bool": {
-          "must":     [  { "match": { "title": "quick" }} ],
-          "must_not": [  { "match": { "title": "lazy"  }} ],
-          "should":   [
-                        { "match": { "title": "brown" }},
-                        { "match": { "title": "dog"   }}
-                      ]
+    },
+    aggs: {
+      agg_terms_user: {
+        terms: {
+          field: 'user'
         }
       }
-    })
+    }
+  })
+})
+
+test('bodybuilder should allow rebuilding', (t) => {
+  t.plan(2)
+
+  const body = bodyBuilder().filter('match', 'message', 'this is a test')
+
+  t.deepEqual(body.build('v1'), {
+    query: {
+      filtered: {
+        filter: {
+          match: {
+            message: 'this is a test'
+          }
+        }
+      }
+    }
+  })
+
+  t.deepEqual(body.build(), {
+    query: {
+      bool: {
+        filter: {
+          match: {
+            message: 'this is a test'
+          }
+        }
+      }
+    }
+  })
+})
+
+test('bodybuilder should add a not filter', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .notFilter('match', 'message', 'this is a test')
+    .build()
+
+  t.deepEqual(result, {
+    query: {
+      bool: {
+        filter: {
+          bool: {
+            must_not: [{
+              match: {
+                message: 'this is a test'
+              }
+            }]
+          }
+        }
+      }
+    }
+  })
+})
+
+test('bodybuilder | or filter', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder().filter('or', [
+    {term: {user: 'kimchy'}},
+    {term: {user: 'tony'}}
+  ])
+  .build()
+
+  t.deepEqual(result,
+  {
+    query: {
+      bool: {
+        filter: {
+          or: [
+            {term: {user: 'kimchy'}},
+            {term: {user: 'tony'}}
+          ]
+        }
+      }
+    }
   })
 })

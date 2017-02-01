@@ -38,7 +38,7 @@ body.build() // Build 2.x / 5.x DSL (default)
 body.build('v1') // Build 1.x DSL
 ```
 
-For each elasticsearch query body, create an instance of `Bodybuilder`, apply
+For each elasticsearch query body, create an instance of `bodybuilder`, apply
 the desired query/filter/aggregation clauses, and call `build` to retrieve the
 built query body.
 
@@ -48,7 +48,7 @@ Try it out on the command line using the node REPL:
 
     # Start the repl
     node ./node_modules/bodybuilder/repl.js
-    # The builder is available in the context variable Bodybuilder
+    # The builder is available in the context variable bodybuilder
     bodybuilder > bodybuilder().query('match', 'message', 'this is a test').build()
 
 ### Queries

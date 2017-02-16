@@ -656,3 +656,46 @@ test('queryBuilder | or', (t) => {
     ]
   })
 })
+
+test('queryBuilder | minimum_should_match with one query ignores minimum', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder()
+    .orQuery('term', 'status', 'alert')
+    .minimumShouldMatch(2)
+
+  t.deepEqual(result.getQuery(), {
+    bool: {
+      should: [{
+        term: {
+          status: 'alert'
+        }
+      }]
+    }
+  })
+})
+
+test('queryBuilder | minimum_should_match with multiple queries', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder()
+    .orQuery('term', 'status', 'alert')
+    .orQuery('term', 'status', 'normal')
+    .minimumShouldMatch(2)
+
+  t.deepEqual(result.getQuery(), {
+    bool: {
+      should: [{
+        term: {
+          status: 'alert'
+        }
+      }, {
+        term: {
+          status: 'normal'
+        }
+      }],
+      minimum_should_match: 2
+    }
+  })
+
+})

@@ -662,7 +662,7 @@ test('queryBuilder | minimum_should_match with one query ignores minimum', (t) =
 
   const result = queryBuilder()
     .orQuery('term', 'status', 'alert')
-    .minimumShouldMatch(2)
+    .queryMinimumShouldMatch(2)
 
   t.deepEqual(result.getQuery(), {
     bool: {
@@ -681,7 +681,7 @@ test('queryBuilder | minimum_should_match with multiple queries', (t) => {
   const result = queryBuilder()
     .orQuery('term', 'status', 'alert')
     .orQuery('term', 'status', 'normal')
-    .minimumShouldMatch(2)
+    .queryMinimumShouldMatch(2)
 
   t.deepEqual(result.getQuery(), {
     bool: {

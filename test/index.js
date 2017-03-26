@@ -518,3 +518,88 @@ test('bodybuilder | or filter', (t) => {
     }
   })
 })
+
+test('bodybuilder | minimum_should_match filter', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .orFilter('term', 'user', 'kimchy')
+    .orFilter('term', 'user', 'tony')
+    .filterMinimumShouldMatch(2)
+    .build()
+
+  t.deepEqual(result,
+  {
+    query: {
+      bool: {
+        filter: {
+          bool: {
+            should: [
+              {term: {user: 'kimchy'}},
+              {term: {user: 'tony'}}
+            ],
+            minimum_should_match: 2
+          }
+        }
+      }
+    }
+  })
+})
+
+test('bodybuilder | minimum_should_match query', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .orQuery('term', 'user', 'kimchy')
+    .orQuery('term', 'user', 'tony')
+    .queryMinimumShouldMatch(2)
+    .build()
+
+  t.deepEqual(result,
+  {
+    query: {
+      bool: {
+        should: [
+          {term: {user: 'kimchy'}},
+          {term: {user: 'tony'}}
+        ],
+        minimum_should_match: 2
+      }
+    }
+  })
+})
+
+test('bodybuilder | minimum_should_match query and filter', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .orQuery('term', 'user', 'kimchy')
+    .orQuery('term', 'user', 'tony')
+    .orFilter('term', 'user', 'kimchy')
+    .orFilter('term', 'user', 'tony')
+    .filterMinimumShouldMatch(1)
+    .queryMinimumShouldMatch(2)
+    .build()
+
+  t.deepEqual(result,
+  {
+    query: {
+      bool: {
+        should: [
+          {term: {user: 'kimchy'}},
+          {term: {user: 'tony'}}
+        ],
+        minimum_should_match: 2,
+        filter: {
+          bool: {
+            should: [
+              {term: {user: 'kimchy'}},
+              {term: {user: 'tony'}}
+            ],
+            minimum_should_match: 1
+          }
+        }
+      }
+    }
+  })
+})

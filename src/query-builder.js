@@ -5,6 +5,13 @@ import filterBuilder from './filter-builder'
 export default function queryBuilder () {
   let query = {}
 
+  function addMinimumShouldMatch(str) {
+    const shouldClause = _.get(query, 'bool.should')
+    if (shouldClause && shouldClause.length > 1) {
+      query.bool['minimum_should_match'] = str
+    }
+  }
+
   function makeQuery (boolType, queryType, ...args) {
     const nested = {}
     if (_.isFunction(_.last(args))) {
@@ -115,6 +122,19 @@ export default function queryBuilder () {
      */
     notQuery (...args) {
       makeQuery('not', ...args)
+      return this
+    },
+
+    /**
+     * Set the `minimum_should_match` property on a bool query with more than
+     * one `should` clause.
+     *
+     * @param  {any} param  minimum_should_match parameter. For possible values
+     *                      see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-minimum-should-match.html
+     * @return {bodybuilder} Builder.
+     */
+    queryMinimumShouldMatch (param) {
+      addMinimumShouldMatch(param)
       return this
     },
 

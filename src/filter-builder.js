@@ -6,6 +6,13 @@ import aggregationBuilder from './aggregation-builder'
 export default function filterBuilder () {
   let filter = {}
 
+  function addMinimumShouldMatch(str) {
+    const shouldClause = _.get(filter, 'bool.should')
+    if (shouldClause && shouldClause.length > 1) {
+      filter.bool['minimum_should_match'] = str
+    }
+  }
+
   function makeFilter (boolType, filterType, ...args) {
     const nested = {}
     if (_.isFunction(_.last(args))) {
@@ -101,6 +108,19 @@ export default function filterBuilder () {
      */
     notFilter (...args) {
       makeFilter('not', ...args)
+      return this
+    },
+
+    /**
+     * Set the `minimum_should_match` property on a bool filter with more than
+     * one `should` clause.
+     *
+     * @param  {any} param  minimum_should_match parameter. For possible values
+     *                      see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-minimum-should-match.html
+     * @return {bodybuilder} Builder.
+     */
+    filterMinimumShouldMatch (param) {
+      addMinimumShouldMatch(param)
       return this
     },
 

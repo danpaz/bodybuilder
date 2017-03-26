@@ -8,6 +8,7 @@ to npm. Currently, @danpaz is the only one doing this.
 1. Bump the npm version `npm version major|minor|patch`. This will also:
   - Run tests and style checks locally.
   - Generate built files.
-1. Commit changes to master branch.
-1. Push updates to github, including the new npm version tag `git push && git push --tags`.
-  - Travis CI will automatically publish to npm.
+  - Commit built files to master branch.
+  - Generate a tagged version commit.
+  - Push to GitHub and trigger a Travis build.
+  - Travis CI should automatically publish to npm.

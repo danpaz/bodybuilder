@@ -135,6 +135,16 @@
               
                 
                 <li><a
+                  href='#queryminimumshouldmatch'
+                  class="">
+                  queryMinimumShouldMatch
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#filter'
                   class="">
                   filter
@@ -178,6 +188,16 @@
                   href='#notfilter'
                   class="">
                   notFilter
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#filterminimumshouldmatch'
+                  class="">
+                  filterMinimumShouldMatch
                   
                 </a>
                 
@@ -1048,6 +1068,74 @@ bodybuilder()
 
   
   <div class='clearfix'>
+    <h3 class='fl m0' id='queryminimumshouldmatch'>
+      queryMinimumShouldMatch
+    </h3>
+    
+  </div>
+  
+
+  <p>Set the <code>minimum_should_match</code> property on a bool query with more than
+one <code>should</code> clause.</p>
+
+
+  <div class='pre p1 fill-light mt0'>queryMinimumShouldMatch(param: any): <a href="#bodybuilder">bodybuilder</a></div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>param</span> <code class='quiet'>(any)</code> minimum_should_match parameter. For possible values
+see 
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-minimum-should-match.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-minimum-should-match.html</a>
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#bodybuilder">bodybuilder</a></code>:
+        Builder.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
     <h3 class='fl m0' id='filter'>
       filter
     </h3>
@@ -1387,6 +1475,74 @@ the last argument.
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>args</span> <code class='quiet'>(...any)</code> 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#bodybuilder">bodybuilder</a></code>:
+        Builder.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    <h3 class='fl m0' id='filterminimumshouldmatch'>
+      filterMinimumShouldMatch
+    </h3>
+    
+  </div>
+  
+
+  <p>Set the <code>minimum_should_match</code> property on a bool filter with more than
+one <code>should</code> clause.</p>
+
+
+  <div class='pre p1 fill-light mt0'>filterMinimumShouldMatch(param: any): <a href="#bodybuilder">bodybuilder</a></div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>param</span> <code class='quiet'>(any)</code> minimum_should_match parameter. For possible values
+see 
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-minimum-should-match.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-minimum-should-match.html</a>
+
           </div>
           
         </div>

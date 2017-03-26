@@ -16,5 +16,5 @@ deploy:
     secure: ZppvibgEzEsDYjNxt1LU2Uyj+qSI3OkkfWO5EmUpALcJmPmEZnTl592YntBjFXptxJ1rAptnMZKO2Oo+NYefagg/ejAcI5Yf/pw2RvvND8J/45oFSHk5ChS3Y7J0bRkhRlMFckRH2HhBwxSkDd/0VWF1/lDIlrDtRGdQNixKMPDbf+awAc8f4y92+mcdouiizUqxhuPJ0LkDjSfiwsyD5KVeG/Yss117C1m1Sewl51/fVvQMoixs3uA1de3OvASYON8g0nEkytaTWVraTqpXTtvLSpKD/OlSotAJQVZUj1SCN3l3T5MMbfl2DcNdmpVmI0acbYefHCctJNXeuRDuYgAw94ElKhF79ofcvonQg7+HNvnY2A7NfInSnmGhXIhcRefNnlMGCEwISv48ffe7kpE7xupJzEQqhe8bp6wmpJkHZEZKd1udW/WQ4LKU4AzlkuF3N7TRN76R9B2s9D6/pTC3oz8D0ZPCGvOlyefouoTyCVE/GZaR7XiumZNWLXuB+qZCyBK0SqRFISA+lO4zSt6a2lQaQHk+fma+AhqGoZ/wbrY404jGBg1xnr0n9Asrt7oI58A41kOSo3HtBrEEmP6kg+qcciSVATAU2+xvZXM8L88LM9Ti0yq0BE6baOxpZ0AWqP8rn9oca23gjUvRA/Mut8Ej8fiNf5pJ1JeHtvg=
   on:
     tags: true
-    branch: master
+    all_branches: true
     repo: danpaz/bodybuilder

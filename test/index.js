@@ -519,6 +519,35 @@ test('bodybuilder | or filter', (t) => {
   })
 })
 
+test('bodybuilder | dynamic filter', t => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .filter('constant_score', f => f.filter('term', 'user', 'kimchy'))
+    .filter('term', 'message', 'this is a test')
+    .build()
+
+  t.deepEqual(result,
+  {
+    query: { bool: { filter: {
+      bool: {
+        must: [
+          {
+            constant_score: {
+              filter: {
+                term: {
+                  user: 'kimchy'
+                }
+              }
+            }
+          },
+          { term: { message: 'this is a test' } }
+        ]
+      }
+    } } }
+  })
+})
+
 test('bodybuilder | minimum_should_match filter', (t) => {
   t.plan(1)
 

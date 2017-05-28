@@ -231,6 +231,38 @@ var body = bodybuilder()
 // }
 ```
 
+#### Nesting Filters and Queries
+
+It is even possible to nest filters, e.g. when some should and must filters have to be combined.
+
+```js
+var body = bodybuilder()
+    .orFilter('term', 'author', 'kimchy')
+    .orFilter('bool', b => b
+      .filter('match', 'message', 'this is a test')
+      .filter('term', 'type', 'comment')
+    )
+    .build()
+
+// body == {
+//   query: {
+//     bool: {
+//       filter: {
+//         bool: {
+//           should: [
+//             { term: { author: 'kimchy' } },
+//             { bool: { must: [
+//               { match: { message: 'this is a test' } },
+//               { term: { type: 'comment' } }
+//             ] } }
+//           ]
+//         }
+//       }
+//     }
+//   }
+// }
+```
+
 ### Sort
 
 Set a sort direction using `sort(field, direction)`, where direction defaults to

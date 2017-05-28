@@ -1,16 +1,17 @@
 import _ from 'lodash'
-import { boolMerge, buildClause } from './utils'
+import { buildClause } from './utils'
 import queryBuilder from './query-builder'
 import aggregationBuilder from './aggregation-builder'
 
 export default function filterBuilder () {
-  let filter = {}
+  let filters = {
+    and: [],
+    or: [],
+    not: []
+  }
 
   function addMinimumShouldMatch(str) {
-    const shouldClause = _.get(filter, 'bool.should')
-    if (shouldClause && shouldClause.length > 1) {
-      filter.bool['minimum_should_match'] = str
-    }
+    filters.minimum_should_match = str
   }
 
   function makeFilter (boolType, filterType, ...args) {
@@ -36,10 +37,8 @@ export default function filterBuilder () {
       }
     }
 
-    filter = boolMerge(
-      {[filterType]: Object.assign(buildClause(...args), nested)},
-      filter,
-      boolType
+    filters[boolType].push(
+      {[filterType]: Object.assign(buildClause(...args), nested)}
     )
   }
 
@@ -125,11 +124,51 @@ export default function filterBuilder () {
     },
 
     getFilter () {
-      return filter
+      return this.hasFilter() ? toBool(filters) : {}
     },
 
     hasFilter () {
-      return !!_.size(filter)
+      return !!(filters.and.length || filters.or.length || filters.not.length)
     }
   }
+}
+
+function toBool (filters) {
+  const unwrapped = {
+    must: unwrap(filters.and),
+    should: unwrap(filters.or),
+    must_not: unwrap(filters.not),
+    minimum_should_match: filters.minimum_should_match
+  }
+
+  if (
+    filters.and.length === 1 &&
+    !unwrapped.should &&
+    !unwrapped.must_not
+  ) {
+    return unwrapped.must
+  }
+
+  const cleaned = {}
+
+  if (unwrapped.must) {
+    cleaned.must = unwrapped.must
+  }
+  if (unwrapped.should) {
+    cleaned.should = filters.or
+  }
+  if (unwrapped.must_not) {
+    cleaned.must_not = filters.not
+  }
+  if (unwrapped.minimum_should_match) {
+    cleaned.minimum_should_match = unwrapped.minimum_should_match
+  }
+
+  return {
+    bool: cleaned
+  }
+}
+
+function unwrap (arr) {
+  return arr.length > 1 ? arr : _.last(arr)
 }

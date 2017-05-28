@@ -1,45 +1,16 @@
-import _ from 'lodash'
-import { buildClause } from './utils'
-import queryBuilder from './query-builder'
-import aggregationBuilder from './aggregation-builder'
+import { pushQuery, toBool } from './utils'
 
 export default function filterBuilder () {
-  let filters = {
+  const filters = {
     and: [],
     or: [],
     not: []
   }
 
+  const makeFilter = pushQuery.bind(null, filters)
+
   function addMinimumShouldMatch(str) {
     filters.minimum_should_match = str
-  }
-
-  function makeFilter (boolType, filterType, ...args) {
-    const nested = {}
-    if (_.isFunction(_.last(args))) {
-      const nestedCallback = args.pop()
-      const nestedResult = nestedCallback(
-        Object.assign(
-          {},
-          queryBuilder(),
-          filterBuilder(),
-          aggregationBuilder()
-        )
-      )
-      if (nestedResult.hasQuery()) {
-        nested.query = nestedResult.getQuery()
-      }
-      if (nestedResult.hasFilter()) {
-        nested.filter = nestedResult.getFilter()
-      }
-      if (nestedResult.hasAggregations()) {
-        nested.aggs = nestedResult.getAggregations()
-      }
-    }
-
-    filters[boolType].push(
-      {[filterType]: Object.assign(buildClause(...args), nested)}
-    )
   }
 
   return {
@@ -131,44 +102,4 @@ export default function filterBuilder () {
       return !!(filters.and.length || filters.or.length || filters.not.length)
     }
   }
-}
-
-function toBool (filters) {
-  const unwrapped = {
-    must: unwrap(filters.and),
-    should: unwrap(filters.or),
-    must_not: unwrap(filters.not),
-    minimum_should_match: filters.minimum_should_match
-  }
-
-  if (
-    filters.and.length === 1 &&
-    !unwrapped.should &&
-    !unwrapped.must_not
-  ) {
-    return unwrapped.must
-  }
-
-  const cleaned = {}
-
-  if (unwrapped.must) {
-    cleaned.must = unwrapped.must
-  }
-  if (unwrapped.should) {
-    cleaned.should = filters.or
-  }
-  if (unwrapped.must_not) {
-    cleaned.must_not = filters.not
-  }
-  if (unwrapped.minimum_should_match) {
-    cleaned.minimum_should_match = unwrapped.minimum_should_match
-  }
-
-  return {
-    bool: cleaned
-  }
-}
-
-function unwrap (arr) {
-  return arr.length > 1 ? arr : _.last(arr)
 }

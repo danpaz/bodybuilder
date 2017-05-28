@@ -1,58 +1,7 @@
 import _ from 'lodash'
-import boolQuery from './bool-query'
-
-/**
- * Extends lodash's assignWith by allowing array concatenation
- * and deep merging.
- *
- * @private
- *
- * @param {Object} target Target.
- * @returns {Object} Merged object.
- */
-export function mergeConcat() {
-  let args = Array.prototype.slice.call(arguments, 0)
-  args.push(function customizer(a, b) {
-    if (_.isPlainObject(a)) {
-      return _.assignWith(a, b, customizer)
-    } else if (_.isArray(a)) {
-      return a.concat(b)
-    } else {
-      return b
-    }
-  })
-  return _.assignWith.apply(null, args)
-}
-
-/**
- * Merge two filters or queries using their Boolean counterparts.
- *
- * @private
- *
- * @param  {Object} newObj      New filter or query to add.
- * @param  {Object} currentObj  Old filter or query to merge into.
- * @param  {String} boolType    Type of boolean ('and', 'or', 'not').
- * @returns {Object} Combined filter or query.
- */
-export function boolMerge(newObj, currentObj, boolType = 'and') {
-  let boolCurrent
-  let boolNew
-
-  // Only one, no need for bool.
-  if (_.isEmpty(currentObj)) {
-    // Allow starting with 'or' and 'not' queries.
-    if (boolType !== 'and') {
-      return boolQuery(boolType, newObj)
-    }
-    return newObj
-  }
-
-  // Make bools out of the new and existing filters.
-  boolCurrent = currentObj.bool ? currentObj : boolQuery('must', currentObj)
-  boolNew = newObj.bool ? newObj : boolQuery(boolType, newObj)
-
-  return mergeConcat({}, boolCurrent, boolNew)
-}
+import queryBuilder from './query-builder'
+import filterBuilder from './filter-builder'
+import aggregationBuilder from './aggregation-builder'
 
 /**
  * Compound sort function into the list of sorts
@@ -111,4 +60,75 @@ export function buildClause (field, value, opts) {
   }
 
   return Object.assign({}, mainClause, opts)
+}
+
+export function toBool (filters) {
+  const unwrapped = {
+    must: unwrap(filters.and),
+    should: unwrap(filters.or),
+    must_not: unwrap(filters.not),
+    minimum_should_match: filters.minimum_should_match
+  }
+
+  if (
+    filters.and.length === 1 &&
+    !unwrapped.should &&
+    !unwrapped.must_not
+  ) {
+    return unwrapped.must
+  }
+
+  const cleaned = {}
+
+  if (unwrapped.must) {
+    cleaned.must = unwrapped.must
+  }
+  if (unwrapped.should) {
+    cleaned.should = filters.or
+  }
+  if (unwrapped.must_not) {
+    cleaned.must_not = filters.not
+  }
+  if (
+    unwrapped.minimum_should_match &&
+    unwrapped.minimum_should_match <= filters.or.length
+  ) {
+    cleaned.minimum_should_match = unwrapped.minimum_should_match
+  }
+
+  return {
+    bool: cleaned
+  }
+}
+
+function unwrap (arr) {
+  return arr.length > 1 ? arr : _.last(arr)
+}
+
+export function pushQuery (existing, boolType, filterType, ...args) {
+  const nested = {}
+  if (_.isFunction(_.last(args))) {
+    const nestedCallback = args.pop()
+    const nestedResult = nestedCallback(
+      Object.assign(
+        {},
+        queryBuilder(),
+        filterBuilder(),
+        aggregationBuilder()
+      )
+    )
+    if (nestedResult.hasQuery()) {
+      nested.query = nestedResult.getQuery()
+    }
+    if (nestedResult.hasFilter()) {
+      nested.filter = nestedResult.getFilter()
+    }
+    if (nestedResult.hasAggregations()) {
+      nested.aggs = nestedResult.getAggregations()
+    }
+  }
+
+  existing[boolType].push(
+    {[filterType]: Object.assign(buildClause(...args), nested)}
+  )
 }

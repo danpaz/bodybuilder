@@ -130,7 +130,7 @@ export function pushQuery (existing, boolKey, type, ...args) {
     this.isInFilterContext &&
     _.has(nested, 'filter.bool')
   ) {
-    // nesting filters: We've introduced an unnecessary ``
+    // nesting filters: We've introduced an unnecessary `filter.bool`
     existing[boolKey].push(
       {[type]: Object.assign(buildClause(...args), nested.filter.bool)}
     )

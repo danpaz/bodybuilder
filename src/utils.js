@@ -104,7 +104,7 @@ function unwrap (arr) {
   return arr.length > 1 ? arr : _.last(arr)
 }
 
-export function pushQuery (existing, boolType, filterType, ...args) {
+export function pushQuery (existing, boolKey, type, ...args) {
   const nested = {}
   if (_.isFunction(_.last(args))) {
     const nestedCallback = args.pop()
@@ -126,18 +126,18 @@ export function pushQuery (existing, boolType, filterType, ...args) {
   }
 
   if (
-    _.includes(['bool', 'constant_score'], filterType) &&
+    _.includes(['bool', 'constant_score'], type) &&
     this.isInFilterContext &&
     _.has(nested, 'filter.bool')
   ) {
     // nesting filters: We've introduced an unnecessary ``
-    existing[boolType].push(
-      {[filterType]: Object.assign(buildClause(...args), nested.filter.bool)}
+    existing[boolKey].push(
+      {[type]: Object.assign(buildClause(...args), nested.filter.bool)}
     )
   } else {
     // Usual case
-    existing[boolType].push(
-      {[filterType]: Object.assign(buildClause(...args), nested)}
+    existing[boolKey].push(
+      {[type]: Object.assign(buildClause(...args), nested)}
     )
   }
 }

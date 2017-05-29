@@ -1,13 +1,13 @@
 import { toBool, pushQuery } from './utils'
 
-export default function queryBuilder () {
+export default function queryBuilder (options) {
   const query = {
     and: [],
     or: [],
     not: []
   }
 
-  const makeQuery = pushQuery.bind(null, query)
+  const makeQuery = pushQuery.bind(options || {}, query)
 
   function addMinimumShouldMatch(str) {
     query.minimum_should_match = str

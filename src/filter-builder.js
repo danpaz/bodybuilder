@@ -1,13 +1,16 @@
 import { pushQuery, toBool } from './utils'
 
-export default function filterBuilder () {
+export default function filterBuilder (options) {
   const filters = {
     and: [],
     or: [],
     not: []
   }
 
-  const makeFilter = pushQuery.bind(null, filters)
+  const makeFilter = pushQuery.bind(
+    Object.assign({ isInFilterContext: true }, options),
+    filters
+  )
 
   function addMinimumShouldMatch(str) {
     filters.minimum_should_match = str

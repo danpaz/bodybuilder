@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import queryBuilder from './query-builder'
 import filterBuilder from './filter-builder'
-import aggregationBuilder from './aggregation-builder'
 
 /**
  * Compound sort function into the list of sorts
@@ -112,23 +111,33 @@ export function pushQuery (existing, boolType, filterType, ...args) {
     const nestedResult = nestedCallback(
       Object.assign(
         {},
-        queryBuilder(),
-        filterBuilder(),
-        aggregationBuilder()
+        filterBuilder({ isInFilterContext: this.isInFilterContext }),
+        this.isInFilterContext
+          ? {}
+          : queryBuilder({ isInFilterContext: this.isInFilterContext })
       )
     )
-    if (nestedResult.hasQuery()) {
+    if (!this.isInFilterContext && nestedResult.hasQuery()) {
       nested.query = nestedResult.getQuery()
     }
     if (nestedResult.hasFilter()) {
       nested.filter = nestedResult.getFilter()
     }
-    if (nestedResult.hasAggregations()) {
-      nested.aggs = nestedResult.getAggregations()
-    }
   }
 
-  existing[boolType].push(
-    {[filterType]: Object.assign(buildClause(...args), nested)}
-  )
+  if (
+    _.includes(['bool', 'constant_score'], filterType) &&
+    this.isInFilterContext &&
+    _.has(nested, 'filter.bool')
+  ) {
+    // nesting filters: We've introduced an unnecessary ``
+    existing[boolType].push(
+      {[filterType]: Object.assign(buildClause(...args), nested.filter.bool)}
+    )
+  } else {
+    // Usual case
+    existing[boolType].push(
+      {[filterType]: Object.assign(buildClause(...args), nested)}
+    )
+  }
 }

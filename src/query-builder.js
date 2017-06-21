@@ -1,41 +1,16 @@
-import _ from 'lodash'
-import { boolMerge, buildClause } from './utils'
-import filterBuilder from './filter-builder'
+import { toBool, pushQuery } from './utils'
 
-export default function queryBuilder () {
-  let query = {}
-
-  function addMinimumShouldMatch(str) {
-    const shouldClause = _.get(query, 'bool.should')
-    if (shouldClause && shouldClause.length > 1) {
-      query.bool['minimum_should_match'] = str
-    }
+export default function queryBuilder (options) {
+  const query = {
+    and: [],
+    or: [],
+    not: []
   }
 
-  function makeQuery (boolType, queryType, ...args) {
-    const nested = {}
-    if (_.isFunction(_.last(args))) {
-      const nestedCallback = args.pop()
-      const nestedResult = nestedCallback(
-        Object.assign(
-          {},
-          queryBuilder(),
-          filterBuilder()
-        )
-      )
-      if (nestedResult.hasQuery()) {
-        nested.query = nestedResult.getQuery()
-      }
-      if (nestedResult.hasFilter()) {
-        nested.filter = nestedResult.getFilter()
-      }
-    }
+  const makeQuery = pushQuery.bind(options || {}, query)
 
-    query = boolMerge(
-      {[queryType]: Object.assign(buildClause(...args), nested)},
-      query,
-      boolType
-    )
+  function addMinimumShouldMatch(str) {
+    query.minimum_should_match = str
   }
 
   return {
@@ -139,11 +114,11 @@ export default function queryBuilder () {
     },
 
     getQuery () {
-      return query
+      return this.hasQuery() ? toBool(query) : {}
     },
 
     hasQuery () {
-      return !!_.size(query)
+      return !!(query.and.length || query.or.length || query.not.length)
     }
   }
 }

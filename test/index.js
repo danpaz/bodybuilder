@@ -519,6 +519,109 @@ test('bodybuilder | or filter', (t) => {
   })
 })
 
+test('bodybuilder | dynamic filter', t => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .filter('constant_score', f => f.filter('term', 'user', 'kimchy'))
+    .filter('term', 'message', 'this is a test')
+    .build()
+
+  t.deepEqual(result,
+  {
+    query: { bool: { filter: {
+      bool: {
+        must: [
+          {
+            constant_score: {
+              filter: {
+                term: {
+                  user: 'kimchy'
+                }
+              }
+            }
+          },
+          { term: { message: 'this is a test' } }
+        ]
+      }
+    } } }
+  })
+})
+
+test('bodybuilder | complex dynamic filter', t => {
+  t.plan(3)
+
+  const result = bodyBuilder()
+    .orFilter('bool', f => {
+      f.filter('terms', 'tags', ['Popular'])
+      f.filter('terms', 'brands', ['A', 'B'])
+      return f
+    })
+    .orFilter('bool', f => {
+      f.filter('terms', 'tags', ['Emerging'])
+      f.filter('terms', 'brands', ['C'])
+      return f
+    })
+    .orFilter('bool', f => {
+      f.filter('terms', 'tags', ['Rumor'])
+      f.filter('terms', 'companies', ['A', 'C', 'D'])
+      return f
+    })
+    .build()
+
+  t.deepEqual(result, {
+    query: { bool: { filter: { bool: { should: [
+      {
+        bool: { must: [
+          { terms: { tags: ['Popular'] } },
+          { terms: { brands: ['A', 'B'] } }
+        ]}
+      },
+      {
+        bool: { must: [
+          { terms: { tags: ['Emerging'] } },
+          { terms: { brands: ['C'] } }
+        ]}
+      },
+      {
+        bool: { must: [
+          { terms: { tags: ['Rumor'] } },
+          { terms: { companies: ['A', 'C', 'D'] } }
+        ]}
+      }
+    ]}}}}
+  })
+
+  t.deepEqual(result.query.bool.filter.bool.should, [
+    {
+      bool: { must: [
+        { terms: { tags: ['Popular'] } },
+        { terms: { brands: ['A', 'B'] } }
+      ]}
+    },
+    {
+      bool: { must: [
+        { terms: { tags: ['Emerging'] } },
+        { terms: { brands: ['C'] } }
+      ]}
+    },
+    {
+      bool: { must: [
+        { terms: { tags: ['Rumor'] } },
+        { terms: { companies: ['A', 'C', 'D'] } }
+      ]}
+    }
+  ])
+
+  t.deepEqual(result.query.bool.filter.bool.should[0], {
+    bool: { must: [
+      { terms: { tags: ['Popular'] } },
+      { terms: { brands: ['A', 'B'] } }
+    ]}
+  })
+
+})
+
 test('bodybuilder | minimum_should_match filter', (t) => {
   t.plan(1)
 

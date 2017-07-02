@@ -90,7 +90,7 @@ export function toBool (filters) {
   }
   if (
     unwrapped.minimum_should_match &&
-    unwrapped.minimum_should_match <= filters.or.length
+    filters.or.length > 1
   ) {
     cleaned.minimum_should_match = unwrapped.minimum_should_match
   }

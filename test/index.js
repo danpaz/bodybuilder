@@ -335,7 +335,7 @@ test('bodyBuilder should make this chained nested query', (t) => {
 })
 
 test('bodyBuilder should create this big-ass query', (t) => {
-  t.plan(1)
+  t.plan(4)
 
   const result = bodyBuilder().query('constant_score', (q) => {
     return q
@@ -352,47 +352,60 @@ test('bodyBuilder should create this big-ass query', (t) => {
       })
   })
 
-  t.deepEqual(result.getQuery(), {
+  const firstShould = {
+    term: {
+      'created_by.user_id': 'abc'
+    }
+  }
+
+  const secondShould = {
+    nested: {
+      path: 'doc_meta',
+      query: {
+        constant_score: {
+          filter: {
+            term: {
+              'doc_meta.user_id': 'abc'
+            }
+          }
+        }
+      }
+    }
+  }
+  const thirdShould = {
+    nested: {
+      path: 'tests',
+      query: {
+        constant_score: {
+          filter: {
+            term: {
+              'tests.created_by.user_id': 'abc'
+            }
+          }
+        }
+      }
+    }
+  }
+
+  const resultQuery = result.getQuery()
+
+  t.deepEqual(resultQuery, {
     constant_score: {
       filter: {
         bool: {
           should: [
-            {
-              term: {
-                'created_by.user_id': 'abc'
-              }
-            }, {
-              nested: {
-                path: 'doc_meta',
-                query: {
-                  constant_score: {
-                    filter: {
-                      term: {
-                        'doc_meta.user_id': 'abc'
-                      }
-                    }
-                  }
-                }
-              }
-            }, {
-              nested: {
-                path: 'tests',
-                query: {
-                  constant_score: {
-                    filter: {
-                      term: {
-                        'tests.created_by.user_id': 'abc'
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            firstShould, secondShould, thirdShould
           ]
         }
       }
     }
   })
+
+  const resultShould = resultQuery.constant_score.filter.bool.should
+
+  t.deepEqual(resultShould[0], firstShould)
+  t.deepEqual(resultShould[1], secondShould)
+  t.deepEqual(resultShould[2], thirdShould)
 })
 
 test('bodyBuilder should combine queries, filters, aggregations', (t) => {
@@ -546,6 +559,51 @@ test('bodybuilder | dynamic filter', t => {
       }
     } } }
   })
+})
+
+test('bodybuilder | dynamic query', t => {
+  t.plan(3)
+
+  const result = bodyBuilder()
+    .query('constant_score', f => f.query('term', 'user', 'kimchy'))
+    .query('term', 'message', 'this is a test')
+    .build()
+
+  t.deepEqual(result,
+  {
+    query: {
+      bool: {
+        must: [
+          {
+            constant_score: {
+              must: {
+                term: {
+                  user: 'kimchy'
+                }
+              }
+            }
+          },
+          { term: { message: 'this is a test' } }
+        ]
+      }
+    }
+  })
+
+  t.deepEqual(result.query.bool.must[0],
+  {
+    constant_score: {
+      must: {
+        term: {
+          user: 'kimchy'
+        }
+      }
+    }
+  })
+
+  t.deepEqual(
+    result.query.bool.must[1],
+    { term: { message: 'this is a test' } }
+  )
 })
 
 test('bodybuilder | complex dynamic filter', t => {

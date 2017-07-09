@@ -471,6 +471,23 @@ test('queryBuilder | has_parent', (t) => {
   })
 })
 
+test('queryBuilder | hasParent (valid v2 syntax)', (t) => {
+  t.plan(1)
+
+  const result = queryBuilder().query('hasParent', 'parentTag', 'blog', (q) => {
+    return q.query('term', 'tag', 'something')
+  })
+
+  t.deepEqual(result.getQuery(), {
+    hasParent: {
+      parentTag: 'blog',
+      query: {
+        term: { tag: 'something' }
+      }
+    }
+  })
+})
+
 test('queryBuilder | geo_bounding_box', (t) => {
   t.plan(1)
 

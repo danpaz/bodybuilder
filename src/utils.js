@@ -109,7 +109,7 @@ const nestedTypes = ['nested', 'has_parent', 'has_child']
 export function pushQuery (existing, boolKey, type, ...args) {
   const nested = {}
   if (_.isFunction(_.last(args))) {
-    const isNestedType = _.includes(nestedTypes, _.toLower(type))
+    const isNestedType = _.includes(nestedTypes, _.snakeCase(type))
     const nestedCallback = args.pop()
     // It is illogical to add a query nested inside a filter, because its
     // scoring won't be taken into account by elasticsearch. However we do need

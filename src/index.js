@@ -2,7 +2,7 @@ import _ from 'lodash'
 import queryBuilder from './query-builder'
 import filterBuilder from './filter-builder'
 import aggregationBuilder from './aggregation-builder'
-import { sortMerge } from './utils'
+import { sortMerge, build, buildV1 } from './utils'
 
 /**
  * **http://bodybuilder.js.org**
@@ -140,10 +140,10 @@ export default function bodybuilder () {
         const aggregations = this.getAggregations()
 
         if (version === 'v1') {
-          return _buildV1(body, queries, filters, aggregations)
+          return buildV1(body, queries, filters, aggregations)
         }
 
-        return _build(body, queries, filters, aggregations)
+        return build(body, queries, filters, aggregations)
       }
 
     },
@@ -151,50 +151,6 @@ export default function bodybuilder () {
     filterBuilder(),
     aggregationBuilder()
   )
-}
-
-function _buildV1(body, queries, filters, aggregations) {
-  let clonedBody = _.cloneDeep(body)
-
-  if (!_.isEmpty(filters)) {
-    _.set(clonedBody, 'query.filtered.filter', filters)
-
-    if (!_.isEmpty(queries)) {
-      _.set(clonedBody, 'query.filtered.query', queries)
-    }
-
-  } else if (!_.isEmpty(queries)) {
-    _.set(clonedBody, 'query', queries)
-  }
-
-  if (!_.isEmpty(aggregations)) {
-    _.set(clonedBody, 'aggregations', aggregations)
-  }
-  return clonedBody
-}
-
-function _build(body, queries, filters, aggregations) {
-  let clonedBody = _.cloneDeep(body)
-
-  if (!_.isEmpty(filters)) {
-    let filterBody = {}
-    let queryBody = {}
-    _.set(filterBody, 'query.bool.filter', filters)
-    if (!_.isEmpty(queries.bool)) {
-      _.set(queryBody, 'query.bool', queries.bool)
-    } else if (!_.isEmpty(queries)) {
-      _.set(queryBody, 'query.bool.must', queries)
-    }
-    _.merge(clonedBody, filterBody, queryBody)
-  } else if (!_.isEmpty(queries)) {
-    _.set(clonedBody, 'query', queries)
-  }
-
-  if (!_.isEmpty(aggregations)) {
-    _.set(clonedBody, 'aggs', aggregations)
-  }
-
-  return clonedBody
 }
 
 module.exports = bodybuilder

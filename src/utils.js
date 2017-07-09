@@ -104,24 +104,39 @@ function unwrap (arr) {
   return arr.length > 1 ? arr : _.last(arr)
 }
 
+const nestedTypes = ['nested', 'has_parent', 'has_child']
+
 export function pushQuery (existing, boolKey, type, ...args) {
   const nested = {}
   if (_.isFunction(_.last(args))) {
+    const isNestedType = _.includes(nestedTypes, _.toLower(type))
     const nestedCallback = args.pop()
+    // It is illogical to add a query nested inside a filter, because its
+    // scoring won't be taken into account by elasticsearch. However we do need
+    // to provide the `query` methods in the context of joined queries for
+    // backwards compatability.
     const nestedResult = nestedCallback(
       Object.assign(
         {},
         filterBuilder({ isInFilterContext: this.isInFilterContext }),
-        this.isInFilterContext
+        (this.isInFilterContext && !isNestedType)
           ? {}
           : queryBuilder({ isInFilterContext: this.isInFilterContext })
       )
     )
-    if (!this.isInFilterContext && nestedResult.hasQuery()) {
-      nested.query = nestedResult.getQuery()
-    }
-    if (nestedResult.hasFilter()) {
-      nested.filter = nestedResult.getFilter()
+    if (isNestedType) {
+      nested.query = build(
+        {},
+        nestedResult.getQuery(),
+        nestedResult.getFilter()
+      ).query
+    } else {
+      if (!this.isInFilterContext && nestedResult.hasQuery()) {
+        nested.must = nestedResult.getQuery()
+      }
+      if (nestedResult.hasFilter()) {
+        nested.filter = nestedResult.getFilter()
+      }
     }
   }
 
@@ -140,4 +155,48 @@ export function pushQuery (existing, boolKey, type, ...args) {
       {[type]: Object.assign(buildClause(...args), nested)}
     )
   }
+}
+
+export function buildV1(body, queries, filters, aggregations) {
+  let clonedBody = _.cloneDeep(body)
+
+  if (!_.isEmpty(filters)) {
+    _.set(clonedBody, 'query.filtered.filter', filters)
+
+    if (!_.isEmpty(queries)) {
+      _.set(clonedBody, 'query.filtered.query', queries)
+    }
+
+  } else if (!_.isEmpty(queries)) {
+    _.set(clonedBody, 'query', queries)
+  }
+
+  if (!_.isEmpty(aggregations)) {
+    _.set(clonedBody, 'aggregations', aggregations)
+  }
+  return clonedBody
+}
+
+export function build(body, queries, filters, aggregations) {
+  let clonedBody = _.cloneDeep(body)
+
+  if (!_.isEmpty(filters)) {
+    let filterBody = {}
+    let queryBody = {}
+    _.set(filterBody, 'query.bool.filter', filters)
+    if (!_.isEmpty(queries.bool)) {
+      _.set(queryBody, 'query.bool', queries.bool)
+    } else if (!_.isEmpty(queries)) {
+      _.set(queryBody, 'query.bool.must', queries)
+    }
+    _.merge(clonedBody, filterBody, queryBody)
+  } else if (!_.isEmpty(queries)) {
+    _.set(clonedBody, 'query', queries)
+  }
+
+  if (!_.isEmpty(aggregations)) {
+    _.set(clonedBody, 'aggs', aggregations)
+  }
+
+  return clonedBody
 }

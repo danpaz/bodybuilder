@@ -675,6 +675,30 @@ test('queryBuilder | minimum_should_match with one query ignores minimum', (t) =
   })
 })
 
+test('queryBuilder | minimum_should_match with multiple combination', (t) => {
+    t.plan(1)
+
+    const result = queryBuilder()
+        .orQuery('term', 'status', 'alert')
+        .orQuery('term', 'status', 'normal')
+        .queryMinimumShouldMatch('2<-25% 9<-3')
+
+    t.deepEqual(result.getQuery(), {
+        bool: {
+            should: [{
+                term: {
+                    status: 'alert'
+                }
+            }, {
+                term: {
+                    status: 'normal'
+                }
+            }],
+            minimum_should_match: '2<-25% 9<-3'
+        }
+    })
+})
+
 test('queryBuilder | minimum_should_match with multiple queries', (t) => {
   t.plan(1)
 

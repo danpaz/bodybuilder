@@ -1,0 +1,84 @@
+{
+  "projectName": "bodybuilder",
+  "projectOwner": "danpaz",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "contributors": [
+    {
+      "login": "danpaz",
+      "name": "Daniel Paz-Soldan",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/5665333?v=4",
+      "profile": "http://danpaz.me/",
+      "contributions": [
+        "code",
+        "doc",
+        "infra",
+        "ideas"
+      ]
+    },
+    {
+      "login": "nfantone",
+      "name": "Nicolás Fantone",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/476069?v=4",
+      "profile": "https://github.com/nfantone",
+      "contributions": [
+        "code",
+        "test"
+      ]
+    },
+    {
+      "login": "npatmaja",
+      "name": "Nauval Atmaja",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/967979?v=4",
+      "profile": "http://nauvalatmaja.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ferronrsmith",
+      "name": "Ferron H",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/159764?v=4",
+      "profile": "https://ferronrsmith.github.io/",
+      "contributions": [
+        "code",
+        "test",
+        "bug",
+        "doc"
+      ]
+    },
+    {
+      "login": "davecranwell",
+      "name": "Dave Cranwell",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/352835?v=4",
+      "profile": "http://davecranwell.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "johannes-scharlach",
+      "name": "Johannes Scharlach",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/5310458?v=4",
+      "profile": "https://github.com/johannes-scharlach",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas"
+      ]
+    },
+    {
+      "login": "antonsamper",
+      "name": "Anton Samper Rivaya",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/102233?v=4",
+      "profile": "https://rivaya.com",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    }
+  ]
+}

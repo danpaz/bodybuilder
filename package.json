@@ -20,7 +20,7 @@
     "test": "babel-tape-runner test/* | tap-spec",
     "watch:test": "tape-watch test/* -r babel-register -p tap-spec",
     "check": "npm run lint && npm test",
-    "preversion": "npm run check",
+    "preversion": "npm run check && npm run build && npm run git-commit",
     "git-commit": "git add docs browser && git commit -m \"Commit built files\"",
     "git-push": "git push origin master && git push origin v$npm_package_version",
     "add": "all-contributors add",

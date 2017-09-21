@@ -10,6 +10,7 @@ branches:
   - master
   - /^v[0-9](\.[0-9]+)(\.[0-9]+)?$/
 script: npm run check
+before_deploy: npm run build
 deploy:
   provider: npm
   email: daniel.pazsoldan@gmail.com

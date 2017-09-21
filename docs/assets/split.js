@@ -1,20 +1,19 @@
-'use strict';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 /*! Split.js - v1.3.5 */
 // https://github.com/nathancahill/Split.js
 // Copyright (c) 2017 Nathan Cahill; Licensed MIT
 
-(function (global, factory) {
-  (typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object' && typeof module !== 'undefined' ? module.exports = factory() : typeof define === 'function' && define.amd ? define(factory) : global.Split = factory();
-})(undefined, function () {
+(function(global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined'
+    ? (module.exports = factory())
+    : typeof define === 'function' && define.amd
+      ? define(factory)
+      : (global.Split = factory());
+})(this, function() {
   'use strict';
   // The programming goals of Split.js are to deliver readable, understandable and
   // maintainable code, while at the same time manually optimizing for tiny minified file size,
   // browser compatibility without additional requirements, graceful fallback (IE8 is supported)
   // and very few assumptions about the user's page layout.
-
   var global = window;
   var document = global.document;
 
@@ -23,7 +22,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   var addEventListener = 'addEventListener';
   var removeEventListener = 'removeEventListener';
   var getBoundingClientRect = 'getBoundingClientRect';
-  var NOOP = function NOOP() {
+  var NOOP = function() {
     return false;
   };
 
@@ -38,17 +37,20 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   //
   // Tests -webkit, -moz and -o prefixes. Modified from StackOverflow:
   // http://stackoverflow.com/questions/16625140/js-feature-detection-to-detect-the-usage-of-webkit-calc-over-calc/16625167#16625167
-  var calc = ['', '-webkit-', '-moz-', '-o-'].filter(function (prefix) {
-    var el = document.createElement('div');
-    el.style.cssText = 'width:' + prefix + 'calc(9px)';
+  var calc =
+    ['', '-webkit-', '-moz-', '-o-']
+      .filter(function(prefix) {
+        var el = document.createElement('div');
+        el.style.cssText = 'width:' + prefix + 'calc(9px)';
 
-    return !!el.style.length;
-  }).shift() + 'calc';
+        return !!el.style.length;
+      })
+      .shift() + 'calc';
 
   // The second helper function allows elements and string selectors to be used
   // interchangeably. In either case an element is returned. This allows us to
   // do `Split([elem1, elem2])` as well as `Split(['#id1', '#id2'])`.
-  var elementOrSelector = function elementOrSelector(el) {
+  var elementOrSelector = function(el) {
     if (typeof el === 'string' || el instanceof String) {
       return document.querySelector(el);
     }
@@ -85,7 +87,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   // 4. Loop through the elements while pairing them off. Every pair gets an
   //    `pair` object, a gutter, and special isFirst/isLast properties.
   // 5. Actually size the pair elements, insert gutters and attach event listeners.
-  var Split = function Split(ids, options) {
+  var Split = function(ids, options) {
     if (options === void 0) options = {};
 
     var dimension;
@@ -103,44 +105,56 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     var parentFlexDirection = global.getComputedStyle(parent).flexDirection;
 
     // Set default options.sizes to equal percentages of the parent element.
-    var sizes = options.sizes || ids.map(function () {
-      return 100 / ids.length;
-    });
+    var sizes =
+      options.sizes ||
+      ids.map(function() {
+        return 100 / ids.length;
+      });
 
     // Standardize minSize to an array if it isn't already. This allows minSize
     // to be passed as a number.
     var minSize = options.minSize !== undefined ? options.minSize : 100;
-    var minSizes = Array.isArray(minSize) ? minSize : ids.map(function () {
-      return minSize;
-    });
+    var minSizes = Array.isArray(minSize)
+      ? minSize
+      : ids.map(function() {
+          return minSize;
+        });
     var gutterSize = options.gutterSize !== undefined ? options.gutterSize : 10;
     var snapOffset = options.snapOffset !== undefined ? options.snapOffset : 30;
     var direction = options.direction || 'horizontal';
-    var cursor = options.cursor || (direction === 'horizontal' ? 'ew-resize' : 'ns-resize');
-    var gutter = options.gutter || function (i, gutterDirection) {
-      var gut = document.createElement('div');
-      gut.className = 'gutter gutter-' + gutterDirection;
-      return gut;
-    };
-    var elementStyle = options.elementStyle || function (dim, size, gutSize) {
-      var style = {};
+    var cursor =
+      options.cursor ||
+      (direction === 'horizontal' ? 'ew-resize' : 'ns-resize');
+    var gutter =
+      options.gutter ||
+      function(i, gutterDirection) {
+        var gut = document.createElement('div');
+        gut.className = 'gutter gutter-' + gutterDirection;
+        return gut;
+      };
+    var elementStyle =
+      options.elementStyle ||
+      function(dim, size, gutSize) {
+        var style = {};
 
-      if (typeof size !== 'string' && !(size instanceof String)) {
-        if (!isIE8) {
-          style[dim] = calc + '(' + size + '% - ' + gutSize + 'px)';
+        if (typeof size !== 'string' && !(size instanceof String)) {
+          if (!isIE8) {
+            style[dim] = calc + '(' + size + '% - ' + gutSize + 'px)';
+          } else {
+            style[dim] = size + '%';
+          }
         } else {
-          style[dim] = size + '%';
+          style[dim] = size;
         }
-      } else {
-        style[dim] = size;
-      }
 
-      return style;
-    };
-    var gutterStyle = options.gutterStyle || function (dim, gutSize) {
-      return obj = {}, obj[dim] = gutSize + 'px', obj;
-      var obj;
-    };
+        return style;
+      };
+    var gutterStyle =
+      options.gutterStyle ||
+      function(dim, gutSize) {
+        return (obj = {}), (obj[dim] = gutSize + 'px'), obj;
+        var obj;
+      };
 
     // 2. Initialize a bunch of strings based on the direction we're splitting.
     // A lot of the behavior in the rest of the library is paramatized down to
@@ -180,8 +194,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var style = elementStyle(dimension, size, gutSize);
 
       // eslint-disable-next-line no-param-reassign
-      Object.keys(style).forEach(function (prop) {
-        return el.style[prop] = style[prop];
+      Object.keys(style).forEach(function(prop) {
+        return (el.style[prop] = style[prop]);
       });
     }
 
@@ -189,8 +203,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var style = gutterStyle(dimension, gutSize);
 
       // eslint-disable-next-line no-param-reassign
-      Object.keys(style).forEach(function (prop) {
-        return gutterElement.style[prop] = style[prop];
+      Object.keys(style).forEach(function(prop) {
+        return (gutterElement.style[prop] = style[prop]);
       });
     }
 
@@ -247,7 +261,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       // Include the appropriate gutter sizes to prevent overflows.
       if (offset <= elements[this.a].minSize + snapOffset + this.aGutterSize) {
         offset = elements[this.a].minSize + this.aGutterSize;
-      } else if (offset >= this.size - (elements[this.b].minSize + snapOffset + this.bGutterSize)) {
+      } else if (
+        offset >=
+        this.size - (elements[this.b].minSize + snapOffset + this.bGutterSize)
+      ) {
         offset = this.size - (elements[this.b].minSize + this.bGutterSize);
       }
 
@@ -279,7 +296,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var a = elements[this.a].element;
       var b = elements[this.b].element;
 
-      this.size = a[getBoundingClientRect]()[dimension] + b[getBoundingClientRect]()[dimension] + this.aGutterSize + this.bGutterSize;
+      this.size =
+        a[getBoundingClientRect]()[dimension] +
+        b[getBoundingClientRect]()[dimension] +
+        this.aGutterSize +
+        this.bGutterSize;
       this.start = a[getBoundingClientRect]()[position];
     }
 
@@ -406,7 +427,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     // |             |                     |                  |              |
     // -----------------------------------------------------------------------
     var pairs = [];
-    elements = ids.map(function (id, i) {
+    elements = ids.map(function(id, i) {
       // Create the element object.
       var element = {
         element: elementOrSelector(id),
@@ -441,7 +462,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
 
         // if the parent has a reverse flex-direction, switch the pair elements.
-        if (parentFlexDirection === 'row-reverse' || parentFlexDirection === 'column-reverse') {
+        if (
+          parentFlexDirection === 'row-reverse' ||
+          parentFlexDirection === 'column-reverse'
+        ) {
           var temp = pair.a;
           pair.a = pair.b;
           pair.b = temp;
@@ -459,8 +483,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           var gutterElement = gutter(i, direction);
           setGutterSize(gutterElement, gutterSize);
 
-          gutterElement[addEventListener]('mousedown', startDragging.bind(pair));
-          gutterElement[addEventListener]('touchstart', startDragging.bind(pair));
+          gutterElement[addEventListener](
+            'mousedown',
+            startDragging.bind(pair)
+          );
+          gutterElement[addEventListener](
+            'touchstart',
+            startDragging.bind(pair)
+          );
 
           parent.insertBefore(gutterElement, element.element);
 
@@ -492,7 +522,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     });
 
     function setSizes(newSizes) {
-      newSizes.forEach(function (newSize, i) {
+      newSizes.forEach(function(newSize, i) {
         if (i > 0) {
           var pair = pairs[i - 1];
           var a = elements[pair.a];
@@ -508,7 +538,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function destroy() {
-      pairs.forEach(function (pair) {
+      pairs.forEach(function(pair) {
         pair.parent.removeChild(pair.gutter);
         elements[pair.a].element.style[dimension] = '';
         elements[pair.b].element.style[dimension] = '';
@@ -525,7 +555,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return {
       setSizes: setSizes,
       getSizes: function getSizes() {
-        return elements.map(function (element) {
+        return elements.map(function(element) {
           return element.size;
         });
       },

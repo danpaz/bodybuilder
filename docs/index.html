@@ -2,19 +2,19 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>bodybuilder  | Documentation</title>
+  <title>bodybuilder 2.2.4 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
   <link href='assets/github.css' type='text/css' rel='stylesheet' />
+  <link href='assets/split.css' type='text/css' rel='stylesheet' />
 </head>
-<body class='documentation'>
-  <div class='max-width-4 mx-auto'>
-    <div class='clearfix md-mxn2'>
-      <div class='fixed xs-hide fix-3 overflow-auto max-height-100'>
+<body class='documentation m0'>
+    <div class='flex'>
+      <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>bodybuilder</h3>
-          <div class='mb1'><code></code></div>
+          <div class='mb1'><code>2.2.4</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -230,16 +230,18 @@
           </div>
         </div>
       </div>
-      <div class='fix-margin-3'>
+      <div id='split-right' class='relative overflow-auto height-viewport-100'>
         
           
             <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='bodybuilder'>
       bodybuilder
     </h3>
+    
     
   </div>
   
@@ -247,35 +249,35 @@
   <p><strong><a href="http://bodybuilder.js.org">http://bodybuilder.js.org</a></strong></p>
 <p><strong><a href="https://github.com/danpaz/bodybuilder">https://github.com/danpaz/bodybuilder</a></strong></p>
 <p>Bodybuilder is a small library that makes elasticsearch queries easier to
-write, read, and maintain &#x1F4AA;. The whole public api is documented here, but
+write, read, and maintain 💪. The whole public api is documented here, but
 how about a simple example to get started:</p>
 <pre><code>bodybuilder()
-  .query(&#x27;match&#x27;, &#x27;message&#x27;, &#x27;this is a test&#x27;)
+  .query('match', 'message', 'this is a test')
   .build()
 
 // results in:
 {
   query: {
     match: {
-      message: &#x27;this is a test&#x27;
+      message: 'this is a test'
     }
   }
 }
 </code></pre>
 <p>You can chain multiple methods together to build up a more complex query.</p>
 <pre><code>bodybuilder()
-  .query(&#x27;match&#x27;, &#x27;message&#x27;, &#x27;this is a test&#x27;)
-  .filter(&#x27;term&#x27;, &#x27;user&#x27;, &#x27;kimchy&#x27;)
-  .notFilter(&#x27;term&#x27;, &#x27;user&#x27;, &#x27;cassie&#x27;)
-  .aggregation(&#x27;terms&#x27;, &#x27;user&#x27;)
+  .query('match', 'message', 'this is a test')
+  .filter('term', 'user', 'kimchy')
+  .notFilter('term', 'user', 'cassie')
+  .aggregation('terms', 'user')
   .build()
 </code></pre>
 <p>For nested sub-queries or sub-aggregations, pass a function as the last
 argument and build the nested clause in the body of that function. For
 example:</p>
 <pre><code>bodybuilder()
-  .query(&#x27;nested&#x27;, &#x27;path&#x27;, &#x27;obj1&#x27;, (q) =&gt; {
-    return q.query(&#x27;match&#x27;, &#x27;obj1.color&#x27;, &#x27;blue&#x27;)
+  .query('nested', 'path', 'obj1', (q) => {
+    return q.query('match', 'obj1.color', 'blue')
   })
   .build()
 </code></pre>
@@ -284,9 +286,10 @@ There are many more examples in the docs as well as in the tests.</p>
 
 
   <div class='pre p1 fill-light mt0'>bodybuilder(): <a href="#bodybuilder">bodybuilder</a></div>
-
+  
   
 
+  
   
   
   
@@ -325,9 +328,11 @@ There are many more examples in the docs as well as in the tests.</p>
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='sort'>
       sort
     </h3>
+    
     
   </div>
   
@@ -335,10 +340,11 @@ There are many more examples in the docs as well as in the tests.</p>
   <p>Set a sort direction on a given field.</p>
 
 
-  <div class='pre p1 fill-light mt0'>sort(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, direction: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>]): <a href="#bodybuilder">bodybuilder</a></div>
-
+  <div class='pre p1 fill-light mt0'>sort(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, direction: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="#bodybuilder">bodybuilder</a></div>
+  
   
 
+  
   
   
   
@@ -351,7 +357,8 @@ There are many more examples in the docs as well as in the tests.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>field</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Field name.
+            <span class='code bold'>field</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Field name.
 
           </div>
           
@@ -359,9 +366,9 @@ There are many more examples in the docs as well as in the tests.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>direction</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>]
-            (default <code>&#39;asc&#39;</code>)
-            )</code> A valid direction: &#x27;asc&#x27; or &#x27;desc&#x27;.
+            <span class='code bold'>direction</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+            = <code>&#39;asc&#39;</code>)</code>
+	    A valid direction: 'asc' or 'desc'.
 
           </div>
           
@@ -400,9 +407,11 @@ There are many more examples in the docs as well as in the tests.</p>
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='from'>
       from
     </h3>
+    
     
   </div>
   
@@ -411,9 +420,10 @@ There are many more examples in the docs as well as in the tests.</p>
 
 
   <div class='pre p1 fill-light mt0'>from(quantity: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>): <a href="#bodybuilder">bodybuilder</a></div>
-
+  
   
 
+  
   
   
   
@@ -426,7 +436,8 @@ There are many more examples in the docs as well as in the tests.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>quantity</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code> The offset from the first result you want to
+            <span class='code bold'>quantity</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    The offset from the first result you want to
 fetch.
 
           </div>
@@ -466,9 +477,11 @@ fetch.
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='size'>
       size
     </h3>
+    
     
   </div>
   
@@ -477,9 +490,10 @@ fetch.
 
 
   <div class='pre p1 fill-light mt0'>size(quantity: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>): <a href="#bodybuilder">bodybuilder</a></div>
-
+  
   
 
+  
   
   
   
@@ -492,7 +506,8 @@ fetch.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>quantity</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code> Maximum number of results to return.
+            <span class='code bold'>quantity</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    Maximum number of results to return.
 
           </div>
           
@@ -531,9 +546,11 @@ fetch.
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='rawoption'>
       rawOption
     </h3>
+    
     
   </div>
   
@@ -542,9 +559,10 @@ fetch.
 
 
   <div class='pre p1 fill-light mt0'>rawOption(k: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, v: any): <a href="#bodybuilder">bodybuilder</a></div>
-
+  
   
 
+  
   
   
   
@@ -557,7 +575,8 @@ fetch.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>k</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code> Key.
+            <span class='code bold'>k</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Key.
 
           </div>
           
@@ -565,7 +584,8 @@ fetch.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>v</span> <code class='quiet'>(any)</code> Value.
+            <span class='code bold'>v</span> <code class='quiet'>(any)</code>
+	    Value.
 
           </div>
           
@@ -604,9 +624,11 @@ fetch.
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='build'>
       build
     </h3>
+    
     
   </div>
   
@@ -615,10 +637,11 @@ fetch.
 elasticsearch query.</p>
 
 
-  <div class='pre p1 fill-light mt0'>build(version: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>]): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
-
+  <div class='pre p1 fill-light mt0'>build(version: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
   
 
+  
   
   
   
@@ -631,8 +654,9 @@ elasticsearch query.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>version</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>])</code> (optional) Pass 
-<code>&#x27;v1&#x27;</code>
+            <span class='code bold'>version</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?)</code>
+	    (optional) Pass 
+<code>'v1'</code>
  to build for the
 elasticsearch 1.x query dsl.
 
@@ -673,9 +697,11 @@ elasticsearch 1.x query dsl.
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='query'>
       query
     </h3>
+    
     
   </div>
   
@@ -683,10 +709,11 @@ elasticsearch 1.x query dsl.
   <p>Add a query clause to the query body.</p>
 
 
-  <div class='pre p1 fill-light mt0'>query(type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, field: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), value: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, nest: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>], args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
-
+  <div class='pre p1 fill-light mt0'>query(args: ...any, type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, field: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), value: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, nest: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?): <a href="#bodybuilder">bodybuilder</a></div>
+  
   
 
+  
   
   
   
@@ -699,7 +726,16 @@ elasticsearch 1.x query dsl.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>type</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code> Query type.
+            <span class='code bold'>args</span> <code class='quiet'>(...any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>type</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    Query type.
 
           </div>
           
@@ -707,7 +743,8 @@ elasticsearch 1.x query dsl.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>field</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>))</code> Field to query or complete query clause.
+            <span class='code bold'>field</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>))</code>
+	    Field to query or complete query clause.
 
           </div>
           
@@ -715,7 +752,8 @@ elasticsearch 1.x query dsl.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>value</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>))</code> Query term or inner clause.
+            <span class='code bold'>value</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>))</code>
+	    Query term or inner clause.
 
           </div>
           
@@ -723,7 +761,8 @@ elasticsearch 1.x query dsl.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> (optional) Additional options for the
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    (optional) Additional options for the
 query clause.
 
           </div>
@@ -732,19 +771,13 @@ query clause.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>nest</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>])</code> (optional) A function used to define
+            <span class='code bold'>nest</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?)</code>
+	    (optional) A function used to define
 sub-filters as children. This 
 <em>must</em>
  be
 the last argument.
 
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>args</span> <code class='quiet'>(...any)</code> 
           </div>
           
         </div>
@@ -810,9 +843,11 @@ bodybuilder()
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='andquery'>
       andQuery
     </h3>
+    
     
   </div>
   
@@ -821,9 +856,10 @@ bodybuilder()
 
 
   <div class='pre p1 fill-light mt0'>andQuery(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
-
+  
   
 
+  
   
   
   
@@ -836,7 +872,8 @@ bodybuilder()
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>args</span> <code class='quiet'>(...any)</code> 
+            <span class='code bold'>args</span> <code class='quiet'>(...any)</code>
+	    
           </div>
           
         </div>
@@ -874,9 +911,11 @@ bodybuilder()
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='addquery'>
       addQuery
     </h3>
+    
     
   </div>
   
@@ -885,9 +924,10 @@ bodybuilder()
 
 
   <div class='pre p1 fill-light mt0'>addQuery(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
-
+  
   
 
+  
   
   
   
@@ -900,7 +940,8 @@ bodybuilder()
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>args</span> <code class='quiet'>(...any)</code> 
+            <span class='code bold'>args</span> <code class='quiet'>(...any)</code>
+	    
           </div>
           
         </div>
@@ -938,21 +979,24 @@ bodybuilder()
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='orquery'>
       orQuery
     </h3>
     
+    
   </div>
   
 
-  <p>Add a &quot;should&quot; query to the query body.</p>
+  <p>Add a "should" query to the query body.</p>
 <p>Same arguments as <code>query</code>.</p>
 
 
   <div class='pre p1 fill-light mt0'>orQuery(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
-
+  
   
 
+  
   
   
   
@@ -965,7 +1009,8 @@ bodybuilder()
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>args</span> <code class='quiet'>(...any)</code> 
+            <span class='code bold'>args</span> <code class='quiet'>(...any)</code>
+	    
           </div>
           
         </div>
@@ -1003,21 +1048,24 @@ bodybuilder()
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='notquery'>
       notQuery
     </h3>
     
+    
   </div>
   
 
-  <p>Add a &quot;must_not&quot; query to the query body.</p>
+  <p>Add a "must_not" query to the query body.</p>
 <p>Same arguments as <code>query</code>.</p>
 
 
   <div class='pre p1 fill-light mt0'>notQuery(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
-
+  
   
 
+  
   
   
   
@@ -1030,7 +1078,8 @@ bodybuilder()
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>args</span> <code class='quiet'>(...any)</code> 
+            <span class='code bold'>args</span> <code class='quiet'>(...any)</code>
+	    
           </div>
           
         </div>
@@ -1068,9 +1117,11 @@ bodybuilder()
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='queryminimumshouldmatch'>
       queryMinimumShouldMatch
     </h3>
+    
     
   </div>
   
@@ -1080,9 +1131,10 @@ one <code>should</code> clause.</p>
 
 
   <div class='pre p1 fill-light mt0'>queryMinimumShouldMatch(param: any): <a href="#bodybuilder">bodybuilder</a></div>
-
+  
   
 
+  
   
   
   
@@ -1095,7 +1147,8 @@ one <code>should</code> clause.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>param</span> <code class='quiet'>(any)</code> minimum_should_match parameter. For possible values
+            <span class='code bold'>param</span> <code class='quiet'>(any)</code>
+	    minimum_should_match parameter. For possible values
 see 
 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-minimum-should-match.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-minimum-should-match.html</a>
 
@@ -1136,9 +1189,11 @@ see
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='filter'>
       filter
     </h3>
+    
     
   </div>
   
@@ -1146,10 +1201,11 @@ see
   <p>Add a filter clause to the query body.</p>
 
 
-  <div class='pre p1 fill-light mt0'>filter(type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, field: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), value: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, nest: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>], args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
-
+  <div class='pre p1 fill-light mt0'>filter(args: ...any, type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, field: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), value: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, nest: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?): <a href="#bodybuilder">bodybuilder</a></div>
+  
   
 
+  
   
   
   
@@ -1162,7 +1218,16 @@ see
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>type</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code> Filter type.
+            <span class='code bold'>args</span> <code class='quiet'>(...any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>type</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    Filter type.
 
           </div>
           
@@ -1170,7 +1235,8 @@ see
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>field</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>))</code> Field to filter or complete filter
+            <span class='code bold'>field</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>))</code>
+	    Field to filter or complete filter
 clause.
 
           </div>
@@ -1179,7 +1245,8 @@ clause.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>value</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>))</code> Filter term or inner clause.
+            <span class='code bold'>value</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>))</code>
+	    Filter term or inner clause.
 
           </div>
           
@@ -1187,7 +1254,8 @@ clause.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> (optional) Additional options for the
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    (optional) Additional options for the
 filter clause.
 
           </div>
@@ -1196,19 +1264,13 @@ filter clause.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>nest</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>])</code> (optional) A function used to define
+            <span class='code bold'>nest</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?)</code>
+	    (optional) A function used to define
 sub-filters as children. This 
 <em>must</em>
  be
 the last argument.
 
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>args</span> <code class='quiet'>(...any)</code> 
           </div>
           
         </div>
@@ -1254,9 +1316,11 @@ the last argument.
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='andfilter'>
       andFilter
     </h3>
+    
     
   </div>
   
@@ -1265,9 +1329,10 @@ the last argument.
 
 
   <div class='pre p1 fill-light mt0'>andFilter(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
-
+  
   
 
+  
   
   
   
@@ -1280,7 +1345,8 @@ the last argument.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>args</span> <code class='quiet'>(...any)</code> 
+            <span class='code bold'>args</span> <code class='quiet'>(...any)</code>
+	    
           </div>
           
         </div>
@@ -1318,9 +1384,11 @@ the last argument.
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='addfilter'>
       addFilter
     </h3>
+    
     
   </div>
   
@@ -1329,9 +1397,10 @@ the last argument.
 
 
   <div class='pre p1 fill-light mt0'>addFilter(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
-
+  
   
 
+  
   
   
   
@@ -1344,7 +1413,8 @@ the last argument.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>args</span> <code class='quiet'>(...any)</code> 
+            <span class='code bold'>args</span> <code class='quiet'>(...any)</code>
+	    
           </div>
           
         </div>
@@ -1382,21 +1452,24 @@ the last argument.
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='orfilter'>
       orFilter
     </h3>
     
+    
   </div>
   
 
-  <p>Add a &quot;should&quot; filter to the query body.</p>
+  <p>Add a "should" filter to the query body.</p>
 <p>Same arguments as <code>filter</code>.</p>
 
 
   <div class='pre p1 fill-light mt0'>orFilter(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
-
+  
   
 
+  
   
   
   
@@ -1409,7 +1482,8 @@ the last argument.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>args</span> <code class='quiet'>(...any)</code> 
+            <span class='code bold'>args</span> <code class='quiet'>(...any)</code>
+	    
           </div>
           
         </div>
@@ -1447,21 +1521,24 @@ the last argument.
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='notfilter'>
       notFilter
     </h3>
     
+    
   </div>
   
 
-  <p>Add a &quot;must_not&quot; filter to the query body.</p>
+  <p>Add a "must_not" filter to the query body.</p>
 <p>Same arguments as <code>filter</code>.</p>
 
 
   <div class='pre p1 fill-light mt0'>notFilter(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
-
+  
   
 
+  
   
   
   
@@ -1474,7 +1551,8 @@ the last argument.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>args</span> <code class='quiet'>(...any)</code> 
+            <span class='code bold'>args</span> <code class='quiet'>(...any)</code>
+	    
           </div>
           
         </div>
@@ -1512,9 +1590,11 @@ the last argument.
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='filterminimumshouldmatch'>
       filterMinimumShouldMatch
     </h3>
+    
     
   </div>
   
@@ -1524,9 +1604,10 @@ one <code>should</code> clause.</p>
 
 
   <div class='pre p1 fill-light mt0'>filterMinimumShouldMatch(param: any): <a href="#bodybuilder">bodybuilder</a></div>
-
+  
   
 
+  
   
   
   
@@ -1539,7 +1620,8 @@ one <code>should</code> clause.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>param</span> <code class='quiet'>(any)</code> minimum_should_match parameter. For possible values
+            <span class='code bold'>param</span> <code class='quiet'>(any)</code>
+	    minimum_should_match parameter. For possible values
 see 
 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-minimum-should-match.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-minimum-should-match.html</a>
 
@@ -1580,9 +1662,11 @@ see
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='aggregation'>
       aggregation
     </h3>
+    
     
   </div>
   
@@ -1590,10 +1674,11 @@ see
   <p>Add an aggregation clause to the query body.</p>
 
 
-  <div class='pre p1 fill-light mt0'>aggregation(type: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, options: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>], name: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>], nest: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>], args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
-
+  <div class='pre p1 fill-light mt0'>aggregation(args: ...any, type: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?, nest: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?): <a href="#bodybuilder">bodybuilder</a></div>
+  
   
 
+  
   
   
   
@@ -1606,11 +1691,20 @@ see
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>type</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>))</code> Name of the aggregation type, such as
+            <span class='code bold'>args</span> <code class='quiet'>(...any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>type</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>))</code>
+	    Name of the aggregation type, such as
 
-<code>&#x27;sum&#x27;</code>
+<code>'sum'</code>
  or 
-<code>&#x27;terms&#x27;</code>
+<code>'terms'</code>
 .
 
           </div>
@@ -1619,7 +1713,8 @@ see
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>field</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code> Name of the field to aggregate over.
+            <span class='code bold'>field</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    Name of the field to aggregate over.
 
           </div>
           
@@ -1627,7 +1722,8 @@ see
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>options</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>])</code> (optional) Additional options to
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
+	    (optional) Additional options to
 include in the aggregation.
 
           </div>
@@ -1636,10 +1732,11 @@ include in the aggregation.
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>])</code> (optional) A custom name for the
+            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?)</code>
+	    (optional) A custom name for the
 aggregation, defaults to
 
-<code>agg_&lt;type&gt;_&lt;field&gt;</code>
+<code>agg_&#x3C;type>_&#x3C;field></code>
 .
 
           </div>
@@ -1648,19 +1745,13 @@ aggregation, defaults to
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>nest</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>])</code> (optional) A function used to define
+            <span class='code bold'>nest</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?)</code>
+	    (optional) A function used to define
 sub-aggregations as children. This
 
 <em>must</em>
  be the last argument.
 
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>args</span> <code class='quiet'>(...any)</code> 
           </div>
           
         </div>
@@ -1725,9 +1816,11 @@ bodybuilder()
 
   
   <div class='clearfix'>
+    
     <h3 class='fl m0' id='agg'>
       agg
     </h3>
+    
     
   </div>
   
@@ -1736,9 +1829,10 @@ bodybuilder()
 
 
   <div class='pre p1 fill-light mt0'>agg(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
-
+  
   
 
+  
   
   
   
@@ -1751,7 +1845,8 @@ bodybuilder()
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>args</span> <code class='quiet'>(...any)</code> 
+            <span class='code bold'>args</span> <code class='quiet'>(...any)</code>
+	    
           </div>
           
         </div>
@@ -1786,8 +1881,8 @@ bodybuilder()
         
       </div>
     </div>
-  </div>
   <script src='assets/anchor.js'></script>
+  <script src='assets/split.js'></script>
   <script src='assets/site.js'></script>
 </body>
 </html>

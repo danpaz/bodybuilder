@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - '8.3.0'
+  - '8.5.0'
   - '6.11.2'
   - '5.11'
   - '4.4'
@@ -20,3 +20,4 @@ deploy:
     repo: danpaz/bodybuilder
     branch: master
     node: '6.11.2'
+    skip_cleanup: true

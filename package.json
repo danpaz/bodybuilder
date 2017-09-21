@@ -1,6 +1,6 @@
 {
   "name": "bodybuilder",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "description": "An elasticsearch query body builder.",
   "main": "lib/index.js",
   "files": [

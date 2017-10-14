@@ -77,7 +77,7 @@ export function toBool (filters) {
     return unwrapped.must
   }
 
-  const cleaned = {}
+  const cleaned = Object.create(null)
 
   if (unwrapped.must) {
     cleaned.must = unwrapped.must

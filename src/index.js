@@ -177,15 +177,12 @@ function _build(body, queries, filters, aggregations) {
   let clonedBody = _.cloneDeep(body)
 
   if (!_.isEmpty(filters)) {
-    let filterBody = {}
-    let queryBody = {}
-    _.set(filterBody, 'query.bool.filter', filters)
     if (!_.isEmpty(queries.bool)) {
-      _.set(queryBody, 'query.bool', queries.bool)
+      _.set(clonedBody, 'query.bool', queries.bool)
     } else if (!_.isEmpty(queries)) {
-      _.set(queryBody, 'query.bool.must', queries)
+      _.set(clonedBody, 'query.bool.must', queries)
     }
-    _.merge(clonedBody, filterBody, queryBody)
+    _.set(clonedBody, 'query.bool.filter', filters)
   } else if (!_.isEmpty(queries)) {
     _.set(clonedBody, 'query', queries)
   }

@@ -134,7 +134,14 @@ export function pushQuery (existing, boolKey, type, ...args) {
     existing[boolKey].push(
       {[type]: Object.assign(buildClause(...args), nested.filter.bool)}
     )
-  } else {
+  } else if (
+    type === 'bool' &&
+    _.has(nested, 'query.bool')
+   ) {
+    existing[boolKey].push(
+      {[type]: Object.assign(buildClause(...args), nested.query.bool)}
+    )
+    } else {
     // Usual case
     existing[boolKey].push(
       {[type]: Object.assign(buildClause(...args), nested)}

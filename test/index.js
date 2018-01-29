@@ -776,3 +776,124 @@ test('bodybuilder | minimum_should_match query and filter', (t) => {
     }
   })
 })
+
+test('bodybuilder | Nested bool query with must #162', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .query('bool', b => b.orQuery('match', 'title', 'Solr').orQuery('match', 'title', 'Elasticsearch'))
+    .query('match', 'authors', 'clinton gormely')
+    .notQuery('match', 'authors', 'radu gheorge')
+    .build()
+
+  t.deepEqual(result,
+    {
+      query: {
+        bool: {
+          must: [
+            {
+              bool: {
+                should: [
+                  {
+                    match: {
+                      title: "Solr"
+                    }
+                  },
+                  {
+                    match: {
+                      title: "Elasticsearch"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              match: {
+                authors: "clinton gormely"
+              }
+            }
+          ],
+          must_not: [
+            {
+              match: {
+                authors: "radu gheorge"
+              }
+            }
+          ]
+        }
+      }
+    }
+)
+})
+
+test('bodybuilder | Invalid nested bool query with more "query" #142', (t) => {
+  t.plan(1)
+
+  const body = bodyBuilder()
+
+  body.query('bool', b => b
+    .query('term', 'field1', 1)
+    .query('term', 'field2', 2)
+    .orQuery('term', 'field3', 3))
+  body.query('bool', b => b
+    .query('term', 'field4', 10)
+    .query('term', 'field5', 20)
+    .orQuery('term', 'field6', 30))
+
+  t.deepEqual(body.build(),
+    {
+      query: {
+        bool: {
+          must: [
+            {
+              bool: {
+                must: [
+                  {
+                    term: {
+                      field1: 1
+                    }
+                  },
+                  {
+                    term: {
+                      field2: 2
+                    }
+                  }
+                ],
+                should: [
+                  {
+                    term: {
+                      field3: 3
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              bool: {
+                must: [
+                  {
+                    term: {
+                      field4: 10
+                    }
+                  },
+                  {
+                    term: {
+                      field5: 20
+                    }
+                  }
+                ],
+                should: [
+                  {
+                    term: {
+                      field6: 30
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  )
+})

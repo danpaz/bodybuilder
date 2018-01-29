@@ -25,7 +25,7 @@ export function sortMerge(current, field, value) {
     return o[field] != undefined
   })
 
-  if (idx == -1) {
+  if (field === '_geo_distance' || idx === -1) {
     current.push(payload)
   } else {
     _.extend(current[idx], payload)

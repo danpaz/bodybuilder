@@ -766,8 +766,33 @@ test('bodybuilder | minimum_should_match query and filter', (t) => {
         filter: {
           bool: {
             should: [
-              {term: {user: 'kimchy'}},
-              {term: {user: 'tony'}}
+                { term: { user: 'kimchy' } },
+                { term: { user: 'tony' } }
+              ],
+              minimum_should_match: 1
+            }
+          }
+        }
+      }
+    })
+})
+
+test('bodybuilder | minimum_should_match with only one filter', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .orFilter('terms', 'user', ['kimchy', 'tony'])
+    .filterMinimumShouldMatch(1)
+    .build()
+
+  t.deepEqual(result,
+    {
+      query: {
+        bool: {
+          filter: {
+            bool: {
+              should: [
+                { terms: { user: ['kimchy', 'tony'] } },
             ],
             minimum_should_match: 1
           }

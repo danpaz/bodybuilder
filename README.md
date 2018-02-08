@@ -20,8 +20,7 @@ The bodybuilder 1 API documentation is [still available for reference](./docs/AP
 
 ## Elasticsearch compatibility
 
-Currently aims to support the full elasticsearch query DSL for versions 1.x,
-2.x, and 5.x.
+Currently aims to support the full elasticsearch query DSL for all versions.
 
 The elasticsearch 1.x query DSL is supported by providing a `v1` argument
 when calling the `build` function.
@@ -35,7 +34,7 @@ when calling the `build` function.
 ```js
 var bodybuilder = require('bodybuilder')
 var body = bodybuilder().query('match', 'message', 'this is a test')
-body.build() // Build 2.x / 5.x DSL (default)
+body.build() // Build 2.x or greater DSL (default)
 body.build('v1') // Build 1.x DSL
 ```
 

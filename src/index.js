@@ -64,6 +64,53 @@ export default function bodybuilder () {
       /**
        * Set a sort direction on a given field.
        *
+       * ```
+       * bodybuilder()
+       *   .sort('timestamp', 'desc')
+       *   .build()
+       * ```
+       * You can sort multiple fields at once
+       *
+       * ```
+       * bodybuilder()
+       *  .sort([
+       *    {"categories": "desc"},
+       *    {"content": "asc"}
+       *  ])
+       *   .build()
+       * ```
+       * Geo Distance sorting is also supported & it's the only sort type that allows for duplicates
+       *
+       * ```
+       * bodyBuilder().sort([
+       *     {
+       *       _geo_distance: {
+       *         'a.pin.location': [-70, 40],
+       *         order: 'asc',
+       *         unit: 'km',
+       *         mode: 'min',
+       *         distance_type: 'sloppy_arc'
+       *       }
+       *     },
+       *     {
+       *       _geo_distance: {
+       *         'b.pin.location': [-140, 80],
+       *         order: 'asc',
+       *         unit: 'km',
+       *         mode: 'min',
+       *         distance_type: 'sloppy_arc'
+       *       }
+       *     }
+       *   ])
+       *   .sort([
+       *     { timestamp: 'desc' },
+       *     { content: 'desc' },
+       *     { content: 'asc' },
+       *    {"price" : {"order" : "asc", "mode" : "avg"}}
+       *   ])
+       * .build()
+       * ```
+       *
        * @param  {String} field             Field name.
        * @param  {String} [direction='asc'] A valid direction: 'asc' or 'desc'.
        * @returns {bodybuilder} Builder.

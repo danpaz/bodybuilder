@@ -338,6 +338,47 @@ There are many more examples in the docs as well as in the tests.</p>
   
 
   <p>Set a sort direction on a given field.</p>
+<pre><code>bodybuilder()
+  .sort('timestamp', 'desc')
+  .build()
+</code></pre>
+<p>You can sort multiple fields at once</p>
+<pre><code>bodybuilder()
+ .sort([
+   {"categories": "desc"},
+   {"content": "asc"}
+ ])
+  .build()
+</code></pre>
+<p>Geo Distance sorting is also supported &#x26; it's the only sort type that allows for duplicates</p>
+<pre><code>bodyBuilder().sort([
+    {
+      _geo_distance: {
+        'a.pin.location': [-70, 40],
+        order: 'asc',
+        unit: 'km',
+        mode: 'min',
+        distance_type: 'sloppy_arc'
+      }
+    },
+    {
+      _geo_distance: {
+        'b.pin.location': [-140, 80],
+        order: 'asc',
+        unit: 'km',
+        mode: 'min',
+        distance_type: 'sloppy_arc'
+      }
+    }
+  ])
+  .sort([
+    { timestamp: 'desc' },
+    { content: 'desc' },
+    { content: 'asc' },
+   {"price" : {"order" : "asc", "mode" : "avg"}}
+  ])
+.build()
+</code></pre>
 
 
   <div class='pre p1 fill-light mt0'>sort(field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, direction: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="#bodybuilder">bodybuilder</a></div>

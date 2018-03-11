@@ -3,10 +3,12 @@
   "version": "2.2.7",
   "description": "An elasticsearch query body builder.",
   "main": "lib/index.js",
+  "typings": "./bodybuilder.d.ts",
   "files": [
     "browser/",
     "lib/",
     "src/",
+    "bodybuilder.d.ts",
     "repl.js"
   ],
   "scripts": {

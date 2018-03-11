@@ -101,8 +101,10 @@ export interface AggregationBuilder<B> extends Object {
 
 export interface Bodybuilder extends Object, QueryBuilder<Bodybuilder>, FilterBuilder<Bodybuilder>, AggregationBuilder<Bodybuilder> {
   sort(field: string): Bodybuilder;
-  sort(fields: Array<{[field: string]: string | object}>): Bodybuilder;
   sort(field: string, direction: string): Bodybuilder;
+  sort(field: string, body: object): Bodybuilder;
+  sort(fields: string[]): Bodybuilder;
+  sort(fields: Array<{[field: string]: string | object}>): Bodybuilder;
 
   from(quantity: number): Bodybuilder;
 

@@ -126,6 +126,9 @@ export default function bodybuilder () {
 
             if(_.isArray(body.sort)) {
                 _.each(field, (sorts) => {
+                    if(_.isString(sorts)) {
+                        return sortMerge(body.sort, sorts, direction)
+                    }
                     _.each(sorts, (value, key) => {
                         sortMerge(body.sort, key, value)
                     })

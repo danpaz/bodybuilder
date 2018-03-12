@@ -174,6 +174,33 @@ test('bodyBuilder should sort with default sort direction', (t) => {
   })
 })
 
+test('bodyBuilder should handle string fields in multi-sort', (t) => {
+    t.plan(1)
+
+    const result = bodyBuilder()
+        .sort([
+            { categories: 'desc' },
+            { content: 'desc' },
+            'content'
+        ]).build()
+
+    t.deepEqual(result, {
+        sort: [
+            {
+                categories: {
+                    order: 'desc'
+                }
+            },
+            {
+                content: {
+                    order:'asc'
+                }
+            }
+        ]
+    })
+})
+
+
 test('bodyBuilder should not de-depude _geo_distance', (t) => {
   t.plan(1)
 

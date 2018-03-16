@@ -9,103 +9,108 @@ declare namespace bodybuilder {
 	) => QuerySubFilterBuilder;
 
 	export interface QueryBuilder<B> extends Object {
-		query(type: string, field: string | object, value: string | object): B;
+		query(type: string): B;
+		query(type: string, field: string | object, value: any): B;
 		query(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			subfilters: QuerySubFilterFn
-		): B;
-		query(
-			type: string,
-			field: string | object,
-			value: string | object,
-			options: object
 		): B;
 		query(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
+			options: object
+		): B;
+		query(
+			type: string,
+			field: string | object,
+			value: any,
 			options: object,
 			subfilters: QuerySubFilterFn
 		): B;
-		andQuery(type: string, field: string | object, value: string | object): B;
+		andQuery(type: string): B;
+		andQuery(type: string, field: string | object, value: any): B;
+		andQuery(type: string, field: string | object, value: any): B;
 		andQuery(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			subfilters: QuerySubFilterFn
 		): B;
 		andQuery(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			options: object
 		): B;
 		andQuery(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			options: object,
 			subfilters: QuerySubFilterFn
 		): B;
-		addQuery(type: string, field: string | object, value: string | object): B;
+		addQuery(type: string, field: string | object, value: any): B;
 		addQuery(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			subfilters: QuerySubFilterFn
 		): B;
 		addQuery(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			options: object
 		): B;
 		addQuery(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			options: object,
 			subfilters: QuerySubFilterFn
 		): B;
-		orQuery(type: string, field: string | object, value: string | object): B;
+		orQuery(type: string): B;
+		orQuery(type: string, field: string | object, value: any): B;
 		orQuery(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			subfilters: QuerySubFilterFn
 		): B;
 		orQuery(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			options: object
 		): B;
 		orQuery(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			options: object,
 			subfilters: QuerySubFilterFn
 		): B;
-		notQuery(type: string, field: string | object, value: string | object): B;
+		notQuery(type: string): B;
+		notQuery(type: string, field: string | object, value: any): B;
 		notQuery(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			subfilters: QuerySubFilterFn
 		): B;
 		notQuery(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			options: object
 		): B;
 		notQuery(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			options: object,
 			subfilters: QuerySubFilterFn
 		): B;
@@ -123,103 +128,107 @@ declare namespace bodybuilder {
 	) => FilterSubFilterBuilder;
 
 	export interface FilterBuilder<B> extends Object {
-		filter(type: string, field: string | object, value: string | object): B;
+		filter(type: string): B;
+		filter(type: string, field: string | object, value: any): B;
 		filter(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			subfilters: FilterSubFilterFn
-		): B;
-		filter(
-			type: string,
-			field: string | object,
-			value: string | object,
-			options: object
 		): B;
 		filter(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
+			options: object
+		): B;
+		filter(
+			type: string,
+			field: string | object,
+			value: any,
 			options: object,
 			subfilters: FilterSubFilterFn
 		): B;
-		andFilter(type: string, field: string | object, value: string | object): B;
+		andFilter(type: string): B;
+		andFilter(type: string, field: string | object, value: any): B;
 		andFilter(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			subfilters: FilterSubFilterFn
 		): B;
 		andFilter(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			options: object
 		): B;
 		andFilter(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			options: object,
 			subfilters: FilterSubFilterFn
 		): B;
-		addFilter(type: string, field: string | object, value: string | object): B;
+		addFilter(type: string, field: string | object, value: any): B;
 		addFilter(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			subfilters: FilterSubFilterFn
 		): B;
 		addFilter(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			options: object
 		): B;
 		addFilter(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			options: object,
 			subfilters: FilterSubFilterFn
 		): B;
-		orFilter(type: string, field: string | object, value: string | object): B;
+		orFilter(type: string): B;
+		orFilter(type: string, field: string | object, value: any): B;
 		orFilter(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			subfilters: FilterSubFilterFn
 		): B;
 		orFilter(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			options: object
 		): B;
 		orFilter(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			options: object,
 			subfilters: FilterSubFilterFn
 		): B;
-		notFilter(type: string, field: string | object, value: string | object): B;
+		notFilter(type: string): B;
+		notFilter(type: string, field: string | object, value: any): B;
 		notFilter(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			subfilters: FilterSubFilterFn
 		): B;
 		notFilter(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			options: object
 		): B;
 		notFilter(
 			type: string,
 			field: string | object,
-			value: string | object,
+			value: any,
 			options: object,
 			subfilters: FilterSubFilterFn
 		): B;

@@ -17,8 +17,9 @@
     "build:docs": "documentation build src/index.js -o docs -f html --name bodybuilder",
     "build": "npm run build:babel && npm run build:umd && npm run build:docs",
     "lint": "eslint src test",
+    "typescript-test": "tsc --project typing-tests",
     "style": "npm run lint",
-    "test": "babel-tape-runner test/* | tap-spec",
+    "test": "babel-tape-runner test/* | tap-spec && npm run typescript-test",
     "watch:test": "tape-watch test/* -r babel-register -p tap-spec",
     "check": "npm run lint && npm test",
     "preversion": "npm run check && npm run build && npm run git-commit",
@@ -52,6 +53,7 @@
     "tap-spec": "4.1.1",
     "tape": "4.8.0",
     "tape-watch": "2.3.0",
+    "typescript": "2.7.2",
     "webpack": "1.12.13"
   },
   "dependencies": {

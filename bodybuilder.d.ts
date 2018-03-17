@@ -257,7 +257,7 @@ declare namespace bodybuilder {
 
 	export interface AggregationBuilder<B> extends Object {
 		aggregation(type: string | object, field: string): B;
-		aggregation(type: string | object, field: string, name: string): B;
+		aggregation(type: string | object, field: string | object, name: string): B;
 		aggregation(
 			type: string | object,
 			field: string,
@@ -265,9 +265,9 @@ declare namespace bodybuilder {
 		): B;
 		aggregation(
 			type: string | object,
-			field: string,
+			field: string | object,
 			name: string,
-			subaggregations: SubAggregationFn
+			subaggregations: SubAggregationFn | object
 		): B;
 		aggregation(type: string | object, field: string, options: object): B;
 		aggregation(
@@ -290,7 +290,6 @@ declare namespace bodybuilder {
 			subaggregations: SubAggregationFn
 		): B;
 		agg(type: string | object, field: string): B;
-		agg(type: string | object, field: string, name: string): B;
 		agg(
 			type: string | object,
 			field: string,
@@ -298,11 +297,11 @@ declare namespace bodybuilder {
 		): B;
 		agg(
 			type: string | object,
-			field: string,
+            field: string | object,
 			name: string,
-			subaggregations: SubAggregationFn
+			subaggregations: SubAggregationFn | object
 		): B;
-		agg(type: string | object, field: string, options: object): B;
+		agg(type: string | object, field: string, options: string | object): B;
 		agg(type: string | object, field: string, options: object, name: string): B;
 		agg(
 			type: string | object,

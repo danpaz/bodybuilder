@@ -163,7 +163,170 @@ bodybuilder()
     .build();
 bodybuilder().aggregation('filter', 'name', 'test', (a) => {
     return a.filter('nested', {path: 'skus'}, (n) => {
-        return n.filter('terms', { 'material': 'wood' })
+        return n.filter('terms', {'material': 'wood'})
     })
         .aggregation('terms', 'some', 'thing')
 }).build();
+
+bodybuilder()
+    .aggregation('max', 'price')
+    .build()
+
+bodybuilder()
+    .aggregation('percentiles', 'load_time', {
+        percents: [95, 99, 99.9]
+    })
+    .build();
+
+bodybuilder()
+    .aggregation('date_range', 'date', {
+        format: 'MM-yyy',
+        ranges: [{to: 'now-10M/M'}, {from: 'now-10M/M'}]
+    })
+    .build();
+
+bodybuilder()
+    .aggregation('diversified_sampler', 'user.id', {shard_size: 200}, (a) => {
+        return a.aggregation('significant_terms', 'text', 'keywords')
+    })
+    .build();
+
+bodybuilder()
+    .aggregation(
+        // agg type
+        'terms',
+        // field
+        'type',
+        // additional opts
+        {size: 3},
+        // agg name
+        'top_tags',
+        // nested aggregation
+        agg =>
+            agg.aggregation(
+                'top_hits',
+                {
+                    sort: [{date: {order: 'desc'}}],
+                    _source: {includes: ['date', 'price']},
+                    size: 1
+                },
+                'top_sales_hits'
+            )
+    )
+    .build();
+
+bodybuilder()
+    .query('match', 'name', 'led tv')
+    .aggregation(
+        'nested',
+        {path: 'resellers'},
+        'resellers',
+        agg => agg.aggregation('min', 'resellers.price', 'min_price')
+    )
+    .build()
+
+bodybuilder()
+    .agg(
+        // agg type
+        'terms',
+        // field
+        'type',
+        // additional opts
+        {size: 3},
+        // agg name
+        'top_tags',
+        // nested aggregation
+        agg =>
+            agg.aggregation(
+                'top_hits',
+                {
+                    sort: [{date: {order: 'desc'}}],
+                    _source: {includes: ['date', 'price']},
+                    size: 1
+                },
+                'top_sales_hits'
+            )
+    )
+    .build();
+
+bodybuilder()
+    .query('match', 'name', 'led tv')
+    .agg(
+        'nested',
+        {path: 'resellers'},
+        'resellers',
+        agg => agg.aggregation('min', 'resellers.price', 'min_price')
+    )
+    .build();
+
+bodybuilder()
+    .orFilter('nested', 'path', 'prop1', q => {
+        return q.query('terms', 'prop1.id', '1');
+    })
+    .build();
+
+bodybuilder()
+    .query(
+        'multi_match',
+        {
+            query: 'hello',
+            fuzziness: 5,
+            prefix_length: 0,
+            fields: ['Field1^1000', 'Field2^3', 'Field3^2', 'Field4']
+        }
+    )
+    .build();
+
+bodybuilder()
+    .rawOption('fields', ['price', 'brand'])
+    .orFilter('range', 'price', {'gt': 100, 'lt': 200})
+    .orFilter('range', 'price', {'gt': 600, 'lt': 900})
+    .filter('terms', 'brand', ['sony', 'samsung'])
+    .build();
+
+
+bodybuilder()
+    .agg('nested', {path: 'business_units'},
+        'business_units', (a) => {
+            return a.agg('nested', {path: 'business_units.members'}, 'business_units.members', (a) => {
+                return a.agg('max', 'business_units.members.created_at')
+            })
+        })
+    .build();
+
+bodybuilder().query('function_score', {
+    functions: [
+        {
+            exp: {
+                'profile.go_live_date': {
+                    origin: 'now',
+                    offset: '14d',
+                    scale: '14d'
+                },
+            }
+        }
+    ], boost: 0.5
+});
+
+
+bodybuilder()
+    .query('match_all')
+    .filter('nested', {path: 'offer'}, function (q) {
+        return q
+            .query('match_all')
+            .filter('geo_distance', {
+                "distance": "200km",
+                "offer.geo": {
+                    "lat": 48.86,
+                    "lon": 2.34445
+                }
+            });
+    }).build();
+
+bodybuilder()
+    .aggregation('sum', '', 'Balance', {
+        script: "doc['DEBIT_DC'].value + doc['CREDIT_DC'].value",
+        lang: 'expression'
+    })
+    .build()
+

@@ -34,7 +34,6 @@ declare namespace bodybuilder {
 		andQuery(type: string): B;
 		andQuery(type: string, field: string | object | QuerySubFilterFn): B;
 		andQuery(type: string, field: string | object, value: any): B;
-		andQuery(type: string, field: string | object, value: any): B;
 		andQuery(
 			type: string,
 			field: string | object,

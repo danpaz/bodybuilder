@@ -2,7 +2,7 @@ declare function bodybuilder(): bodybuilder.Bodybuilder;
 
 declare namespace bodybuilder {
 	export interface QuerySubFilterBuilder
-		extends FilterBuilder<QuerySubFilterBuilder> {}
+		extends QueryBuilder<QuerySubFilterBuilder>, FilterBuilder<QuerySubFilterBuilder> {}
 
 	export type QuerySubFilterFn = (
 		agg: QuerySubFilterBuilder
@@ -10,6 +10,7 @@ declare namespace bodybuilder {
 
 	export interface QueryBuilder<B> extends Object {
 		query(type: string): B;
+		query(type: string, field: string | object | QuerySubFilterFn): B;
 		query(type: string, field: string | object, value: any): B;
 		query(
 			type: string,
@@ -31,6 +32,7 @@ declare namespace bodybuilder {
 			subfilters: QuerySubFilterFn
 		): B;
 		andQuery(type: string): B;
+		andQuery(type: string, field: string | object | QuerySubFilterFn): B;
 		andQuery(type: string, field: string | object, value: any): B;
 		andQuery(type: string, field: string | object, value: any): B;
 		andQuery(
@@ -73,6 +75,7 @@ declare namespace bodybuilder {
 			subfilters: QuerySubFilterFn
 		): B;
 		orQuery(type: string): B;
+		orQuery(type: string, field: string | object | QuerySubFilterFn): B;
 		orQuery(type: string, field: string | object, value: any): B;
 		orQuery(
 			type: string,
@@ -94,6 +97,7 @@ declare namespace bodybuilder {
 			subfilters: QuerySubFilterFn
 		): B;
 		notQuery(type: string): B;
+		notQuery(type: string, field: string | object | QuerySubFilterFn): B;
 		notQuery(type: string, field: string | object, value: any): B;
 		notQuery(
 			type: string,
@@ -129,6 +133,8 @@ declare namespace bodybuilder {
 
 	export interface FilterBuilder<B> extends Object {
 		filter(type: string): B;
+		filter(type: string, field: string | object | FilterSubFilterFn): B;
+		filter(type: string, field: string | object, value: FilterSubFilterFn): B;
 		filter(type: string, field: string | object, value: any): B;
 		filter(
 			type: string,
@@ -150,6 +156,7 @@ declare namespace bodybuilder {
 			subfilters: FilterSubFilterFn
 		): B;
 		andFilter(type: string): B;
+		andFilter(type: string, field: string | object | FilterSubFilterFn): B;
 		andFilter(type: string, field: string | object, value: any): B;
 		andFilter(
 			type: string,
@@ -170,6 +177,7 @@ declare namespace bodybuilder {
 			options: object,
 			subfilters: FilterSubFilterFn
 		): B;
+		addFilter(type: string, field: string | object | FilterSubFilterFn): B;
 		addFilter(type: string, field: string | object, value: any): B;
 		addFilter(
 			type: string,
@@ -191,6 +199,7 @@ declare namespace bodybuilder {
 			subfilters: FilterSubFilterFn
 		): B;
 		orFilter(type: string): B;
+		orFilter(type: string, field: string | object | FilterSubFilterFn): B;
 		orFilter(type: string, field: string | object, value: any): B;
 		orFilter(
 			type: string,
@@ -212,6 +221,7 @@ declare namespace bodybuilder {
 			subfilters: FilterSubFilterFn
 		): B;
 		notFilter(type: string): B;
+		notFilter(type: string, field: string | object | FilterSubFilterFn): B;
 		notFilter(type: string, field: string | object, value: any): B;
 		notFilter(
 			type: string,
@@ -320,7 +330,7 @@ declare namespace bodybuilder {
 		sort(field: string, direction: string): Bodybuilder;
 		sort(field: string, body: object): Bodybuilder;
 		sort(fields: string[]): Bodybuilder;
-		sort(fields: Array<{ [field: string]: string | object }>): Bodybuilder;
+		sort(fields: Array<{ [field: string]: string | object } | string >): Bodybuilder;
 		from(quantity: number): Bodybuilder;
 		size(quantity: number): Bodybuilder;
 		rawOption(k: string, v: any): Bodybuilder;

@@ -10,6 +10,7 @@ export default function aggregationBuilder () {
     const opts = _.find(args, _.isPlainObject)
     const nested = _.find(args, _.isFunction)
     const nestedClause = {}
+    const metadata = {}
 
     if (_.isFunction(nested)) {
       const nestedResult = nested(Object.assign(
@@ -25,9 +26,14 @@ export default function aggregationBuilder () {
       }
     }
 
+    if(opts && opts._metadata) {
+      Object.assign(metadata, { meta : opts._metadata })
+      _.unset(opts, '_metadata')
+    }
+
     const innerClause = Object.assign({}, {
       [type]: buildClause(field, null, opts)
-    }, nestedClause)
+    }, metadata, nestedClause)
 
     Object.assign(aggregations, {
       [aggName]: innerClause

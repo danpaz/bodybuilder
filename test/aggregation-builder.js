@@ -412,3 +412,21 @@ test('aggregationBuilder | matrix stats', (t) => {
     }
   })
 })
+
+test('aggregationBuilder | metadata', (t) => {
+    t.plan(1)
+
+    const result = aggregationBuilder()
+        .aggregation('terms', 'title', { _metadata: { color: 'blue' } }, 'titles')
+
+    t.deepEqual(result.getAggregations(), {
+        titles: {
+            terms: {
+                field: 'title'
+            },
+            meta : {
+              color : 'blue'
+            }
+        }
+    })
+})

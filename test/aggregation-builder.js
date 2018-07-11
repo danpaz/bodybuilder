@@ -430,3 +430,33 @@ test('aggregationBuilder | metadata', (t) => {
         }
     })
 })
+
+test('aggregationBuilder | nested metadata', (t) => {
+    t.plan(1)
+
+    const result = aggregationBuilder()
+        .aggregation('terms', 'title', { _metadata: { color: 'blue' } }, 'titles', (a) => {
+            return a.aggregation('sum', 'price', { _metadata: { discount: 1.99 } }, 'sales')
+        })
+
+    t.deepEqual(result.getAggregations(), {
+      titles: {
+        terms: {
+          field: 'title'
+        },
+        meta: {
+          color: 'blue'
+        },
+        aggs: {
+          sales: {
+            sum: {
+              field: 'price'
+            },
+            meta: {
+              discount: 1.99
+            }
+          }
+        }
+      }
+    })
+})

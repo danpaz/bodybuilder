@@ -26,9 +26,9 @@ export default function aggregationBuilder () {
       }
     }
 
-    if(opts && opts._metadata) {
-      Object.assign(metadata, { meta : opts._metadata })
-      _.unset(opts, '_metadata')
+    if(opts && opts._meta) {
+      Object.assign(metadata, { meta : opts._meta })
+      _.unset(opts, '_meta')
     }
 
     const innerClause = Object.assign({}, {

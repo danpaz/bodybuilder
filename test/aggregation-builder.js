@@ -417,7 +417,7 @@ test('aggregationBuilder | metadata', (t) => {
     t.plan(1)
 
     const result = aggregationBuilder()
-        .aggregation('terms', 'title', { _metadata: { color: 'blue' } }, 'titles')
+        .aggregation('terms', 'title', { _meta: { color: 'blue' } }, 'titles')
 
     t.deepEqual(result.getAggregations(), {
         titles: {
@@ -435,8 +435,8 @@ test('aggregationBuilder | nested metadata', (t) => {
     t.plan(1)
 
     const result = aggregationBuilder()
-        .aggregation('terms', 'title', { _metadata: { color: 'blue' } }, 'titles', (a) => {
-            return a.aggregation('sum', 'price', { _metadata: { discount: 1.99 } }, 'sales')
+        .aggregation('terms', 'title', { _meta: { color: 'blue' } }, 'titles', (a) => {
+            return a.aggregation('sum', 'price', { _meta: { discount: 1.99 } }, 'sales')
         })
 
     t.deepEqual(result.getAggregations(), {

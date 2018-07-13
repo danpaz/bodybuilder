@@ -49,6 +49,7 @@ export default function aggregationBuilder () {
      * @param  {string}        field     Name of the field to aggregate over.
      * @param  {Object}        [options] (optional) Additional options to
      *                                   include in the aggregation.
+     *                         [options._meta] associate a piece of metadata with individual aggregations
      * @param  {string}        [name]    (optional) A custom name for the
      *                                   aggregation, defaults to
      *                                   `agg_<type>_<field>`.
@@ -81,6 +82,13 @@ export default function aggregationBuilder () {
      *     return a.aggregation('significant_terms', 'text', 'keywords')
      *   })
      *   .build()
+     *
+     * bodybuilder()
+     *   .aggregation('terms', 'title', {
+     *      _meta: { color: 'blue' }
+     *    }, 'titles')
+     *   .build()
+     *
      */
     aggregation (...args) {
       makeAggregation(...args)

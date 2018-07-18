@@ -10,6 +10,7 @@ export default function aggregationBuilder () {
     const opts = _.find(args, _.isPlainObject)
     const nested = _.find(args, _.isFunction)
     const nestedClause = {}
+    const metadata = {}
 
     if (_.isFunction(nested)) {
       const nestedResult = nested(Object.assign(
@@ -25,9 +26,14 @@ export default function aggregationBuilder () {
       }
     }
 
+    if(opts && opts._meta) {
+      Object.assign(metadata, { meta : opts._meta })
+      _.unset(opts, '_meta')
+    }
+
     const innerClause = Object.assign({}, {
       [type]: buildClause(field, null, opts)
-    }, nestedClause)
+    }, metadata, nestedClause)
 
     Object.assign(aggregations, {
       [aggName]: innerClause
@@ -43,6 +49,7 @@ export default function aggregationBuilder () {
      * @param  {string}        field     Name of the field to aggregate over.
      * @param  {Object}        [options] (optional) Additional options to
      *                                   include in the aggregation.
+     *                         [options._meta] associate a piece of metadata with individual aggregations
      * @param  {string}        [name]    (optional) A custom name for the
      *                                   aggregation, defaults to
      *                                   `agg_<type>_<field>`.
@@ -75,6 +82,13 @@ export default function aggregationBuilder () {
      *     return a.aggregation('significant_terms', 'text', 'keywords')
      *   })
      *   .build()
+     *
+     * bodybuilder()
+     *   .aggregation('terms', 'title', {
+     *      _meta: { color: 'blue' }
+     *    }, 'titles')
+     *   .build()
+     *
      */
     aggregation (...args) {
       makeAggregation(...args)

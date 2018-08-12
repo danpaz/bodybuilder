@@ -336,6 +336,5 @@ declare namespace bodybuilder {
 	}
 }
 
-declare module 'bodybuilder' {
-	export = bodybuilder;
-}
+export as namespace bodybuilder;
+export default bodybuilder;

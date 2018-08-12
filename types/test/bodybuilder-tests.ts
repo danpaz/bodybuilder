@@ -1,6 +1,4 @@
-/// <reference path="../bodybuilder.d.ts" />
-
-import bodybuilder = require('bodybuilder');
+import bodybuilder from 'bodybuilder';
 
 bodybuilder().query('match_all');
 bodybuilder().query('match', 'someId', 2);

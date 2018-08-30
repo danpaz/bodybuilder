@@ -3,7 +3,7 @@
   "version": "2.2.13",
   "description": "An elasticsearch query body builder.",
   "main": "lib/index.js",
-  "typings": "types/index.d.ts",
+  "typings": "./bodybuilder.d.ts",
   "files": [
     "browser/",
     "lib/",
@@ -17,7 +17,7 @@
     "build:docs": "documentation build src/index.js -o docs -f html --name bodybuilder",
     "build": "npm run build:babel && npm run build:umd && npm run build:docs",
     "lint": "eslint src test",
-    "typescript-test": "tsc --project types/test",
+    "typescript-test": "tsc --project typing-tests",
     "style": "npm run lint",
     "test": "babel-tape-runner test/* | tap-spec && npm run typescript-test",
     "watch:test": "tape-watch test/* -r babel-register -p tap-spec",

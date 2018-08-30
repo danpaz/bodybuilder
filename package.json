@@ -8,7 +8,7 @@
     "browser/",
     "lib/",
     "src/",
-    "types/*.d.ts",
+    "bodybuilder.d.ts",
     "repl.js"
   ],
   "scripts": {

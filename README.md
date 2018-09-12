@@ -1,6 +1,5 @@
 # bodybuilder
 [![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors)
-
 [![npm version](https://badge.fury.io/js/bodybuilder.svg)](https://www.npmjs.com/package/bodybuilder)
 [![Build Status](https://travis-ci.org/danpaz/bodybuilder.svg?branch=master)](https://travis-ci.org/danpaz/bodybuilder)
 
@@ -9,14 +8,11 @@ elasticsearch with a simple, predictable api.
 
 ![bodybuilder](img/bodybuilder.jpeg)
 
-**Check out the [API reference documentation](http://bodybuilder.js.org/docs).**
+# Documentation
 
-## Upgrading to bodybuilder 2
+**Check out the [API documentation](http://bodybuilder.js.org/docs)** for details and examples.
 
-See the [migration guide](./docs/migrate-to-2.md) if you are upgrading from
-bodybuilder 1 to bodybuilder 2.
-
-The bodybuilder 1 API documentation is [still available for reference](./docs/API.md).
+Use https://bodybuilder.js.org/ to test your constructions.
 
 ## Elasticsearch compatibility
 

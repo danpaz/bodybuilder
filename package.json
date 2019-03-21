@@ -57,7 +57,7 @@
     "webpack": "1.12.13"
   },
   "dependencies": {
-    "lodash": "^4.9.0"
+    "lodash": "^4.17.11"
   },
   "repository": {
     "type": "git",

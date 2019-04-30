@@ -40,8 +40,8 @@ import { sortMerge } from './utils'
  * ```
  *
  * For nested sub-queries or sub-aggregations, pass a function as the last
- * argument and build the nested clause in the body of that function. For
- * example:
+ * argument and build the nested clause in the body of that function. Note that
+ * you must `return` the builder object in the nested function. For example:
  *
  * ```
  * bodybuilder()
@@ -50,6 +50,8 @@ import { sortMerge } from './utils'
  *   })
  *   .build()
  * ```
+ *
+ *
  *
  * The entire elasticsearch query DSL is available using the bodybuilder api.
  * There are many more examples in the docs as well as in the tests.

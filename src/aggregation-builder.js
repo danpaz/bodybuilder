@@ -26,7 +26,7 @@ export default function aggregationBuilder () {
       }
     }
 
-    if(opts && opts._meta) {
+    if (opts && opts._meta) {
       Object.assign(metadata, { meta : opts._meta })
       _.unset(opts, '_meta')
     }
@@ -109,7 +109,7 @@ export default function aggregationBuilder () {
     },
 
     hasAggregations () {
-      return !!_.size(aggregations)
+      return !_.isEmpty(aggregations)
     }
   }
 }

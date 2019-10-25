@@ -746,6 +746,55 @@ test('bodybuilder | minimum_should_match filter', (t) => {
   })
 })
 
+test('bodybuilder | minimum_should_match with 1 filter', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .orFilter('term', 'user', 'kimchy')
+    .filterMinimumShouldMatch(2)
+    .build()
+
+  t.deepEqual(result,
+    {
+      query: {
+        bool: {
+          filter: {
+            bool: {
+              should: [
+                {term: {user: 'kimchy'}}
+              ]
+            }
+          }
+        }
+      }
+    })
+})
+
+test('bodybuilder | minimum_should_match with 1 filter + override', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .orFilter('term', 'user', 'kimchy')
+    .filterMinimumShouldMatch(1, true)
+    .build()
+
+  t.deepEqual(result,
+    {
+      query: {
+        bool: {
+          filter: {
+            bool: {
+              should: [
+                {term: {user: 'kimchy'}}
+              ],
+              minimum_should_match: 1
+            }
+          }
+        }
+      }
+    })
+})
+
 test('bodybuilder | minimum_should_match query', (t) => {
   t.plan(1)
 

@@ -12,8 +12,9 @@ export default function filterBuilder (options) {
     filters
   )
 
-  function addMinimumShouldMatch(str) {
+  function addMinimumShouldMatch(str, override) {
     filters.minimum_should_match = str
+    filters.minimum_should_match_override = override
   }
 
   return {
@@ -90,10 +91,11 @@ export default function filterBuilder (options) {
      *
      * @param  {any} param  minimum_should_match parameter. For possible values
      *                      see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-minimum-should-match.html
+     * @param {boolean} override  allows minimum_should_match to be overridden, ignoring internal constraints
      * @return {bodybuilder} Builder.
      */
-    filterMinimumShouldMatch (param) {
-      addMinimumShouldMatch(param)
+    filterMinimumShouldMatch (param, override) {
+      addMinimumShouldMatch(param, !!override)
       return this
     },
 

@@ -9,8 +9,9 @@ export default function queryBuilder (options) {
 
   const makeQuery = pushQuery.bind(options || {}, query)
 
-  function addMinimumShouldMatch(str) {
+  function addMinimumShouldMatch(str, override = false) {
     query.minimum_should_match = str
+    query.minimum_should_match_override = override
   }
 
   return {
@@ -106,10 +107,11 @@ export default function queryBuilder (options) {
      *
      * @param  {any} param  minimum_should_match parameter. For possible values
      *                      see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-minimum-should-match.html
+     * @param {boolean} override  allows minimum_should_match to be overridden, ignoring internal constraints
      * @return {bodybuilder} Builder.
      */
-    queryMinimumShouldMatch (param) {
-      addMinimumShouldMatch(param)
+    queryMinimumShouldMatch (param, override) {
+      addMinimumShouldMatch(param, !!override)
       return this
     },
 

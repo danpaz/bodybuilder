@@ -117,7 +117,7 @@ declare namespace bodybuilder {
 			options: object,
 			subfilters: QuerySubFilterFn
 		): B;
-		queryMinimumShouldMatch(param: string | number): B;
+		queryMinimumShouldMatch(param: string | number, override?: boolean): B;
 		getQuery(): object;
 		hasQuery(): boolean;
 	}
@@ -241,7 +241,7 @@ declare namespace bodybuilder {
 			options: object,
 			subfilters: FilterSubFilterFn
 		): B;
-		filterMinimumShouldMatch(param: string | number): B;
+		filterMinimumShouldMatch(param: string | number, override?: boolean): B;
 		getFilter(): object;
 		hasFilter(): boolean;
 	}

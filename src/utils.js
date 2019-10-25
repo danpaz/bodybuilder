@@ -89,8 +89,8 @@ export function toBool (filters) {
     cleaned.must_not = filters.not
   }
   if (
-    unwrapped.minimum_should_match &&
-    filters.or.length > 1
+    (unwrapped.minimum_should_match &&
+    filters.or.length > 1) || filters.minimum_should_match_override
   ) {
     cleaned.minimum_should_match = unwrapped.minimum_should_match
   }

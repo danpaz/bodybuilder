@@ -141,6 +141,12 @@ bodybuilder()
     .queryMinimumShouldMatch(2)
     .build();
 bodybuilder()
+    .orQuery('term', 'user', 'kimchy')
+    .orFilter('term', 'user', 'kimchy')
+    .filterMinimumShouldMatch(1, true)
+    .queryMinimumShouldMatch(2, true)
+    .build();
+bodybuilder()
     .query('bool', b => b.orQuery('match', 'title', 'Solr').orQuery('match', 'title', 'Elasticsearch'))
     .query('match', 'authors', 'clinton gormely')
     .notQuery('match', 'authors', 'radu gheorge')

@@ -115,7 +115,7 @@ var body = new Bodybuilder()
     // Nest aggregations on "bySomeField"
     agg =>
       agg
-        .agregation('max', 'someOtherField')
+        .aggregation('max', 'someOtherField')
         .aggregation('missing', 'anotherField')
    )
   .build()

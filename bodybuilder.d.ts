@@ -120,6 +120,7 @@ declare namespace bodybuilder {
 		queryMinimumShouldMatch(param: string | number, override?: boolean): B;
 		getQuery(): object;
 		hasQuery(): boolean;
+		getRawQuery(): object;
 	}
 
 	export interface FilterSubFilterBuilder
@@ -244,6 +245,7 @@ declare namespace bodybuilder {
 		filterMinimumShouldMatch(param: string | number, override?: boolean): B;
 		getFilter(): object;
 		hasFilter(): boolean;
+		getRawFilter(): object;
 	}
 
 	export interface SubAggregationBuilder
@@ -317,6 +319,7 @@ declare namespace bodybuilder {
 		): B;
 		getAggregations(): object;
 		hasAggregations(): boolean;
+		getRawAggregations(): object;
 	}
 
 	export interface Bodybuilder

@@ -203,7 +203,14 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
       },
 
       /**
-       * Clone this bodybuilder instance
+       * Returns a cloned instance of bodybuilder
+       *
+       * ```
+       * const bodyA = bodybuilder().size(3);
+       * const bodyB = bodyA.clone().from(2); // Doesn't affect bodyA
+       * // bodyA: { size: 3 }
+       * // bodyB: { size: 3, from: 2 }
+       * ```
        *
        * @return {bodybuilder} Newly cloned bodybuilder instance
        */
@@ -212,7 +219,7 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
         const filters = this.getRawFilter()
         const aggregations = this.getRawAggregations()
 
-        return bodybuilder(_.cloneDeep(body), _.cloneDeep(queries), _.cloneDeep(filters), _.cloneDeep(aggregations))
+        return bodybuilder(...[body, queries, filters, aggregations].map(obj => _.cloneDeep(obj)))
       }
 
     },

@@ -336,3 +336,6 @@ bodybuilder()
     })
     .build()
 
+bodybuilder()
+    .clone()
+    .size(1)

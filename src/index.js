@@ -56,10 +56,14 @@ import { sortMerge } from './utils'
  * The entire elasticsearch query DSL is available using the bodybuilder api.
  * There are many more examples in the docs as well as in the tests.
  *
+ * @param  {Object} newBody Body to initialise with
+ * @param  {Object} newQueries Queries to initialise with
+ * @param  {Object} newFilters Filters to initialise with
+ * @param  {Object} newAggregations Aggregations to initialise with
  * @return {bodybuilder} Builder.
  */
-export default function bodybuilder () {
-  let body = {}
+export default function bodybuilder (newBody, newQueries, newFilters, newAggregations) {
+  let body = newBody || {}
 
   return Object.assign(
     {
@@ -196,12 +200,32 @@ export default function bodybuilder () {
         }
 
         return _build(body, queries, filters, aggregations)
+      },
+
+      /**
+       * Returns a cloned instance of bodybuilder
+       *
+       * ```
+       * const bodyA = bodybuilder().size(3);
+       * const bodyB = bodyA.clone().from(2); // Doesn't affect bodyA
+       * // bodyA: { size: 3 }
+       * // bodyB: { size: 3, from: 2 }
+       * ```
+       *
+       * @return {bodybuilder} Newly cloned bodybuilder instance
+       */
+      clone() {
+        const queries = this.getRawQuery()
+        const filters = this.getRawFilter()
+        const aggregations = this.getRawAggregations()
+
+        return bodybuilder(...[body, queries, filters, aggregations].map(obj => _.cloneDeep(obj)))
       }
 
     },
-    queryBuilder(),
-    filterBuilder(),
-    aggregationBuilder()
+    queryBuilder(undefined, newQueries),
+    filterBuilder(undefined, newFilters),
+    aggregationBuilder(newAggregations)
   )
 }
 

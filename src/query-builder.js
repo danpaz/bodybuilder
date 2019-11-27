@@ -1,11 +1,12 @@
+import _ from 'lodash'
 import { toBool, pushQuery } from './utils'
 
-export default function queryBuilder (options) {
-  const query = {
+export default function queryBuilder (options, newQuery) {
+  const query = _.isEmpty(newQuery) ? {
     and: [],
     or: [],
     not: []
-  }
+  } : newQuery
 
   const makeQuery = pushQuery.bind(options || {}, query)
 
@@ -121,6 +122,10 @@ export default function queryBuilder (options) {
 
     hasQuery () {
       return !!(query.and.length || query.or.length || query.not.length)
+    },
+
+    getRawQuery () {
+      return query
     }
   }
 }

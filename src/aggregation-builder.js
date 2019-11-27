@@ -2,8 +2,8 @@ import _ from 'lodash'
 import { buildClause } from './utils'
 import filterBuilder from './filter-builder'
 
-export default function aggregationBuilder () {
-  let aggregations = {}
+export default function aggregationBuilder (newAggregations) {
+  let aggregations = _.isEmpty(newAggregations) ? {} : newAggregations
 
   function makeAggregation (type, field, ...args) {
     const aggName = _.find(args, _.isString) || `agg_${type}_${field}`
@@ -110,6 +110,10 @@ export default function aggregationBuilder () {
 
     hasAggregations () {
       return !_.isEmpty(aggregations)
+    },
+
+    getRawAggregations () {
+      return aggregations
     }
   }
 }

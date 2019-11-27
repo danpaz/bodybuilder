@@ -1,11 +1,12 @@
+import _ from 'lodash'
 import { pushQuery, toBool } from './utils'
 
-export default function filterBuilder (options) {
-  const filters = {
+export default function filterBuilder (options, newFilters) {
+  const filters = _.isEmpty(newFilters) ? {
     and: [],
     or: [],
     not: []
-  }
+  } : newFilters
 
   const makeFilter = pushQuery.bind(
     Object.assign({ isInFilterContext: true }, options),
@@ -105,6 +106,10 @@ export default function filterBuilder (options) {
 
     hasFilter () {
       return !!(filters.and.length || filters.or.length || filters.not.length)
+    },
+
+    getRawFilter () {
+      return filters
     }
   }
 }

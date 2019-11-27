@@ -57,9 +57,12 @@ import { sortMerge } from './utils'
  * There are many more examples in the docs as well as in the tests.
  *
  * @param  {Object} newBody Body to initialise with
+ * @param  {Object} newQueries Queries to initialise with
+ * @param  {Object} newFilters Filters to initialise with
+ * @param  {Object} newAggregations Aggregations to initialise with
  * @return {bodybuilder} Builder.
  */
-export default function bodybuilder (newBody) {
+export default function bodybuilder (newBody, newQueries, newFilters, newAggregations) {
   let body = newBody || {}
 
   return Object.assign(
@@ -205,13 +208,17 @@ export default function bodybuilder (newBody) {
        * @return {bodybuilder} Newly cloned bodybuilder instance
        */
       clone() {
-        return bodybuilder(_.cloneDeep(body))
+        const queries = this.getRawQuery()
+        const filters = this.getRawFilter()
+        const aggregations = this.getRawAggregations()
+
+        return bodybuilder(_.cloneDeep(body), _.cloneDeep(queries), _.cloneDeep(filters), _.cloneDeep(aggregations))
       }
 
     },
-    queryBuilder(),
-    filterBuilder(),
-    aggregationBuilder()
+    queryBuilder(undefined, newQueries),
+    filterBuilder(undefined, newFilters),
+    aggregationBuilder(newAggregations)
   )
 }
 

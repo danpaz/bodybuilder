@@ -996,3 +996,44 @@ test('bodyBuilder shouldn\'t reference new body on clone', (t) => {
     size: 2
   })
 })
+
+
+test('bodyBuilder complex clone', (t) => {
+  t.plan(1)
+
+  const bodyA = bodyBuilder().query('bool', b => b
+    .query('term', 'field1', 1)
+    .query('term', 'field2', 2)
+    .orQuery('term', 'field3', 3))
+
+  const bodyB = bodyA.clone().from(1)
+
+  t.deepEqual(bodyB.build(),
+    {
+      from: 1,
+      query: {
+        bool: {
+          must: [
+            {
+              term: {
+                field1: 1
+              }
+            },
+            {
+              term: {
+                field2: 2
+              }
+            }
+          ],
+          should: [
+            {
+              term: {
+                field3: 3
+              }
+            }
+          ]
+        }
+      }
+    }
+  )
+})

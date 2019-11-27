@@ -199,7 +199,6 @@ export default function bodybuilder (newBody) {
         return _build(body, queries, filters, aggregations)
       },
 
-
       /**
        * Clone this bodybuilder instance
        *

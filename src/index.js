@@ -56,10 +56,11 @@ import { sortMerge } from './utils'
  * The entire elasticsearch query DSL is available using the bodybuilder api.
  * There are many more examples in the docs as well as in the tests.
  *
+ * @param  {Object} newBody Body to initialise with
  * @return {bodybuilder} Builder.
  */
-export default function bodybuilder () {
-  let body = {}
+export default function bodybuilder (newBody) {
+  let body = newBody || {}
 
   return Object.assign(
     {
@@ -196,6 +197,16 @@ export default function bodybuilder () {
         }
 
         return _build(body, queries, filters, aggregations)
+      },
+
+
+      /**
+       * Clone this bodybuilder instance
+       *
+       * @return {bodybuilder} Newly cloned bodybuilder instance
+       */
+      clone() {
+        return bodybuilder(_.cloneDeep(body))
       }
 
     },

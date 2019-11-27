@@ -973,3 +973,26 @@ test('bodybuilder | Invalid nested bool query with more "query" #142', (t) => {
     }
   )
 })
+
+test('bodyBuilder should clone', (t) => {
+  t.plan(1)
+
+  const bodyA = bodyBuilder().size(2)
+  const bodyB = bodyA.clone().from(1)
+
+  t.deepEqual(bodyB.build(), {
+    size: 2,
+    from: 1
+  })
+})
+
+test('bodyBuilder shouldn\'t reference new body on clone', (t) => {
+  t.plan(1)
+
+  const bodyA = bodyBuilder().size(2)
+  bodyA.clone().from(1)
+
+  t.deepEqual(bodyA.build(), {
+    size: 2
+  })
+})

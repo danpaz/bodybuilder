@@ -333,6 +333,7 @@ declare namespace bodybuilder {
 		size(quantity: number): Bodybuilder;
 		rawOption(k: string, v: any): Bodybuilder;
 		build(version?: string): object;
+		clone(): Bodybuilder;
 	}
 }
 

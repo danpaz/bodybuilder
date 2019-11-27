@@ -85,6 +85,16 @@
               
                 
                 <li><a
+                  href='#clone'
+                  class="">
+                  clone
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#query'
                   class="">
                   query
@@ -285,7 +295,7 @@ you must <code>return</code> the builder object in the nested function. For exam
 There are many more examples in the docs as well as in the tests.</p>
 
 
-  <div class='pre p1 fill-light mt0'>bodybuilder(): <a href="#bodybuilder">bodybuilder</a></div>
+  <div class='pre p1 fill-light mt0'>bodybuilder(newBody: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newQueries: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newFilters: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newAggregations: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -296,6 +306,47 @@ There are many more examples in the docs as well as in the tests.</p>
   
   
 
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>newBody</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    Body to initialise with
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>newQueries</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    Queries to initialise with
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>newFilters</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    Filters to initialise with
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>newAggregations</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    Aggregations to initialise with
+
+          </div>
+          
+        </div>
+      
+    </div>
   
 
   
@@ -715,6 +766,66 @@ elasticsearch 1.x query dsl.
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
         Elasticsearch query body.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='clone'>
+      clone
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Returns a cloned instance of bodybuilder</p>
+<pre><code>const bodyA = bodybuilder().size(3);
+const bodyB = bodyA.clone().from(2); // Doesn't affect bodyA
+// bodyA: { size: 3 }
+// bodyB: { size: 3, from: 2 }
+</code></pre>
+
+
+  <div class='pre p1 fill-light mt0'>clone(): <a href="#bodybuilder">bodybuilder</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#bodybuilder">bodybuilder</a></code>:
+        Newly cloned bodybuilder instance
 
       
     

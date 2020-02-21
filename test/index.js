@@ -271,6 +271,115 @@ test('bodyBuilder should not de-depude _geo_distance', (t) => {
   })
 })
 
+test('bodyBuilder should not de-depude nested sort', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .sort([
+      {
+        _geo_distance: {
+          'a.pin.location': [-70, 40],
+          order: 'asc',
+          unit: 'km',
+          mode: 'min',
+          distance_type: 'sloppy_arc'
+        }
+      },
+      {
+        _geo_distance: {
+          'b.pin.location': [-70, 40],
+          order: 'asc',
+          unit: 'km',
+          mode: 'min',
+          distance_type: 'sloppy_arc'
+        }
+      }
+    ])
+    .sort([
+    { 'nested_entity.name': {
+        order: "desc",
+        nested: {
+          path: "nested_entity",
+          filter: {
+            term: { "nested_entity.subfield.text" : "text1" }
+          }
+        }
+      }
+    },
+    { 'nested_entity.name': {
+        order: "desc",
+        nested: {
+          path: "nested_entity",
+          filter: {
+            term: { "nested_entity.subfield.text" : "text2" }
+          }
+        }
+      }
+    }
+  ])
+    .sort([
+    { categories: 'desc' },
+    { content: 'desc' },
+    { content: 'asc' }
+  ])
+    .build()
+
+  t.deepEqual(result, {
+    sort: [
+      {
+        _geo_distance: {
+          'a.pin.location': [-70, 40],
+          order: 'asc',
+          unit: 'km',
+          mode: 'min',
+          distance_type: 'sloppy_arc'
+        }
+      },
+      {
+        _geo_distance: {
+          'b.pin.location': [-70, 40],
+          order: 'asc',
+          unit: 'km',
+          mode: 'min',
+          distance_type: 'sloppy_arc'
+        }
+      },
+      {
+        'nested_entity.name': {
+          order: 'desc',
+          nested: {
+            path: 'nested_entity',
+            filter: {
+              term: { 'nested_entity.subfield.text' : 'text1' }
+            }
+          }
+        }
+      },
+      {
+        'nested_entity.name': {
+          order: 'desc',
+          nested: {
+            path: 'nested_entity',
+            filter: {
+              term: { 'nested_entity.subfield.text' : 'text2' }
+            }
+          }
+        }
+      },
+      {
+        categories: {
+          order: 'desc'
+        }
+      },
+      {
+        content: {
+          order:'asc'
+        }
+      }
+    ]
+  })
+})
+
 test('bodyBuilder should set from on body', (t) => {
   t.plan(1)
 

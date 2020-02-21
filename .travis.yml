@@ -1,23 +1,22 @@
 language: node_js
 node_js:
-  - '12.13.1'
-  - '10.17.0'
-  - '8.5.0'
-  - '6.11.2'
+- 12.16.1
+- 10.19.0
+- 8.5.0
+- 6.11.2
 branches:
   only:
   - master
-  - /^v[0-9](\.[0-9]+)(\.[0-9]+)?$/
+  - "/^v[0-9](\\.[0-9]+)(\\.[0-9]+)?$/"
 script: npm run check
 before_deploy: npm run build
 deploy:
   provider: npm
   email: daniel.pazsoldan@gmail.com
-  skip_cleanup: true
   api_key:
-    secure: lM1Xaq8a+kvLRQP1Hd4NzWa7f7Cf7Nv5RrtbcUMaobGA1ajkfKxJJ21gaLjAmjSQEY+ZsSsXVktQ4QJ9dtWGUKIfklGRvDCfWdfK3NA4cHEFgK+tTT/689vIrFY27Q1ZJ6YJZDVYDmrX7WJoBeg1lSuTseSgWJ8XOl5d7ctLhIjt9Py6Sy+Zh4yMsTm4H4kWs9cqmqoWIw21Tf+z+wiRSR0ipMoMkavAShj5bQTvuXU3/z1V//N7UTUrB34wK2kqcOu2qdL70o05aYClYfo+B2aFvp0ZVYgamh/tbjR9gQqGDfoAvJy+FvSGjTB+ZP8x0ZjTeCDnKFVHEE3dqvzZYb9FKA2ZTVXT5ZG9XdJ49Qpocpkz8JSpxJ6yKMbcynzsJJ8CEEJatY9yBqH5BFX+2kjlokwxJ9Dz6/TVwiSfleIxTy20x7DWXWwBWu5wvsLedIrkgP3anK6jN+rBiRRC8+bq3XDZDt3AglIdSIkctiXUxIXa74I0oMgjQSBUS6+OuXpXc2yHWwb6+z8TFG/KpOJethAgfKyW/esLAZAPqoyvR2eT/J6kDWVGwr3Wy8JKZuHHGAfRREdqwhe1zCOxbdpvKewbpwGWbA0/aO9rjzCaXRmdXVTIucOJC9Nt4pBHF+y888vu1m7eTf1tBotmKt/hwJK5SakTjWn6N9bBlxo=
+    secure: mNWOPAlbEF4za/ETlkaWge2TI/rYm4UXC77Sc7fh5YVUMEDxe2VPPnBkIKgspDM9DCqyr0RPeZoGyKCRimfzoH3DBF1xv+6mc6ulbcwDiFpUOyDt/4dhQOtn67c9Ta8qZEHl0JGKPk8POp5AA0glKOKehrtSqUZ1HJw8FIg4C5WCs0Ad+2WkNfQsRCRfG6CBVJFYurhX1k8knslexsZNtyjkuP5TxAvwUDPcfvvxUVzcMkSGbxFl+rHdjS4SbQi4E8KwYajaWjCXNA3+N3xg2ed2V7Ba1MXMNloOYVnSKbyucIgGuLI6UE1UJX5B8MQDIRrcmqtyBRr4AnbfLPuwRtZJZUu+dTL1ihv+TJ9lGXPd47CS3oIZE0tjkxgzwZuLtCA8BCQCDVGWu+RwrobllGPirEoUsugddd/lz6AcQrZPbkrIcpLh216lQfMGZci7eggqohTSkWIIAFVMLCpkuy7aZBRzf+m5eem+a8Cidoin64tAM/QUApg2yNHPU7hMNBss7YpHcuxVKkZ9G9Djq8TSWlBHpCGvrjwZES0VoOPONyzVbFK3n8f8fSb46EFlkXPAyLz28jSVUQMYGgTanGPSIqCsvd+Pwpar/3UfjMJbjhZ27ub1ycrcCgbCZ+8bC2zzyBIJS0U1GW5XEBE9ULX6ImB2vTFwkjNNAV9zZeM=
   on:
     tags: true
     repo: danpaz/bodybuilder
     branch: master
-    node: '10.17.0'
+    node: 10.19.0

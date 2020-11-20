@@ -1,9 +1,8 @@
 language: node_js
 node_js:
-- 12.16.1
-- 10.19.0
-- 8.5.0
-- 6.11.2
+- 14.15.1
+- 12.19.1
+- 10.23.0
 branches:
   only:
   - master
@@ -19,4 +18,4 @@ deploy:
     tags: true
     repo: danpaz/bodybuilder
     branch: master
-    node: 10.19.0
+    node: 14.15.1

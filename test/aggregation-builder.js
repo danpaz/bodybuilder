@@ -471,5 +471,5 @@ test('aggregationBuilder | custom name in args', (t) => {
         field: 'grade'
       }
     }
-  });
+  })
 })

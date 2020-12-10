@@ -460,3 +460,16 @@ test('aggregationBuilder | nested metadata', (t) => {
       }
     })
 })
+
+test('aggregationBuilder | custom name in args', (t) => {
+  t.plan(1)
+  const result = aggregationBuilder().aggregation('avg', 'grade', { name: 'customName' })
+
+  t.deepEqual(result.getAggregations(), {
+    customName: {
+      avg: {
+        field: 'grade'
+      }
+    }
+  });
+})

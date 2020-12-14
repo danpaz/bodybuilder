@@ -329,14 +329,14 @@ test('aggregationBuilder | filter aggregation', (t) => {
 
   const result = aggregationBuilder().aggregation('filter', 'red_products', (a) => {
     return a.filter('term', 'color', 'red')
-            .aggregation('avg', 'price', 'avg_price')
+      .aggregation('avg', 'price', 'avg_price')
   })
 
   t.deepEqual(result.getAggregations(), {
     agg_filter_red_products: {
       filter: { term: { color: 'red' } },
       aggs: {
-        avg_price : { avg : { field : 'price' } }
+        avg_price: { avg: { field: 'price' } }
       }
     }
   })
@@ -377,8 +377,8 @@ test('aggregationBuilder | pipeline aggregation', (t) => {
     .aggregation('max_bucket', { buckets_path: 'sales_per_month>sales' }, 'max_monthly_sales')
 
   t.deepEqual(result.getAggregations(), {
-    sales_per_month : {
-      date_histogram : {
+    sales_per_month: {
+      date_histogram: {
         field: 'date',
         interval: 'month'
       },
@@ -414,56 +414,56 @@ test('aggregationBuilder | matrix stats', (t) => {
 })
 
 test('aggregationBuilder | metadata', (t) => {
-    t.plan(1)
+  t.plan(1)
 
-    const result = aggregationBuilder()
-        .aggregation('terms', 'title', { _meta: { color: 'blue' } }, 'titles')
+  const result = aggregationBuilder()
+    .aggregation('terms', 'title', { _meta: { color: 'blue' } }, 'titles')
 
-    t.deepEqual(result.getAggregations(), {
-        titles: {
-            terms: {
-                field: 'title'
-            },
-            meta : {
-              color : 'blue'
-            }
-        }
-    })
+  t.deepEqual(result.getAggregations(), {
+    titles: {
+      terms: {
+        field: 'title'
+      },
+      meta: {
+        color: 'blue'
+      }
+    }
+  })
 })
 
 test('aggregationBuilder | nested metadata', (t) => {
-    t.plan(1)
+  t.plan(1)
 
-    const result = aggregationBuilder()
-        .aggregation('terms', 'title', { _meta: { color: 'blue' } }, 'titles', (a) => {
-            return a.aggregation('sum', 'price', { _meta: { discount: 1.99 } }, 'sales')
-        })
+  const result = aggregationBuilder()
+    .aggregation('terms', 'title', { _meta: { color: 'blue' } }, 'titles', (a) => {
+      return a.aggregation('sum', 'price', { _meta: { discount: 1.99 } }, 'sales')
+    })
 
-    t.deepEqual(result.getAggregations(), {
-      titles: {
-        terms: {
-          field: 'title'
-        },
-        meta: {
-          color: 'blue'
-        },
-        aggs: {
-          sales: {
-            sum: {
-              field: 'price'
-            },
-            meta: {
-              discount: 1.99
-            }
+  t.deepEqual(result.getAggregations(), {
+    titles: {
+      terms: {
+        field: 'title'
+      },
+      meta: {
+        color: 'blue'
+      },
+      aggs: {
+        sales: {
+          sum: {
+            field: 'price'
+          },
+          meta: {
+            discount: 1.99
           }
         }
       }
-    })
+    }
+  })
 })
 
 test('aggregationBuilder | custom name in args', (t) => {
   t.plan(1)
-  const result = aggregationBuilder().aggregation('avg', 'grade', { name: 'customName' })
+  const result = aggregationBuilder().aggregation('avg', 'grade', { _name: 'customName' })
 
   t.deepEqual(result.getAggregations(), {
     customName: {

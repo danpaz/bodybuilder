@@ -8,10 +8,17 @@ declare namespace bodybuilder {
 		agg: QuerySubFilterBuilder
 	) => QuerySubFilterBuilder;
 
+	/**
+	 * Additional options to include in the aggregation.
+	 *
+	 * @interface AggOptions
+	 * @field _name A custom name for the aggregation, defaults to agg_<type>_<field>.
+	 * @field _meta Used to associate a piece of metadata with an individual aggregation.
+	 */
 	export interface AggOptions {
-		name?: string;
-		meta?: object;
-		[key: string]: any,
+		_name?: string;
+		_meta?: object;
+		[key: string]: any;
 	}
 
 	export interface QueryBuilder<B> extends Object {

@@ -59,7 +59,7 @@ export default function aggregationBuilder (newAggregations) {
      * @param  {Object}        [options] (optional) Additional options to
      *                                   include in the aggregation.
      *                         [options._meta] associate a piece of metadata with individual aggregations
-     *                         [options.name ] another way to pass a custom name to the aggregation.
+     *                         [options._name ] another way to pass a custom name to the aggregation.
      * @param  {string}        [name]    (optional) A custom name for the
      *                                   aggregation, defaults to
      *                                   `agg_<type>_<field>`.

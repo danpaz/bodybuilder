@@ -6,8 +6,17 @@ export default function aggregationBuilder (newAggregations) {
   let aggregations = _.isEmpty(newAggregations) ? {} : newAggregations
 
   function makeAggregation (type, field, ...args) {
-    const aggName = _.find(args, _.isString) || `agg_${type}_${field}`
+
     const opts = _.find(args, _.isPlainObject)
+    const customName = opts && opts._name
+
+    const aggName = customName || _.find(args, _.isString) || `agg_${type}_${field}`
+
+    // we don't need name after this point
+    if (customName) {
+      _.unset(opts, '_name')
+    }
+
     const nested = _.find(args, _.isFunction)
     const nestedClause = {}
     const metadata = {}
@@ -50,6 +59,7 @@ export default function aggregationBuilder (newAggregations) {
      * @param  {Object}        [options] (optional) Additional options to
      *                                   include in the aggregation.
      *                         [options._meta] associate a piece of metadata with individual aggregations
+     *                         [options._name ] another way to pass a custom name to the aggregation.
      * @param  {string}        [name]    (optional) A custom name for the
      *                                   aggregation, defaults to
      *                                   `agg_<type>_<field>`.

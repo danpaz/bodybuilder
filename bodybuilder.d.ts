@@ -8,6 +8,19 @@ declare namespace bodybuilder {
 		agg: QuerySubFilterBuilder
 	) => QuerySubFilterBuilder;
 
+	/**
+	 * Additional options to include in the aggregation.
+	 *
+	 * @interface AggOptions
+	 * @field _name A custom name for the aggregation, defaults to agg_<type>_<field>.
+	 * @field _meta Used to associate a piece of metadata with an individual aggregation.
+	 */
+	export interface AggOptions {
+		_name?: string;
+		_meta?: object;
+		[key: string]: any;
+	}
+
 	export interface QueryBuilder<B> extends Object {
 		query(type: string): B;
 		query(type: string, field: string | object | QuerySubFilterFn): B;
@@ -270,23 +283,23 @@ declare namespace bodybuilder {
 			name: string,
 			subaggregations: SubAggregationFn | object
 		): B;
-		aggregation(type: string | object, field: string, options: object): B;
+		aggregation(type: string | object, field: string, options: AggOptions): B;
 		aggregation(
 			type: string | object,
 			field: string,
-			options: object,
+			options: AggOptions,
 			name: string
 		): B;
 		aggregation(
 			type: string | object,
 			field: string,
-			options: object,
+			options: AggOptions,
 			subaggregations: SubAggregationFn
 		): B;
 		aggregation(
 			type: string | object,
 			field: string,
-			options: object,
+			options: AggOptions,
 			name: string,
 			subaggregations: SubAggregationFn
 		): B;
@@ -302,18 +315,18 @@ declare namespace bodybuilder {
 			name: string,
 			subaggregations: SubAggregationFn | object
 		): B;
-		agg(type: string | object, field: string, options: string | object): B;
-		agg(type: string | object, field: string, options: object, name: string): B;
+		agg(type: string | object, field: string, options: string | AggOptions): B;
+		agg(type: string | object, field: string, options: AggOptions, name: string): B;
 		agg(
 			type: string | object,
 			field: string,
-			options: object,
+			options: AggOptions,
 			subaggregations: SubAggregationFn
 		): B;
 		agg(
 			type: string | object,
 			field: string,
-			options: object,
+			options: AggOptions,
 			name: string,
 			subaggregations: SubAggregationFn
 		): B;

@@ -337,5 +337,9 @@ bodybuilder()
     .build()
 
 bodybuilder()
+    .aggregation('sum', '', { _name: 'customName', _meta: {} })
+    .build()
+
+bodybuilder()
     .clone()
     .size(1)

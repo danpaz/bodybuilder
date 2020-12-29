@@ -341,11 +341,10 @@ bodybuilder()
     .build()
 
 bodybuilder()
-    .suggest('term', 'name', { text: 'this is text' })
-    .build()
-
-bodybuilder()
-    .suggest('term', 'name', { name: 'test', text: 'this is text' })
+    .termSuggest('field', { text: 'this is text' })
+    .termSuggest('field', { name: 'test', text: 'this is text', analyzer: 'english' })
+    .phraseSuggest('field', { text: 'this is text' })
+    .phraseSuggest('field', { name: 'test', text: 'this is text', size: 1, gram_size: 4, analyzer: 'english' })
     .build()
 
 bodybuilder()

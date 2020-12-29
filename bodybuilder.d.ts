@@ -340,14 +340,22 @@ declare namespace bodybuilder {
 	 *
 	 * @interface SuggestOptions
 	 * @field name A custom name for the suggestion, defaults to suggest_<type>_<field>.
+	 * @field name Name of predefined analyzer to use on suggest
 	 * @field text Text to suggest on
 	 */
 	export interface SuggestOptions {
-		text: string,
-		name?: string,
+		text: string;
+		analyzer?: string;
+		name?: string;
+	}
+
+	export interface PhraseSuggestOptions extends SuggestOptions {
+		size?: number;
+		gram_size?: number;	
 	}
 	export interface SuggestionBuilder<B> {
-		suggest(type: string, field: string, options: SuggestOptions): B
+		termSuggest(field: string, options: SuggestOptions): B;
+		phraseSuggest(field: string, options: PhraseSuggestOptions): B;
 		getSuggestions(): object;
 	}
 

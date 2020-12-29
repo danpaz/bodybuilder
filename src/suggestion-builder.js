@@ -33,27 +33,54 @@ export default function suggestionBuilder(newSuggestion) {
         /**
          * Add an suggestion clause to the query body.
          *
-         * @param  {string|Object} type      Name of the suggestion type, such as `'term'`.
          * @param  {string}        field     Name of the field to suggest on.
          * @param  {Object}        [options] (optional) Additional options to
          *                                   include in the aggregation.
          *                         [options.text ] text query to run on suggest
          *                         [options.name ] pass a custom name to the function
+         *                         [options.analyzer ] name of predefined analyzer to use on suggest
          * 
          * @return {bodybuilder} Builder.
          *
          * @example
          * bodybuilder()
-         *   .suggest('term', 'price', { text: 'test' })
+         *   .suggest('price', { text: 'test' })
          *   .build()
          *
          * bodybuilder()
-         *   .suggest('term', 'price', { text: 'test', name: 'custom name' })
+         *   .suggest('price', { text: 'test', name: 'custom name' })
          *   .build()
          *
          */
-        suggest(...args) {
-            makeSuggestion(...args)
+        termSuggest(...args) {
+            makeSuggestion('term', ...args)
+            return this
+        },
+        /**
+         * Add an suggestion clause to the query body.
+         *
+         * @param  {string}        field     Name of the field to suggest on.
+         * @param  {Object}        [options] (optional) Additional options to
+         *                                   include in the aggregation.
+         *                         [options.text ] text query to run on suggest
+         *                         [options.name ] pass a custom name to the function
+         *                         [options.analyzer ] name of predefined analyzer to use on suggest
+         *                         [options.size ] The number of candidates that are generated for each individual query term
+         *                         [options.gram_size ] The max number of n-grams per field
+         * @return {bodybuilder} Builder.
+         *
+         * @example
+         * bodybuilder()
+         *   .suggest('price', { text: 'test' })
+         *   .build()
+         *
+         * bodybuilder()
+         *   .suggest('price', { text: 'test', name: 'custom name' })
+         *   .build()
+         *
+         */
+        phraseSuggest(...args) {
+            makeSuggestion('phrase', ...args)
             return this
         },
         getSuggestions() {

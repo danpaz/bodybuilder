@@ -196,12 +196,13 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
         const queries = this.getQuery()
         const filters = this.getFilter()
         const aggregations = this.getAggregations()
+        const suggestions = this.getSuggestions()
 
         if (version === 'v1') {
           return _buildV1(body, queries, filters, aggregations)
         }
 
-        return _build(body, queries, filters, aggregations)
+        return _build(body, queries, filters, aggregations, suggestions)
       },
 
       /**
@@ -220,8 +221,9 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
         const queries = this.getRawQuery()
         const filters = this.getRawFilter()
         const aggregations = this.getRawAggregations()
+        const suggestions = this.getSuggestions()
 
-        return bodybuilder(...[body, queries, filters, aggregations].map(obj => _.cloneDeep(obj)))
+        return bodybuilder(...[body, queries, filters, aggregations, suggestions].map(obj => _.cloneDeep(obj)))
       }
 
     },
@@ -252,7 +254,7 @@ function _buildV1(body, queries, filters, aggregations) {
   return clonedBody
 }
 
-function _build(body, queries, filters, aggregations) {
+function _build(body, queries, filters, aggregations, suggestions) {
   let clonedBody = _.cloneDeep(body)
 
   if (!_.isEmpty(filters)) {
@@ -271,6 +273,10 @@ function _build(body, queries, filters, aggregations) {
 
   if (!_.isEmpty(aggregations)) {
     _.set(clonedBody, 'aggs', aggregations)
+  }
+
+  if (!_.isEmpty(suggestions)) {
+    _.set(clonedBody, 'suggest', suggestions)
   }
 
   return clonedBody

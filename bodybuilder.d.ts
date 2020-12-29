@@ -348,7 +348,7 @@ declare namespace bodybuilder {
 	}
 	export interface SuggestionBuilder<B> {
 		suggest(type: string, field: string, options: SuggestOptions): B
-		getSuggestion(): object;
+		getSuggestions(): object;
 	}
 
 	export interface Bodybuilder

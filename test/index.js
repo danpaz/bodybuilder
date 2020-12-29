@@ -647,6 +647,61 @@ test('bodyBuilder should combine queries, filters, aggregations', (t) => {
   })
 })
 
+test('bodyBuilder should combine queries, filters, aggregations, suggestions', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .query('match', 'message', 'this is a test')
+    .filter('term', 'user', 'kimchy')
+    .filter('term', 'user', 'herald')
+    .orFilter('term', 'user', 'johnny')
+    .notFilter('term', 'user', 'cassie')
+    .aggregation('terms', 'user')
+    .suggest('term', 'user', { text: 'kimchy', name: 'user' } )
+    .build()
+
+  t.deepEqual(result, {
+    query: {
+      bool: {
+        must: {
+          match: {
+            message: 'this is a test'
+          }
+        },
+        filter: {
+          bool: {
+            must: [
+              {term: {user: 'kimchy'}},
+              {term: {user: 'herald'}}
+            ],
+            should: [
+              {term: {user: 'johnny'}}
+            ],
+            must_not: [
+              {term: {user: 'cassie'}}
+            ]
+          }
+        }
+      }
+    },
+    aggs: {
+      agg_terms_user: {
+        terms: {
+          field: 'user'
+        }
+      }
+    },
+    suggest: {
+      user: {
+          text: 'kimchy',
+          term: {
+              field: 'user',
+          }
+      }
+  }
+  })
+})
+
 test('bodybuilder should allow rebuilding', (t) => {
   t.plan(2)
 

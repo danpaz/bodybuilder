@@ -7,7 +7,7 @@ test('suggestion Builder | term suggest', (t) => {
 
     const result = suggestionBuilder().suggest('term', 'products', { text: 'testing' })
 
-    t.deepEqual(result.getSuggestion(), {
+    t.deepEqual(result.getSuggestions(), {
         'suggest_term_products': {
             text: 'testing',
             term: {
@@ -22,7 +22,7 @@ test('suggestion Builder | term suggest with custom name', (t) => {
 
     const result = suggestionBuilder().suggest('term', 'products', { name: 'products', text: 'testing' })
 
-    t.deepEqual(result.getSuggestion(), {
+    t.deepEqual(result.getSuggestions(), {
         products: {
             text: 'testing',
             term: {

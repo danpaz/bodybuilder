@@ -335,11 +335,24 @@ declare namespace bodybuilder {
 		getRawAggregations(): object;
 	}
 
+	export interface SuggestOptions {
+		name: string,
+		text: string,
+		offset?: number,
+		length?: number,
+		options?: object[],
+	}
+	export interface SuggestionBuilder<B> {
+		suggest(type: string, field: string, options: SuggestOptions): B
+		getSuggestion(): object;
+	}
+
 	export interface Bodybuilder
 		extends Object,
 			QueryBuilder<Bodybuilder>,
 			FilterBuilder<Bodybuilder>,
-			AggregationBuilder<Bodybuilder> {
+			AggregationBuilder<Bodybuilder>,
+			SuggestionBuilder<Bodybuilder> {
 		sort(field: string): Bodybuilder;
 		sort(field: string, direction: string): Bodybuilder;
 		sort(field: string, body: object): Bodybuilder;

@@ -2,6 +2,7 @@ import _ from 'lodash'
 import queryBuilder from './query-builder'
 import filterBuilder from './filter-builder'
 import aggregationBuilder from './aggregation-builder'
+import suggestionBuilder from './suggestion-builder'
 import { sortMerge } from './utils'
 
 /**
@@ -60,9 +61,10 @@ import { sortMerge } from './utils'
  * @param  {Object} newQueries Queries to initialise with
  * @param  {Object} newFilters Filters to initialise with
  * @param  {Object} newAggregations Aggregations to initialise with
+ * @param  {Object} newSuggestions Suggestions to initialise with
  * @return {bodybuilder} Builder.
  */
-export default function bodybuilder (newBody, newQueries, newFilters, newAggregations) {
+export default function bodybuilder (newBody, newQueries, newFilters, newAggregations, newSuggestions) {
   let body = newBody || {}
 
   return Object.assign(
@@ -225,7 +227,8 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
     },
     queryBuilder(undefined, newQueries),
     filterBuilder(undefined, newFilters),
-    aggregationBuilder(newAggregations)
+    aggregationBuilder(newAggregations),
+    suggestionBuilder(newSuggestions)
   )
 }
 

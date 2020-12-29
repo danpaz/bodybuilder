@@ -341,5 +341,13 @@ bodybuilder()
     .build()
 
 bodybuilder()
+    .suggest('term', 'name', { name: 'test', text: 'this is text' })
+    .build()
+
+bodybuilder()
+    .suggest('term', 'name', { name: 'test', text: 'this is text', options: [{}], offset: 1, length: 10 })
+    .build()
+
+bodybuilder()
     .clone()
     .size(1)

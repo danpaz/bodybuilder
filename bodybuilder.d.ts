@@ -335,12 +335,16 @@ declare namespace bodybuilder {
 		getRawAggregations(): object;
 	}
 
+	/**
+	 * Options to build a suggestion.
+	 *
+	 * @interface SuggestOptions
+	 * @field name A custom name for the suggestion, defaults to suggest_<type>_<field>.
+	 * @field text Text to suggest on
+	 */
 	export interface SuggestOptions {
-		name: string,
 		text: string,
-		offset?: number,
-		length?: number,
-		options?: object[],
+		name?: string,
 	}
 	export interface SuggestionBuilder<B> {
 		suggest(type: string, field: string, options: SuggestOptions): B

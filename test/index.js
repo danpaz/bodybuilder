@@ -657,8 +657,8 @@ test('bodyBuilder should combine queries, filters, aggregations, suggestions', (
     .orFilter('term', 'user', 'johnny')
     .notFilter('term', 'user', 'cassie')
     .aggregation('terms', 'user')
-    .termSuggest('user', { text: 'kimchy', name: 'userTerm' } )
-    .phraseSuggest('user', { text: 'kimchy', name: 'userPhrase' })
+    .suggest('term', 'user', { text: 'kimchy', name: 'userTerm' } )
+    .suggest('phrase', 'user', { text: 'kimchy', name: 'userPhrase' })
     .build()
 
   t.deepEqual(result, {

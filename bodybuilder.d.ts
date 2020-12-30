@@ -349,13 +349,19 @@ declare namespace bodybuilder {
 		name?: string;
 	}
 
+	export interface TermSuggestOptions extends SuggestOptions {}
 	export interface PhraseSuggestOptions extends SuggestOptions {
 		size?: number;
 		gram_size?: number;	
 	}
+
+	export type DynamicSuggestOption<T> = T extends "term" ? TermSuggestOptions : PhraseSuggestOptions;
+
 	export interface SuggestionBuilder<B> {
-		termSuggest(field: string, options: SuggestOptions): B;
-		phraseSuggest(field: string, options: PhraseSuggestOptions): B;
+		suggest<
+			SuggestT extends 'term' | 'phrase',
+		>
+			(type: SuggestT, field: string, options: DynamicSuggestOption<SuggestT>): B;
 		getSuggestions(): object;
 	}
 

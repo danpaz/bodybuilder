@@ -5,7 +5,7 @@ import suggestionBuilder from '../src/suggestion-builder'
 test('suggestion Builder | term suggest', (t) => {
     t.plan(1)
 
-    const result = suggestionBuilder().termSuggest('products', { text: 'testing' })
+    const result = suggestionBuilder().suggest('term', 'products', { text: 'testing' })
 
     t.deepEqual(result.getSuggestions(), {
         'suggest_term_products': {
@@ -20,7 +20,7 @@ test('suggestion Builder | term suggest', (t) => {
 test('suggestion Builder | term suggest with custom name', (t) => {
     t.plan(1)
 
-    const result = suggestionBuilder().termSuggest('products', { name: 'products', text: 'testing' })
+    const result = suggestionBuilder().suggest('term', 'products', { name: 'products', text: 'testing' })
 
     t.deepEqual(result.getSuggestions(), {
         products: {
@@ -35,7 +35,7 @@ test('suggestion Builder | term suggest with custom name', (t) => {
 test('suggestion Builder | phrase suggest', (t) => {
     t.plan(1)
 
-    const result = suggestionBuilder().phraseSuggest('products', { text: 'testing' })
+    const result = suggestionBuilder().suggest('phrase', 'products', { text: 'testing' })
 
     t.deepEqual(result.getSuggestions(), {
         'suggest_phrase_products': {
@@ -50,7 +50,7 @@ test('suggestion Builder | phrase suggest', (t) => {
 test('suggestion Builder | phrase suggest with custom name', (t) => {
     t.plan(1)
 
-    const result = suggestionBuilder().phraseSuggest('products', { name: 'products', text: 'testing' })
+    const result = suggestionBuilder().suggest('phrase', 'products', { name: 'products', text: 'testing' })
 
     t.deepEqual(result.getSuggestions(), {
         products: {

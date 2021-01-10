@@ -339,8 +339,8 @@ declare namespace bodybuilder {
 	 * Options to build a suggestion.
 	 *
 	 * @interface SuggestOptions
+	 * @field analyzer Name of predefined analyzer to use on suggest
 	 * @field name A custom name for the suggestion, defaults to suggest_<type>_<field>.
-	 * @field name Name of predefined analyzer to use on suggest
 	 * @field text Text to suggest on
 	 */
 	export interface SuggestOptions {

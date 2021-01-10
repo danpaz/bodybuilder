@@ -31,11 +31,11 @@ export default function suggestionBuilder(newSuggestion) {
 
     return {
         /**
-         * Add an suggestion clause to the query body.
+         * Add a suggestion clause to the query body.
          *
          * @param  {string}        field     Name of the field to suggest on.
          * @param  {Object}        [options] (optional) Additional options to
-         *                                   include in the aggregation.
+         *                                   include in the suggestion clause.
          *                         [options.text ] text query to run on suggest
          *                         [options.name ] pass a custom name to the function
          *                         [options.analyzer ] name of predefined analyzer to use on suggest
@@ -44,11 +44,11 @@ export default function suggestionBuilder(newSuggestion) {
          *
          * @example
          * bodybuilder()
-         *   .suggest('price', { text: 'test' })
+         *   .suggest('term', price', { text: 'test' })
          *   .build()
          *
          * bodybuilder()
-         *   .suggest('price', { text: 'test', name: 'custom name' })
+         *   .suggest('phrase', 'price', { text: 'test', name: 'custom name' })
          *   .build()
          *
          */

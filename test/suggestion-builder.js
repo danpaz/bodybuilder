@@ -61,3 +61,44 @@ test('suggestion Builder | phrase suggest with custom name', (t) => {
         }
     })
 })
+
+test('suggestion Builder | chained suggests', (t) => {
+    t.plan(1)
+
+    const result = suggestionBuilder().suggest('phrase', 'products', { name: 'products', text: 'testing' }).suggest('term', 'brands', { name: 'brands', text: 'testing'})
+
+    t.deepEqual(result.getSuggestions(), {
+        products: {
+            text: 'testing',
+            phrase: {
+                field: 'products',
+            }
+        },
+        brands: {
+            text: 'testing',
+            term: {
+                field: 'brands',
+            }
+        }
+    })
+})
+
+
+test('suggestion Builder | nested generator clause', (t) => {
+    t.plan(1)
+
+    const result = suggestionBuilder().suggest('phrase', 'products', { name: 'products', text: 'testing', direct_generator: { field: 'name.trigram', suggest_mode: 'popular'} })
+
+    t.deepEqual(result.getSuggestions(), {
+        products: {
+            text: 'testing',
+            phrase: {
+                field: 'products',
+                direct_generator: {
+                    field: 'name.trigram',
+                    suggest_mode: 'popular',
+                }
+            }
+        },
+    })
+})

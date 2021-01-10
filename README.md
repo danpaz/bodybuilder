@@ -178,7 +178,44 @@ var body = bodybuilder().aggregation('terms', 'code', {
 //}
 ```
 
-### Combining queries, filters, and aggregations
+### Suggestions
+
+```js
+bodybuilder().suggest([arguments])
+```
+
+Creates a `phrase` or `term` suggestion.
+
+#### Arguments
+
+The specific arguments depend on the type of aggregation, but typically follow
+this pattern:
+
+* `sugestionType` - This can be either `phrase` or `term`.
+* `fieldToAggregate` - The name of the field in your index to suggest on.
+* `options` - An object of fields to include in the suggestions.
+  * `text` - The query to run on our suggest field.
+  * `name` - A custom name for the suggest clause.
+  * `analyzer` - The name of an analyzer to run on a suggestion.
+  * ... other suggest specific options, see [typings]('./bodybuilder.d.ts') or the [ElasticSearch suggest docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters.html) for more info
+
+
+
+```js
+var body = bodybuilder().suggest('term', 'user', { text: 'kimchy', 'name': 'user_suggest'}).build()
+// body == {
+//   aggregations: {
+//     user_suggest: {
+//       text: 'kimchy',
+//       term: {
+//         field: 'user'
+//       }
+//     }
+//   }
+// }
+```
+
+### Combining queries, filters, aggregations, and suggestions
 
 Multiple queries and filters are merged using the boolean query or filter (see
 [Combining Filters](https://www.elastic.co/guide/en/elasticsearch/guide/current/combining-filters.html)).
@@ -191,6 +228,7 @@ var body = bodybuilder()
   .orFilter('term', 'user', 'johnny')
   .notFilter('term', 'user', 'cassie')
   .aggregation('terms', 'user')
+  .suggest('term', 'user' { text: 'kimchy' })
   .build()
 
 // body == {
@@ -222,6 +260,12 @@ var body = bodybuilder()
 //       terms: {
 //         field: 'user'
 //       }
+//     }
+//   }
+//   suggest_term_user: {
+//     text: 'kimchy',
+//     term: {
+//       field: 'user'
 //     }
 //   }
 // }

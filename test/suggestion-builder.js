@@ -102,3 +102,17 @@ test('suggestion Builder | nested generator clause', (t) => {
         },
     })
 })
+
+test('suggestion Builder | no config', (t) => {
+    t.plan(1)
+
+    const result = suggestionBuilder().suggest('phrase', 'products')
+
+    t.deepEqual(result.getSuggestions(), {
+        suggest_phrase_products: {
+            phrase: {
+                field: 'products',
+            }
+        },
+    })
+})

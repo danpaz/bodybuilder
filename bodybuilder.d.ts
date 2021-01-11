@@ -344,7 +344,7 @@ declare namespace bodybuilder {
 	 * @field text Text to suggest on
 	 */
 	export interface SuggestOptions {
-		text: string;
+		text?: string;
 		analyzer?: string;
 		name?: string;
 	}
@@ -361,7 +361,7 @@ declare namespace bodybuilder {
 		suggest<
 			SuggestT extends 'term' | 'phrase',
 		>
-			(type: SuggestT, field: string, options: DynamicSuggestOption<SuggestT>): B;
+			(type: SuggestT, field: string, options?: DynamicSuggestOption<SuggestT>): B;
 		getSuggestions(): object;
 	}
 

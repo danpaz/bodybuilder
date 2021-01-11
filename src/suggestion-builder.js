@@ -4,7 +4,7 @@ import { buildClause } from './utils'
 export default function suggestionBuilder(newSuggestion) {
     let suggestions = _.isEmpty(newSuggestion) ? {} : newSuggestion
 
-    function makeSuggestion(type, field, options) {
+    function makeSuggestion(type, field, options = {}) {
         let suggestName
         const { name, text } = options
 
@@ -15,14 +15,14 @@ export default function suggestionBuilder(newSuggestion) {
             suggestName = `suggest_${type}_${field}`
         }
 
+        let innerClause = {}
+
         if (text) {
             _.unset(options, 'text')
+            innerClause.text = text
         }
 
-        const innerClause = Object.assign({}, {
-            text,
-            [type]: buildClause(field, null, options)
-        })
+        innerClause[type] = buildClause(field, null, options)
 
         Object.assign(suggestions, {
             [suggestName]: innerClause

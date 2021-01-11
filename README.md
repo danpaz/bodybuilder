@@ -191,7 +191,7 @@ Creates a `phrase` or `term` suggestion.
 The specific arguments depend on the type of aggregation, but typically follow
 this pattern:
 
-* `sugestionType` - This can be either `phrase` or `term`.
+* `suggestionType` - This can be either `phrase` or `term`.
 * `fieldToAggregate` - The name of the field in your index to suggest on.
 * `options` - An object of fields to include in the suggestions.
   * `text` - The query to run on our suggest field.

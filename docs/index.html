@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>bodybuilder 2.2.25 | Documentation</title>
+  <title>bodybuilder 2.3.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -14,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>bodybuilder</h3>
-          <div class='mb1'><code>2.2.25</code></div>
+          <div class='mb1'><code>2.3.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -233,6 +233,16 @@
                 
                 </li>
               
+                
+                <li><a
+                  href='#suggest'
+                  class="">
+                  suggest
+                  
+                </a>
+                
+                </li>
+              
             </ul>
           </div>
           <div class='mt1 h6 quiet'>
@@ -295,7 +305,7 @@ you must <code>return</code> the builder object in the nested function. For exam
 There are many more examples in the docs as well as in the tests.</p>
 
 
-  <div class='pre p1 fill-light mt0'>bodybuilder(newBody: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newQueries: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newFilters: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newAggregations: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="#bodybuilder">bodybuilder</a></div>
+  <div class='pre p1 fill-light mt0'>bodybuilder(newBody: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newQueries: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newFilters: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newAggregations: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newSuggestions: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -341,6 +351,15 @@ There are many more examples in the docs as well as in the tests.</p>
           <div>
             <span class='code bold'>newAggregations</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
 	    Aggregations to initialise with
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>newSuggestions</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    Suggestions to initialise with
 
           </div>
           
@@ -2054,6 +2073,120 @@ bodybuilder()
 
   
 
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='suggest'>
+      suggest
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Add a suggestion clause to the query body.</p>
+
+
+  <div class='pre p1 fill-light mt0'>suggest(args: ...any, field: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?): <a href="#bodybuilder">bodybuilder</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>args</span> <code class='quiet'>(...any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>field</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    Name of the field to suggest on.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
+	    (optional) Additional options to
+include in the suggestion clause.
+
+[
+options.text 
+]
+ text query to run on suggest
+
+[
+options.name 
+]
+ pass a custom name to the function
+
+[
+options.analyzer 
+]
+ name of predefined analyzer to use on suggest
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#bodybuilder">bodybuilder</a></code>:
+        Builder.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>bodybuilder()
+  .suggest('term', price', { text: 'test' })
+  .build()
+
+bodybuilder()
+  .suggest('phrase', 'price', { text: 'test', name: 'custom name' })
+  .build()</pre>
+    
   
 
   

@@ -335,11 +335,42 @@ declare namespace bodybuilder {
 		getRawAggregations(): object;
 	}
 
+	/**
+	 * Options to build a suggestion.
+	 *
+	 * @interface SuggestOptions
+	 * @field analyzer Name of predefined analyzer to use on suggest
+	 * @field name A custom name for the suggestion, defaults to suggest_<type>_<field>.
+	 * @field text Text to suggest on
+	 */
+	export interface SuggestOptions {
+		text?: string;
+		analyzer?: string;
+		name?: string;
+	}
+
+	export interface TermSuggestOptions extends SuggestOptions {}
+	export interface PhraseSuggestOptions extends SuggestOptions {
+		size?: number;
+		gram_size?: number;	
+	}
+
+	export type DynamicSuggestOption<T> = T extends "term" ? TermSuggestOptions : PhraseSuggestOptions;
+
+	export interface SuggestionBuilder<B> {
+		suggest<
+			SuggestT extends 'term' | 'phrase',
+		>
+			(type: SuggestT, field: string, options?: DynamicSuggestOption<SuggestT>): B;
+		getSuggestions(): object;
+	}
+
 	export interface Bodybuilder
 		extends Object,
 			QueryBuilder<Bodybuilder>,
 			FilterBuilder<Bodybuilder>,
-			AggregationBuilder<Bodybuilder> {
+			AggregationBuilder<Bodybuilder>,
+			SuggestionBuilder<Bodybuilder> {
 		sort(field: string): Bodybuilder;
 		sort(field: string, direction: string): Bodybuilder;
 		sort(field: string, body: object): Bodybuilder;

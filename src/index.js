@@ -2,6 +2,7 @@ import _ from 'lodash'
 import queryBuilder from './query-builder'
 import filterBuilder from './filter-builder'
 import aggregationBuilder from './aggregation-builder'
+import suggestionBuilder from './suggestion-builder'
 import { sortMerge } from './utils'
 
 /**
@@ -60,9 +61,10 @@ import { sortMerge } from './utils'
  * @param  {Object} newQueries Queries to initialise with
  * @param  {Object} newFilters Filters to initialise with
  * @param  {Object} newAggregations Aggregations to initialise with
+ * @param  {Object} newSuggestions Suggestions to initialise with
  * @return {bodybuilder} Builder.
  */
-export default function bodybuilder (newBody, newQueries, newFilters, newAggregations) {
+export default function bodybuilder (newBody, newQueries, newFilters, newAggregations, newSuggestions) {
   let body = newBody || {}
 
   return Object.assign(
@@ -194,12 +196,13 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
         const queries = this.getQuery()
         const filters = this.getFilter()
         const aggregations = this.getAggregations()
+        const suggestions = this.getSuggestions()
 
         if (version === 'v1') {
           return _buildV1(body, queries, filters, aggregations)
         }
 
-        return _build(body, queries, filters, aggregations)
+        return _build(body, queries, filters, aggregations, suggestions)
       },
 
       /**
@@ -218,14 +221,16 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
         const queries = this.getRawQuery()
         const filters = this.getRawFilter()
         const aggregations = this.getRawAggregations()
+        const suggestions = this.getSuggestions()
 
-        return bodybuilder(...[body, queries, filters, aggregations].map(obj => _.cloneDeep(obj)))
+        return bodybuilder(...[body, queries, filters, aggregations, suggestions].map(obj => _.cloneDeep(obj)))
       }
 
     },
     queryBuilder(undefined, newQueries),
     filterBuilder(undefined, newFilters),
-    aggregationBuilder(newAggregations)
+    aggregationBuilder(newAggregations),
+    suggestionBuilder(newSuggestions)
   )
 }
 
@@ -249,7 +254,7 @@ function _buildV1(body, queries, filters, aggregations) {
   return clonedBody
 }
 
-function _build(body, queries, filters, aggregations) {
+function _build(body, queries, filters, aggregations, suggestions) {
   let clonedBody = _.cloneDeep(body)
 
   if (!_.isEmpty(filters)) {
@@ -268,6 +273,10 @@ function _build(body, queries, filters, aggregations) {
 
   if (!_.isEmpty(aggregations)) {
     _.set(clonedBody, 'aggs', aggregations)
+  }
+
+  if (!_.isEmpty(suggestions)) {
+    _.set(clonedBody, 'suggest', suggestions)
   }
 
   return clonedBody

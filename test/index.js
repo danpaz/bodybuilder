@@ -151,7 +151,7 @@ test('bodyBuilder should build a filtered query for version 2.x', (t) => {
           }
         },
         filter: {
-          term: {user: 'kimchy'}
+          term: { user: 'kimchy' }
         }
       }
     }
@@ -175,29 +175,29 @@ test('bodyBuilder should sort with default sort direction', (t) => {
 })
 
 test('bodyBuilder should handle string fields in multi-sort', (t) => {
-    t.plan(1)
+  t.plan(1)
 
-    const result = bodyBuilder()
-        .sort([
-            { categories: 'desc' },
-            { content: 'desc' },
-            'content'
-        ]).build()
+  const result = bodyBuilder()
+    .sort([
+      { categories: 'desc' },
+      { content: 'desc' },
+      'content'
+    ]).build()
 
-    t.deepEqual(result, {
-        sort: [
-            {
-                categories: {
-                    order: 'desc'
-                }
-            },
-            {
-                content: {
-                    order:'asc'
-                }
-            }
-        ]
-    })
+  t.deepEqual(result, {
+    sort: [
+      {
+        categories: {
+          order: 'desc'
+        }
+      },
+      {
+        content: {
+          order: 'asc'
+        }
+      }
+    ]
+  })
 })
 
 
@@ -224,12 +224,12 @@ test('bodyBuilder should not de-depude _geo_distance', (t) => {
       }
     }
   ])
-  .sort([
-    { categories: 'desc' },
-    { content: 'desc' },
-    { content: 'asc' }
-  ])
-  .build()
+    .sort([
+      { categories: 'desc' },
+      { content: 'desc' },
+      { content: 'asc' }
+    ])
+    .build()
 
   t.deepEqual(result, {
     sort: [
@@ -264,7 +264,7 @@ test('bodyBuilder should not de-depude _geo_distance', (t) => {
       },
       {
         content: {
-          order:'asc'
+          order: 'asc'
         }
       }
     ]
@@ -296,32 +296,34 @@ test('bodyBuilder should not de-depude nested sort', (t) => {
       }
     ])
     .sort([
-    { 'nested_entity.name': {
-        order: "desc",
-        nested: {
-          path: "nested_entity",
-          filter: {
-            term: { "nested_entity.subfield.text" : "text1" }
+      {
+        'nested_entity.name': {
+          order: "desc",
+          nested: {
+            path: "nested_entity",
+            filter: {
+              term: { "nested_entity.subfield.text": "text1" }
+            }
+          }
+        }
+      },
+      {
+        'nested_entity.name': {
+          order: "desc",
+          nested: {
+            path: "nested_entity",
+            filter: {
+              term: { "nested_entity.subfield.text": "text2" }
+            }
           }
         }
       }
-    },
-    { 'nested_entity.name': {
-        order: "desc",
-        nested: {
-          path: "nested_entity",
-          filter: {
-            term: { "nested_entity.subfield.text" : "text2" }
-          }
-        }
-      }
-    }
-  ])
+    ])
     .sort([
-    { categories: 'desc' },
-    { content: 'desc' },
-    { content: 'asc' }
-  ])
+      { categories: 'desc' },
+      { content: 'desc' },
+      { content: 'asc' }
+    ])
     .build()
 
   t.deepEqual(result, {
@@ -350,7 +352,7 @@ test('bodyBuilder should not de-depude nested sort', (t) => {
           nested: {
             path: 'nested_entity',
             filter: {
-              term: { 'nested_entity.subfield.text' : 'text1' }
+              term: { 'nested_entity.subfield.text': 'text1' }
             }
           }
         }
@@ -361,7 +363,7 @@ test('bodyBuilder should not de-depude nested sort', (t) => {
           nested: {
             path: 'nested_entity',
             filter: {
-              term: { 'nested_entity.subfield.text' : 'text2' }
+              term: { 'nested_entity.subfield.text': 'text2' }
             }
           }
         }
@@ -373,7 +375,7 @@ test('bodyBuilder should not de-depude nested sort', (t) => {
       },
       {
         content: {
-          order:'asc'
+          order: 'asc'
         }
       }
     ]
@@ -403,7 +405,7 @@ test('bodyBuilder should set size on body', (t) => {
 test('bodyBuilder should set any key-value on body', (t) => {
   t.plan(1)
 
-  const result = bodyBuilder().rawOption('a', {b: 'c'}).build()
+  const result = bodyBuilder().rawOption('a', { b: 'c' }).build()
 
   t.deepEqual(result, {
     a: { b: 'c' }
@@ -425,11 +427,11 @@ test('bodyBuilder should build query with field and value', (t) => {
 test('bodyBuilder should build query with field and object value', (t) => {
   t.plan(1)
 
-  const result = bodyBuilder().query('range', 'date', {gt: 'now-1d'})
+  const result = bodyBuilder().query('range', 'date', { gt: 'now-1d' })
 
   t.deepEqual(result.getQuery(), {
     range: {
-      date: {gt: 'now-1d'}
+      date: { gt: 'now-1d' }
     }
   })
 })
@@ -437,7 +439,7 @@ test('bodyBuilder should build query with field and object value', (t) => {
 test('bodyBuilder should build query with more options', (t) => {
   t.plan(1)
 
-  const result = bodyBuilder().query('geo_distance', 'point', {lat: 40, lon: 20}, {distance: '12km'})
+  const result = bodyBuilder().query('geo_distance', 'point', { lat: 40, lon: 20 }, { distance: '12km' })
 
   t.deepEqual(result.getQuery(), {
     geo_distance: {
@@ -470,8 +472,8 @@ test('bodyBuilder should build nested queries', (t) => {
 test('bodyBuilder should nest bool-merged queries', (t) => {
   t.plan(1)
 
-  const result = bodyBuilder().query('nested', 'path', 'obj1', {score_mode: 'avg'}, (q) => {
-    return q.query('match', 'obj1.name', 'blue').query('range', 'obj1.count', {gt: 5})
+  const result = bodyBuilder().query('nested', 'path', 'obj1', { score_mode: 'avg' }, (q) => {
+    return q.query('match', 'obj1.name', 'blue').query('range', 'obj1.count', { gt: 5 })
   })
 
   t.deepEqual(result.getQuery(), {
@@ -482,10 +484,10 @@ test('bodyBuilder should nest bool-merged queries', (t) => {
         bool: {
           must: [
             {
-              match: {'obj1.name': 'blue'}
+              match: { 'obj1.name': 'blue' }
             },
             {
-              range: {'obj1.count': {gt: 5}}
+              range: { 'obj1.count': { gt: 5 } }
             }
           ]
         }
@@ -499,11 +501,11 @@ test('bodyBuilder should make this chained nested query', (t) => {
 
   const result = bodyBuilder()
     .query('match', 'title', 'eggs')
-    .query('nested', 'path', 'comments', {score_mode: 'max'} , (q) => {
+    .query('nested', 'path', 'comments', { score_mode: 'max' }, (q) => {
       return q
         .query('match', 'comments.name', 'john')
         .query('match', 'comments.age', 28)
-  })
+    })
 
   t.deepEqual(result.getQuery(), {
     bool: {
@@ -624,14 +626,14 @@ test('bodyBuilder should combine queries, filters, aggregations', (t) => {
         filter: {
           bool: {
             must: [
-              {term: {user: 'kimchy'}},
-              {term: {user: 'herald'}}
+              { term: { user: 'kimchy' } },
+              { term: { user: 'herald' } }
             ],
             should: [
-              {term: {user: 'johnny'}}
+              { term: { user: 'johnny' } }
             ],
             must_not: [
-              {term: {user: 'cassie'}}
+              { term: { user: 'cassie' } }
             ]
           }
         }
@@ -641,6 +643,68 @@ test('bodyBuilder should combine queries, filters, aggregations', (t) => {
       agg_terms_user: {
         terms: {
           field: 'user'
+        }
+      }
+    }
+  })
+})
+
+test('bodyBuilder should combine queries, filters, aggregations, suggestions', (t) => {
+  t.plan(1)
+
+  const result = bodyBuilder()
+    .query('match', 'message', 'this is a test')
+    .filter('term', 'user', 'kimchy')
+    .filter('term', 'user', 'herald')
+    .orFilter('term', 'user', 'johnny')
+    .notFilter('term', 'user', 'cassie')
+    .aggregation('terms', 'user')
+    .suggest('term', 'user', { text: 'kimchy', name: 'userTerm' })
+    .suggest('phrase', 'user', { text: 'kimchy', name: 'userPhrase' })
+    .build()
+
+  t.deepEqual(result, {
+    query: {
+      bool: {
+        must: {
+          match: {
+            message: 'this is a test'
+          }
+        },
+        filter: {
+          bool: {
+            must: [
+              { term: { user: 'kimchy' } },
+              { term: { user: 'herald' } }
+            ],
+            should: [
+              { term: { user: 'johnny' } }
+            ],
+            must_not: [
+              { term: { user: 'cassie' } }
+            ]
+          }
+        }
+      }
+    },
+    aggs: {
+      agg_terms_user: {
+        terms: {
+          field: 'user'
+        }
+      }
+    },
+    suggest: {
+      userTerm: {
+        text: 'kimchy',
+        term: {
+          field: 'user',
+        }
+      },
+      userPhrase: {
+        text: 'kimchy',
+        phrase: {
+          field: 'user',
         }
       }
     }
@@ -705,24 +769,24 @@ test('bodybuilder | or filter', (t) => {
   t.plan(1)
 
   const result = bodyBuilder().filter('or', [
-    {term: {user: 'kimchy'}},
-    {term: {user: 'tony'}}
+    { term: { user: 'kimchy' } },
+    { term: { user: 'tony' } }
   ])
-  .build()
+    .build()
 
   t.deepEqual(result,
-  {
-    query: {
-      bool: {
-        filter: {
-          or: [
-            {term: {user: 'kimchy'}},
-            {term: {user: 'tony'}}
-          ]
+    {
+      query: {
+        bool: {
+          filter: {
+            or: [
+              { term: { user: 'kimchy' } },
+              { term: { user: 'tony' } }
+            ]
+          }
         }
       }
-    }
-  })
+    })
 })
 
 test('bodybuilder | dynamic filter', t => {
@@ -734,24 +798,28 @@ test('bodybuilder | dynamic filter', t => {
     .build()
 
   t.deepEqual(result,
-  {
-    query: { bool: { filter: {
-      bool: {
-        must: [
-          {
-            constant_score: {
-              filter: {
-                term: {
-                  user: 'kimchy'
-                }
-              }
+    {
+      query: {
+        bool: {
+          filter: {
+            bool: {
+              must: [
+                {
+                  constant_score: {
+                    filter: {
+                      term: {
+                        user: 'kimchy'
+                      }
+                    }
+                  }
+                },
+                { term: { message: 'this is a test' } }
+              ]
             }
-          },
-          { term: { message: 'this is a test' } }
-        ]
+          }
+        }
       }
-    } } }
-  })
+    })
 })
 
 test('bodybuilder | complex dynamic filter', t => {
@@ -776,54 +844,76 @@ test('bodybuilder | complex dynamic filter', t => {
     .build()
 
   t.deepEqual(result, {
-    query: { bool: { filter: { bool: { should: [
-      {
-        bool: { must: [
-          { terms: { tags: ['Popular'] } },
-          { terms: { brands: ['A', 'B'] } }
-        ]}
-      },
-      {
-        bool: { must: [
-          { terms: { tags: ['Emerging'] } },
-          { terms: { brands: ['C'] } }
-        ]}
-      },
-      {
-        bool: { must: [
-          { terms: { tags: ['Rumor'] } },
-          { terms: { companies: ['A', 'C', 'D'] } }
-        ]}
+    query: {
+      bool: {
+        filter: {
+          bool: {
+            should: [
+              {
+                bool: {
+                  must: [
+                    { terms: { tags: ['Popular'] } },
+                    { terms: { brands: ['A', 'B'] } }
+                  ]
+                }
+              },
+              {
+                bool: {
+                  must: [
+                    { terms: { tags: ['Emerging'] } },
+                    { terms: { brands: ['C'] } }
+                  ]
+                }
+              },
+              {
+                bool: {
+                  must: [
+                    { terms: { tags: ['Rumor'] } },
+                    { terms: { companies: ['A', 'C', 'D'] } }
+                  ]
+                }
+              }
+            ]
+          }
+        }
       }
-    ]}}}}
+    }
   })
 
   t.deepEqual(result.query.bool.filter.bool.should, [
     {
-      bool: { must: [
-        { terms: { tags: ['Popular'] } },
-        { terms: { brands: ['A', 'B'] } }
-      ]}
+      bool: {
+        must: [
+          { terms: { tags: ['Popular'] } },
+          { terms: { brands: ['A', 'B'] } }
+        ]
+      }
     },
     {
-      bool: { must: [
-        { terms: { tags: ['Emerging'] } },
-        { terms: { brands: ['C'] } }
-      ]}
+      bool: {
+        must: [
+          { terms: { tags: ['Emerging'] } },
+          { terms: { brands: ['C'] } }
+        ]
+      }
     },
     {
-      bool: { must: [
-        { terms: { tags: ['Rumor'] } },
-        { terms: { companies: ['A', 'C', 'D'] } }
-      ]}
+      bool: {
+        must: [
+          { terms: { tags: ['Rumor'] } },
+          { terms: { companies: ['A', 'C', 'D'] } }
+        ]
+      }
     }
   ])
 
   t.deepEqual(result.query.bool.filter.bool.should[0], {
-    bool: { must: [
-      { terms: { tags: ['Popular'] } },
-      { terms: { brands: ['A', 'B'] } }
-    ]}
+    bool: {
+      must: [
+        { terms: { tags: ['Popular'] } },
+        { terms: { brands: ['A', 'B'] } }
+      ]
+    }
   })
 
 })
@@ -838,21 +928,21 @@ test('bodybuilder | minimum_should_match filter', (t) => {
     .build()
 
   t.deepEqual(result,
-  {
-    query: {
-      bool: {
-        filter: {
-          bool: {
-            should: [
-              {term: {user: 'kimchy'}},
-              {term: {user: 'tony'}}
-            ],
-            minimum_should_match: 2
+    {
+      query: {
+        bool: {
+          filter: {
+            bool: {
+              should: [
+                { term: { user: 'kimchy' } },
+                { term: { user: 'tony' } }
+              ],
+              minimum_should_match: 2
+            }
           }
         }
       }
-    }
-  })
+    })
 })
 
 test('bodybuilder | minimum_should_match with 1 filter', (t) => {
@@ -870,7 +960,7 @@ test('bodybuilder | minimum_should_match with 1 filter', (t) => {
           filter: {
             bool: {
               should: [
-                {term: {user: 'kimchy'}}
+                { term: { user: 'kimchy' } }
               ]
             }
           }
@@ -894,7 +984,7 @@ test('bodybuilder | minimum_should_match with 1 filter + override', (t) => {
           filter: {
             bool: {
               should: [
-                {term: {user: 'kimchy'}}
+                { term: { user: 'kimchy' } }
               ],
               minimum_should_match: 1
             }
@@ -914,17 +1004,17 @@ test('bodybuilder | minimum_should_match query', (t) => {
     .build()
 
   t.deepEqual(result,
-  {
-    query: {
-      bool: {
-        should: [
-          {term: {user: 'kimchy'}},
-          {term: {user: 'tony'}}
-        ],
-        minimum_should_match: 2
+    {
+      query: {
+        bool: {
+          should: [
+            { term: { user: 'kimchy' } },
+            { term: { user: 'tony' } }
+          ],
+          minimum_should_match: 2
+        }
       }
-    }
-  })
+    })
 })
 
 test('bodybuilder | minimum_should_match query and filter', (t) => {
@@ -940,26 +1030,26 @@ test('bodybuilder | minimum_should_match query and filter', (t) => {
     .build()
 
   t.deepEqual(result,
-  {
-    query: {
-      bool: {
-        should: [
-          {term: {user: 'kimchy'}},
-          {term: {user: 'tony'}}
-        ],
-        minimum_should_match: 2,
-        filter: {
-          bool: {
-            should: [
-              {term: {user: 'kimchy'}},
-              {term: {user: 'tony'}}
-            ],
-            minimum_should_match: 1
+    {
+      query: {
+        bool: {
+          should: [
+            { term: { user: 'kimchy' } },
+            { term: { user: 'tony' } }
+          ],
+          minimum_should_match: 2,
+          filter: {
+            bool: {
+              should: [
+                { term: { user: 'kimchy' } },
+                { term: { user: 'tony' } }
+              ],
+              minimum_should_match: 1
+            }
           }
         }
       }
-    }
-  })
+    })
 })
 
 test('bodybuilder | Nested bool query with must #162', (t) => {
@@ -1008,7 +1098,7 @@ test('bodybuilder | Nested bool query with must #162', (t) => {
         }
       }
     }
-)
+  )
 })
 
 test('bodybuilder | Invalid nested bool query with more "query" #142', (t) => {

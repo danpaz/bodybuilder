@@ -228,7 +228,7 @@ var body = bodybuilder()
   .orFilter('term', 'user', 'johnny')
   .notFilter('term', 'user', 'cassie')
   .aggregation('terms', 'user')
-  .suggest('term', 'user' { text: 'kimchy' })
+  .suggest('term', 'user', { text: 'kimchy' })
   .build()
 
 // body == {

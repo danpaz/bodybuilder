@@ -6,7 +6,7 @@ import queryBuilder from './query-builder'
 import filterBuilder from './filter-builder'
 import aggregationBuilder from './aggregation-builder'
 import suggestionBuilder from './suggestion-builder'
-import { sortMerge, isEmpty } from './utils'
+import { sortMerge, isEmpty, isString } from './utils'
 
 /**
  * **http://bodybuilder.js.org**
@@ -137,7 +137,7 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
 
             if(Array.isArray(body.sort)) {
                 field.forEach((sorts) => {
-                    if(_.isString(sorts)) {
+                    if(isString(sorts)) {
                         return sortMerge(body.sort, sorts, direction)
                     }
                     Object.entries(sorts).forEach(([key, value]) => {

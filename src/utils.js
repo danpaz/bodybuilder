@@ -169,3 +169,10 @@ export function pushQuery (existing, boolKey, type, ...args) {
 }
 
 export const isEmpty = obj => [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
+
+export function isString (str) {
+  if (str && typeof str.valueOf() === "string") {
+    return true
+  }
+  return false
+}

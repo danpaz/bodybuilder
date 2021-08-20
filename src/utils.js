@@ -127,7 +127,7 @@ export function pushQuery (existing, boolKey, type, ...args) {
   }
 
   if (
-    _.includes(['bool', 'constant_score'], type) &&
+    ['bool', 'constant_score'].includes(type) &&
     this.isInFilterContext &&
     _.has(nested, 'filter.bool')
   ) {

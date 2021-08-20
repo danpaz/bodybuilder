@@ -113,14 +113,14 @@ export function isFunction (func) {
 }
 
 export function has (obj, key) {
-  var keyParts = key.split('.');
+  var keyParts = key.split('.')
 
   return !!obj && (
     keyParts.length > 1
       ? has(obj[key.split('.')[0]], keyParts.slice(1).join('.'))
       : hasOwnProperty.call(obj, key)
-  );
-};
+  )
+}
 
 export function pushQuery (existing, boolKey, type, ...args) {
   const nested = {}
@@ -167,7 +167,7 @@ export function pushQuery (existing, boolKey, type, ...args) {
   }
 }
 
-export const isEmpty = obj => [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
+export const isEmpty = obj => [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length
 
 export function isString (str) {
   if (str && typeof str.valueOf() === "string") {

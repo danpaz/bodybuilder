@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import isPlainObject from 'lodash.isplainobject'
 import unset from 'lodash.unset'
-import { buildClause, isEmpty } from './utils'
+import { buildClause, isEmpty, isFunction } from './utils'
 import filterBuilder from './filter-builder'
 
 export default function aggregationBuilder (newAggregations) {
@@ -23,7 +23,7 @@ export default function aggregationBuilder (newAggregations) {
     const nestedClause = {}
     const metadata = {}
 
-    if (_.isFunction(nested)) {
+    if (isFunction(nested)) {
       const nestedResult = nested(Object.assign(
         {},
         aggregationBuilder(),

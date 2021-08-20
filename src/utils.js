@@ -105,9 +105,18 @@ function unwrap (arr) {
   return arr.length > 1 ? arr : _.last(arr)
 }
 
+export function isFunction (func) {
+  if (func && typeof func === "function") {
+    return true
+  }
+  return false
+}
+
+
+
 export function pushQuery (existing, boolKey, type, ...args) {
   const nested = {}
-  if (_.isFunction(_.last(args))) {
+  if (isFunction(_.last(args))) {
     const nestedCallback = args.pop()
     const nestedResult = nestedCallback(
       Object.assign(

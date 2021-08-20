@@ -136,11 +136,11 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
             }
 
             if(Array.isArray(body.sort)) {
-                _.each(field, (sorts) => {
+                field.forEach((sorts) => {
                     if(_.isString(sorts)) {
                         return sortMerge(body.sort, sorts, direction)
                     }
-                    _.each(sorts, (value, key) => {
+                    Object.entries(sorts).forEach(([key, value]) => {
                         sortMerge(body.sort, key, value)
                     })
                 })

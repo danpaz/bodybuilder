@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import unset from 'lodash.unset'
 import { buildClause, isEmpty } from './utils'
 

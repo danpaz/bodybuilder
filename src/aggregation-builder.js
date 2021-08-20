@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import isPlainObject from 'lodash.isplainobject'
 import unset from 'lodash.unset'
 import { buildClause, isEmpty, isFunction, isString } from './utils'

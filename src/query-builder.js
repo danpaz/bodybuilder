@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { toBool, pushQuery, isEmpty } from './utils'
 
 export default function queryBuilder (options, newQuery) {

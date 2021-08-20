@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import isPlainObject from 'lodash.isplainobject'
 import isObject from 'lodash.isobject'
 import queryBuilder from './query-builder'

@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { pushQuery, toBool, isEmpty } from './utils'
 
 export default function filterBuilder (options, newFilters) {

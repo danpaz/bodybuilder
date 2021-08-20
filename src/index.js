@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import isPlainObject from 'lodash.isplainobject'
 import set from 'lodash.set'
 import merge from 'lodash.merge'

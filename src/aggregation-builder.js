@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import isPlainObject from 'lodash.isplainobject'
+import unset from 'lodash.unset'
 import { buildClause, isEmpty } from './utils'
 import filterBuilder from './filter-builder'
 
@@ -15,7 +16,7 @@ export default function aggregationBuilder (newAggregations) {
 
     // we don't need name after this point
     if (customName) {
-      _.unset(opts, '_name')
+      unset(opts, '_name')
     }
 
     const nested = _.find(args, _.isFunction)
@@ -38,7 +39,7 @@ export default function aggregationBuilder (newAggregations) {
 
     if (opts && opts._meta) {
       Object.assign(metadata, { meta : opts._meta })
-      _.unset(opts, '_meta')
+      unset(opts, '_meta')
     }
 
     const innerClause = Object.assign({}, {

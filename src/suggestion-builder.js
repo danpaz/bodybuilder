@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import unset from 'lodash.unset'
 import { buildClause, isEmpty } from './utils'
 
 export default function suggestionBuilder(newSuggestion) {
@@ -10,7 +11,7 @@ export default function suggestionBuilder(newSuggestion) {
 
         if (name) {
             suggestName = name
-            _.unset(options, 'name')
+            unset(options, 'name')
         } else {
             suggestName = `suggest_${type}_${field}`
         }
@@ -18,7 +19,7 @@ export default function suggestionBuilder(newSuggestion) {
         let innerClause = {}
 
         if (text) {
-            _.unset(options, 'text')
+            unset(options, 'text')
             innerClause.text = text
         }
 

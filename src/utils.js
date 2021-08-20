@@ -18,7 +18,7 @@ export function sortMerge(current, field, value) {
   let payload
 
   if (isPlainObject(value)) {
-    payload = { [field]: _.assign({}, value) }
+    payload = { [field]: Object.assign({}, value) }
   } else {
     payload = { [field]: { order: value } }
   }
@@ -30,7 +30,7 @@ export function sortMerge(current, field, value) {
   if (isPlainObject(value) || idx === -1) {
     current.push(payload)
   } else {
-    _.extend(current[idx], payload)
+    Object.assign(current[idx], payload)
   }
 
   return current

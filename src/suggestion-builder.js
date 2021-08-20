@@ -1,8 +1,8 @@
 import _ from 'lodash'
-import { buildClause } from './utils'
+import { buildClause, isEmpty } from './utils'
 
 export default function suggestionBuilder(newSuggestion) {
-    let suggestions = _.isEmpty(newSuggestion) ? {} : newSuggestion
+    let suggestions = isEmpty(newSuggestion) ? {} : newSuggestion
 
     function makeSuggestion(type, field, options = {}) {
         let suggestName
@@ -39,7 +39,7 @@ export default function suggestionBuilder(newSuggestion) {
          *                         [options.text ] text query to run on suggest
          *                         [options.name ] pass a custom name to the function
          *                         [options.analyzer ] name of predefined analyzer to use on suggest
-         * 
+         *
          * @return {bodybuilder} Builder.
          *
          * @example
@@ -60,7 +60,7 @@ export default function suggestionBuilder(newSuggestion) {
             return suggestions
         },
         hasSuggestions() {
-            return !_.isEmpty(suggestions)
+            return !isEmpty(suggestions)
         },
     }
 }

@@ -3,7 +3,7 @@ import queryBuilder from './query-builder'
 import filterBuilder from './filter-builder'
 import aggregationBuilder from './aggregation-builder'
 import suggestionBuilder from './suggestion-builder'
-import { sortMerge } from './utils'
+import { sortMerge, isEmpty } from './utils'
 
 /**
  * **http://bodybuilder.js.org**
@@ -237,18 +237,18 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
 function _buildV1(body, queries, filters, aggregations) {
   let clonedBody = _.cloneDeep(body)
 
-  if (!_.isEmpty(filters)) {
+  if (!isEmpty(filters)) {
     _.set(clonedBody, 'query.filtered.filter', filters)
 
-    if (!_.isEmpty(queries)) {
+    if (!isEmpty(queries)) {
       _.set(clonedBody, 'query.filtered.query', queries)
     }
 
-  } else if (!_.isEmpty(queries)) {
+  } else if (!isEmpty(queries)) {
     _.set(clonedBody, 'query', queries)
   }
 
-  if (!_.isEmpty(aggregations)) {
+  if (!isEmpty(aggregations)) {
     _.set(clonedBody, 'aggregations', aggregations)
   }
   return clonedBody
@@ -257,25 +257,25 @@ function _buildV1(body, queries, filters, aggregations) {
 function _build(body, queries, filters, aggregations, suggestions) {
   let clonedBody = _.cloneDeep(body)
 
-  if (!_.isEmpty(filters)) {
+  if (!isEmpty(filters)) {
     let filterBody = {}
     let queryBody = {}
     _.set(filterBody, 'query.bool.filter', filters)
-    if (!_.isEmpty(queries.bool)) {
+    if (!isEmpty(queries.bool)) {
       _.set(queryBody, 'query.bool', queries.bool)
-    } else if (!_.isEmpty(queries)) {
+    } else if (!isEmpty(queries)) {
       _.set(queryBody, 'query.bool.must', queries)
     }
     _.merge(clonedBody, filterBody, queryBody)
-  } else if (!_.isEmpty(queries)) {
+  } else if (!isEmpty(queries)) {
     _.set(clonedBody, 'query', queries)
   }
 
-  if (!_.isEmpty(aggregations)) {
+  if (!isEmpty(aggregations)) {
     _.set(clonedBody, 'aggs', aggregations)
   }
 
-  if (!_.isEmpty(suggestions)) {
+  if (!isEmpty(suggestions)) {
     _.set(clonedBody, 'suggest', suggestions)
   }
 

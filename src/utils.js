@@ -148,3 +148,5 @@ export function pushQuery (existing, boolKey, type, ...args) {
     )
   }
 }
+
+export const isEmpty = obj => [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;

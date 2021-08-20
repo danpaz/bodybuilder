@@ -1,9 +1,9 @@
 import _ from 'lodash'
-import { buildClause } from './utils'
+import { buildClause, isEmpty } from './utils'
 import filterBuilder from './filter-builder'
 
 export default function aggregationBuilder (newAggregations) {
-  let aggregations = _.isEmpty(newAggregations) ? {} : newAggregations
+  let aggregations = isEmpty(newAggregations) ? {} : newAggregations
 
   function makeAggregation (type, field, ...args) {
 
@@ -119,7 +119,7 @@ export default function aggregationBuilder (newAggregations) {
     },
 
     hasAggregations () {
-      return !_.isEmpty(aggregations)
+      return !isEmpty(aggregations)
     },
 
     getRawAggregations () {

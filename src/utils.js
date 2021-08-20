@@ -102,7 +102,7 @@ export function toBool (filters) {
 }
 
 function unwrap (arr) {
-  return arr.length > 1 ? arr : _.last(arr)
+  return arr.length > 1 ? arr : arr.slice(-1)[0]
 }
 
 export function isFunction (func) {
@@ -124,7 +124,7 @@ export function has (obj, key) {
 
 export function pushQuery (existing, boolKey, type, ...args) {
   const nested = {}
-  if (isFunction(_.last(args))) {
+  if (isFunction(args.slice(-1)[0])) {
     const nestedCallback = args.pop()
     const nestedResult = nestedCallback(
       Object.assign(

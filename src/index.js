@@ -126,13 +126,13 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
       sort(field, direction = 'asc') {
         body.sort = body.sort || []
 
-        if (_.isArray(field)) {
+        if (Array.isArray(field)) {
 
             if(_.isPlainObject(body.sort)) {
                 body.sort = [body.sort]
             }
 
-            if(_.isArray(body.sort)) {
+            if(Array.isArray(body.sort)) {
                 _.each(field, (sorts) => {
                     if(_.isString(sorts)) {
                         return sortMerge(body.sort, sorts, direction)

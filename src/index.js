@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import isPlainObject from 'lodash.isplainobject'
+import set from 'lodash.set'
 import queryBuilder from './query-builder'
 import filterBuilder from './filter-builder'
 import aggregationBuilder from './aggregation-builder'
@@ -239,18 +240,18 @@ function _buildV1(body, queries, filters, aggregations) {
   let clonedBody = _.cloneDeep(body)
 
   if (!isEmpty(filters)) {
-    _.set(clonedBody, 'query.filtered.filter', filters)
+    set(clonedBody, 'query.filtered.filter', filters)
 
     if (!isEmpty(queries)) {
-      _.set(clonedBody, 'query.filtered.query', queries)
+      set(clonedBody, 'query.filtered.query', queries)
     }
 
   } else if (!isEmpty(queries)) {
-    _.set(clonedBody, 'query', queries)
+    set(clonedBody, 'query', queries)
   }
 
   if (!isEmpty(aggregations)) {
-    _.set(clonedBody, 'aggregations', aggregations)
+    set(clonedBody, 'aggregations', aggregations)
   }
   return clonedBody
 }
@@ -261,23 +262,23 @@ function _build(body, queries, filters, aggregations, suggestions) {
   if (!isEmpty(filters)) {
     let filterBody = {}
     let queryBody = {}
-    _.set(filterBody, 'query.bool.filter', filters)
+    set(filterBody, 'query.bool.filter', filters)
     if (!isEmpty(queries.bool)) {
-      _.set(queryBody, 'query.bool', queries.bool)
+      set(queryBody, 'query.bool', queries.bool)
     } else if (!isEmpty(queries)) {
-      _.set(queryBody, 'query.bool.must', queries)
+      set(queryBody, 'query.bool.must', queries)
     }
     _.merge(clonedBody, filterBody, queryBody)
   } else if (!isEmpty(queries)) {
-    _.set(clonedBody, 'query', queries)
+    set(clonedBody, 'query', queries)
   }
 
   if (!isEmpty(aggregations)) {
-    _.set(clonedBody, 'aggs', aggregations)
+    set(clonedBody, 'aggs', aggregations)
   }
 
   if (!isEmpty(suggestions)) {
-    _.set(clonedBody, 'suggest', suggestions)
+    set(clonedBody, 'suggest', suggestions)
   }
 
   return clonedBody

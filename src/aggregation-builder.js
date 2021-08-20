@@ -9,17 +9,17 @@ export default function aggregationBuilder (newAggregations) {
 
   function makeAggregation (type, field, ...args) {
 
-    const opts = _.find(args, isPlainObject)
+    const opts = args.find(isPlainObject)
     const customName = opts && opts._name
 
-    const aggName = customName || _.find(args, _.isString) || `agg_${type}_${field}`
+    const aggName = customName || args.find(_.isString) || `agg_${type}_${field}`
 
     // we don't need name after this point
     if (customName) {
       unset(opts, '_name')
     }
 
-    const nested = _.find(args, _.isFunction)
+    const nested = args.find(_.isFunction)
     const nestedClause = {}
     const metadata = {}
 

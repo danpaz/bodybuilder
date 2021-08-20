@@ -23,7 +23,7 @@ export function sortMerge(current, field, value) {
     payload = { [field]: { order: value } }
   }
 
-  const idx = _.findIndex(current, function (o) {
+  const idx = current.findIndex(function (o) {
     return o[field] != undefined
   })
 

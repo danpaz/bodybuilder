@@ -48,8 +48,8 @@ export function sortMerge(current, field, value) {
  * @return {Object} Clause
  */
 export function buildClause (field, value, opts) {
-  const hasField = !_.isNil(field)
-  const hasValue = !_.isNil(value)
+  const hasField = field != null
+  const hasValue = value != null
   let mainClause = {}
 
   if (hasValue) {

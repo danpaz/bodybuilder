@@ -19,7 +19,7 @@ export default function aggregationBuilder (newAggregations) {
       unset(opts, '_name')
     }
 
-    const nested = args.find(_.isFunction)
+    const nested = args.find(isFunction)
     const nestedClause = {}
     const metadata = {}
 

@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import isPlainObject from 'lodash.isplainobject'
 import set from 'lodash.set'
+import merge from 'lodash.merge'
 import queryBuilder from './query-builder'
 import filterBuilder from './filter-builder'
 import aggregationBuilder from './aggregation-builder'
@@ -268,7 +269,7 @@ function _build(body, queries, filters, aggregations, suggestions) {
     } else if (!isEmpty(queries)) {
       set(queryBody, 'query.bool.must', queries)
     }
-    _.merge(clonedBody, filterBody, queryBody)
+    merge(clonedBody, filterBody, queryBody)
   } else if (!isEmpty(queries)) {
     set(clonedBody, 'query', queries)
   }

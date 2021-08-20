@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import isPlainObject from 'lodash.isplainobject'
+import isObject from 'lodash.isobject'
 import queryBuilder from './query-builder'
 import filterBuilder from './filter-builder'
 
@@ -53,7 +54,7 @@ export function buildClause (field, value, opts) {
 
   if (hasValue) {
     mainClause = {[field]: value}
-  } else if (_.isObject(field)) {
+  } else if (isObject(field)) {
     mainClause = field
   } else if (hasField) {
     mainClause = {field}

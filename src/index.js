@@ -2,6 +2,7 @@ import _ from 'lodash'
 import isPlainObject from 'lodash.isplainobject'
 import set from 'lodash.set'
 import merge from 'lodash.merge'
+import cloneDeep from 'lodash.clonedeep'
 import queryBuilder from './query-builder'
 import filterBuilder from './filter-builder'
 import aggregationBuilder from './aggregation-builder'
@@ -226,7 +227,7 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
         const aggregations = this.getRawAggregations()
         const suggestions = this.getSuggestions()
 
-        return bodybuilder(...[body, queries, filters, aggregations, suggestions].map(obj => _.cloneDeep(obj)))
+        return bodybuilder(...[body, queries, filters, aggregations, suggestions].map(obj => cloneDeep(obj)))
       }
 
     },
@@ -238,7 +239,7 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
 }
 
 function _buildV1(body, queries, filters, aggregations) {
-  let clonedBody = _.cloneDeep(body)
+  let clonedBody = cloneDeep(body)
 
   if (!isEmpty(filters)) {
     set(clonedBody, 'query.filtered.filter', filters)
@@ -258,7 +259,7 @@ function _buildV1(body, queries, filters, aggregations) {
 }
 
 function _build(body, queries, filters, aggregations, suggestions) {
-  let clonedBody = _.cloneDeep(body)
+  let clonedBody = cloneDeep(body)
 
   if (!isEmpty(filters)) {
     let filterBody = {}

@@ -112,7 +112,15 @@ export function isFunction (func) {
   return false
 }
 
+export function has (obj, key) {
+  var keyParts = key.split('.');
 
+  return !!obj && (
+    keyParts.length > 1
+      ? has(obj[key.split('.')[0]], keyParts.slice(1).join('.'))
+      : hasOwnProperty.call(obj, key)
+  );
+};
 
 export function pushQuery (existing, boolKey, type, ...args) {
   const nested = {}
@@ -138,7 +146,7 @@ export function pushQuery (existing, boolKey, type, ...args) {
   if (
     ['bool', 'constant_score'].includes(type) &&
     this.isInFilterContext &&
-    _.has(nested, 'filter.bool')
+    has(nested, 'filter.bool')
   ) {
     // nesting filters: We've introduced an unnecessary `filter.bool`
     existing[boolKey].push(
@@ -146,7 +154,7 @@ export function pushQuery (existing, boolKey, type, ...args) {
     )
   } else if (
     type === 'bool' &&
-    _.has(nested, 'query.bool')
+    has(nested, 'query.bool')
    ) {
     existing[boolKey].push(
       {[type]: Object.assign(buildClause(...args), nested.query.bool)}

@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import isPlainObject from 'lodash.isplainobject'
 import queryBuilder from './query-builder'
 import filterBuilder from './filter-builder'
 
@@ -15,7 +16,7 @@ import filterBuilder from './filter-builder'
 export function sortMerge(current, field, value) {
   let payload
 
-  if (_.isPlainObject(value)) {
+  if (isPlainObject(value)) {
     payload = { [field]: _.assign({}, value) }
   } else {
     payload = { [field]: { order: value } }
@@ -25,7 +26,7 @@ export function sortMerge(current, field, value) {
     return o[field] != undefined
   })
 
-  if (_.isPlainObject(value) || idx === -1) {
+  if (isPlainObject(value) || idx === -1) {
     current.push(payload)
   } else {
     _.extend(current[idx], payload)

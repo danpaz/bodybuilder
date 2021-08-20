@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import isPlainObject from 'lodash.isplainobject'
 import queryBuilder from './query-builder'
 import filterBuilder from './filter-builder'
 import aggregationBuilder from './aggregation-builder'
@@ -128,7 +129,7 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
 
         if (Array.isArray(field)) {
 
-            if(_.isPlainObject(body.sort)) {
+            if(isPlainObject(body.sort)) {
                 body.sort = [body.sort]
             }
 

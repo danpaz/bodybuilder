@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import isPlainObject from 'lodash.isplainobject'
 import { buildClause, isEmpty } from './utils'
 import filterBuilder from './filter-builder'
 
@@ -7,7 +8,7 @@ export default function aggregationBuilder (newAggregations) {
 
   function makeAggregation (type, field, ...args) {
 
-    const opts = _.find(args, _.isPlainObject)
+    const opts = _.find(args, isPlainObject)
     const customName = opts && opts._name
 
     const aggName = customName || _.find(args, _.isString) || `agg_${type}_${field}`

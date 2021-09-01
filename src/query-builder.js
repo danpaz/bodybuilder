@@ -1,8 +1,7 @@
-import _ from 'lodash'
-import { toBool, pushQuery } from './utils'
+import { toBool, pushQuery, isEmpty } from './utils'
 
 export default function queryBuilder (options, newQuery) {
-  const query = _.isEmpty(newQuery) ? {
+  const query = isEmpty(newQuery) ? {
     and: [],
     or: [],
     not: []

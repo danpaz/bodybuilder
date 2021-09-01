@@ -1,27 +1,28 @@
-import _ from 'lodash'
-import { buildClause } from './utils'
+import isPlainObject from 'lodash.isplainobject'
+import unset from 'lodash.unset'
+import { buildClause, isEmpty, isFunction, isString } from './utils'
 import filterBuilder from './filter-builder'
 
 export default function aggregationBuilder (newAggregations) {
-  let aggregations = _.isEmpty(newAggregations) ? {} : newAggregations
+  let aggregations = isEmpty(newAggregations) ? {} : newAggregations
 
   function makeAggregation (type, field, ...args) {
 
-    const opts = _.find(args, _.isPlainObject)
+    const opts = args.find(isPlainObject)
     const customName = opts && opts._name
 
-    const aggName = customName || _.find(args, _.isString) || `agg_${type}_${field}`
+    const aggName = customName || args.find(isString) || `agg_${type}_${field}`
 
     // we don't need name after this point
     if (customName) {
-      _.unset(opts, '_name')
+      unset(opts, '_name')
     }
 
-    const nested = _.find(args, _.isFunction)
+    const nested = args.find(isFunction)
     const nestedClause = {}
     const metadata = {}
 
-    if (_.isFunction(nested)) {
+    if (isFunction(nested)) {
       const nestedResult = nested(Object.assign(
         {},
         aggregationBuilder(),
@@ -37,7 +38,7 @@ export default function aggregationBuilder (newAggregations) {
 
     if (opts && opts._meta) {
       Object.assign(metadata, { meta : opts._meta })
-      _.unset(opts, '_meta')
+      unset(opts, '_meta')
     }
 
     const innerClause = Object.assign({}, {
@@ -119,7 +120,7 @@ export default function aggregationBuilder (newAggregations) {
     },
 
     hasAggregations () {
-      return !_.isEmpty(aggregations)
+      return !isEmpty(aggregations)
     },
 
     getRawAggregations () {

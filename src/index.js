@@ -1,9 +1,12 @@
-import _ from 'lodash'
+import isPlainObject from 'lodash.isplainobject'
+import set from 'lodash.set'
+import merge from 'lodash.merge'
+import cloneDeep from 'lodash.clonedeep'
 import queryBuilder from './query-builder'
 import filterBuilder from './filter-builder'
 import aggregationBuilder from './aggregation-builder'
 import suggestionBuilder from './suggestion-builder'
-import { sortMerge } from './utils'
+import { sortMerge, isEmpty, isString } from './utils'
 
 /**
  * **http://bodybuilder.js.org**
@@ -126,18 +129,18 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
       sort(field, direction = 'asc') {
         body.sort = body.sort || []
 
-        if (_.isArray(field)) {
+        if (Array.isArray(field)) {
 
-            if(_.isPlainObject(body.sort)) {
+            if(isPlainObject(body.sort)) {
                 body.sort = [body.sort]
             }
 
-            if(_.isArray(body.sort)) {
-                _.each(field, (sorts) => {
-                    if(_.isString(sorts)) {
+            if(Array.isArray(body.sort)) {
+                field.forEach((sorts) => {
+                    if(isString(sorts)) {
                         return sortMerge(body.sort, sorts, direction)
                     }
-                    _.each(sorts, (value, key) => {
+                    Object.entries(sorts).forEach(([key, value]) => {
                         sortMerge(body.sort, key, value)
                     })
                 })
@@ -223,7 +226,7 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
         const aggregations = this.getRawAggregations()
         const suggestions = this.getSuggestions()
 
-        return bodybuilder(...[body, queries, filters, aggregations, suggestions].map(obj => _.cloneDeep(obj)))
+        return bodybuilder(...[body, queries, filters, aggregations, suggestions].map(obj => cloneDeep(obj)))
       }
 
     },
@@ -235,48 +238,48 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
 }
 
 function _buildV1(body, queries, filters, aggregations) {
-  let clonedBody = _.cloneDeep(body)
+  let clonedBody = cloneDeep(body)
 
-  if (!_.isEmpty(filters)) {
-    _.set(clonedBody, 'query.filtered.filter', filters)
+  if (!isEmpty(filters)) {
+    set(clonedBody, 'query.filtered.filter', filters)
 
-    if (!_.isEmpty(queries)) {
-      _.set(clonedBody, 'query.filtered.query', queries)
+    if (!isEmpty(queries)) {
+      set(clonedBody, 'query.filtered.query', queries)
     }
 
-  } else if (!_.isEmpty(queries)) {
-    _.set(clonedBody, 'query', queries)
+  } else if (!isEmpty(queries)) {
+    set(clonedBody, 'query', queries)
   }
 
-  if (!_.isEmpty(aggregations)) {
-    _.set(clonedBody, 'aggregations', aggregations)
+  if (!isEmpty(aggregations)) {
+    set(clonedBody, 'aggregations', aggregations)
   }
   return clonedBody
 }
 
 function _build(body, queries, filters, aggregations, suggestions) {
-  let clonedBody = _.cloneDeep(body)
+  let clonedBody = cloneDeep(body)
 
-  if (!_.isEmpty(filters)) {
+  if (!isEmpty(filters)) {
     let filterBody = {}
     let queryBody = {}
-    _.set(filterBody, 'query.bool.filter', filters)
-    if (!_.isEmpty(queries.bool)) {
-      _.set(queryBody, 'query.bool', queries.bool)
-    } else if (!_.isEmpty(queries)) {
-      _.set(queryBody, 'query.bool.must', queries)
+    set(filterBody, 'query.bool.filter', filters)
+    if (!isEmpty(queries.bool)) {
+      set(queryBody, 'query.bool', queries.bool)
+    } else if (!isEmpty(queries)) {
+      set(queryBody, 'query.bool.must', queries)
     }
-    _.merge(clonedBody, filterBody, queryBody)
-  } else if (!_.isEmpty(queries)) {
-    _.set(clonedBody, 'query', queries)
+    merge(clonedBody, filterBody, queryBody)
+  } else if (!isEmpty(queries)) {
+    set(clonedBody, 'query', queries)
   }
 
-  if (!_.isEmpty(aggregations)) {
-    _.set(clonedBody, 'aggs', aggregations)
+  if (!isEmpty(aggregations)) {
+    set(clonedBody, 'aggs', aggregations)
   }
 
-  if (!_.isEmpty(suggestions)) {
-    _.set(clonedBody, 'suggest', suggestions)
+  if (!isEmpty(suggestions)) {
+    set(clonedBody, 'suggest', suggestions)
   }
 
   return clonedBody

@@ -1,8 +1,7 @@
-import _ from 'lodash'
-import { pushQuery, toBool } from './utils'
+import { pushQuery, toBool, isEmpty } from './utils'
 
 export default function filterBuilder (options, newFilters) {
-  const filters = _.isEmpty(newFilters) ? {
+  const filters = isEmpty(newFilters) ? {
     and: [],
     or: [],
     not: []

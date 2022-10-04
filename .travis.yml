@@ -1,6 +1,5 @@
 language: node_js
 node_js:
-- 18.10.0
 - 16.17.1
 - 14.15.1
 branches:

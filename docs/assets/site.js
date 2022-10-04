@@ -7,7 +7,7 @@ anchors.add('h3');
 // Filter UI
 var tocElements = document.getElementById('toc').getElementsByTagName('li');
 
-document.getElementById('filter-input').addEventListener('keyup', function(e) {
+document.getElementById('filter-input').addEventListener('keyup', function (e) {
   var i, element, children;
 
   // enter key
@@ -22,14 +22,14 @@ document.getElementById('filter-input').addEventListener('keyup', function(e) {
     }
   }
 
-  var match = function() {
+  var match = function () {
     return true;
   };
 
   var value = this.value.toLowerCase();
 
   if (!value.match(/^\s*$/)) {
-    match = function(element) {
+    match = function (element) {
       var html = element.firstChild.innerHTML;
       return html && html.toLowerCase().indexOf(value) !== -1;
     };
@@ -113,28 +113,19 @@ split_left.style.overflow = 'hidden';
 var cw_without_sb = split_left.clientWidth;
 split_left.style.overflow = '';
 
-// Need to add:
-// - Half of gutterSize (i.e. 10) because gutter will take that much from each.
-// - Scrollbar width (cw_with_sb - cw_without_sb), if it takes up existing
-//   space (Firefox) rather than adding the scrollbar to the side (Chrome)
-var percent_left =
-  (split_left.getBoundingClientRect().width + 10 + cw_without_sb - cw_with_sb) /
-  split_parent.getBoundingClientRect().width *
-  100;
-
 Split(['#split-left', '#split-right'], {
-  elementStyle: function(dimension, size, gutterSize) {
+  elementStyle: function (dimension, size, gutterSize) {
     return {
       'flex-basis': 'calc(' + size + '% - ' + gutterSize + 'px)'
     };
   },
-  gutterStyle: function(dimension, gutterSize) {
+  gutterStyle: function (dimension, gutterSize) {
     return {
       'flex-basis': gutterSize + 'px'
     };
   },
   gutterSize: 20,
-  sizes: [percent_left, 100 - percent_left]
+  sizes: [33, 67]
 });
 
 // Chrome doesn't remember scroll position properly so do it ourselves.
@@ -161,9 +152,9 @@ function loadState(ev) {
   }
 }
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
   // Restore after Firefox scrolls to hash.
-  setTimeout(function() {
+  setTimeout(function () {
     loadState();
     // Update with initial scroll position.
     updateState();

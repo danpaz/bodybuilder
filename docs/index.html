@@ -1,24 +1,28 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-  <meta charset='utf-8' />
-  <title>bodybuilder 2.4.0 | Documentation</title>
+  <meta charset='utf-8'>
+  <title>bodybuilder 2.5.0 | Documentation</title>
+  <meta name='description' content='An elasticsearch query body builder.'>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
-  <link href='assets/bass.css' type='text/css' rel='stylesheet' />
-  <link href='assets/style.css' type='text/css' rel='stylesheet' />
-  <link href='assets/github.css' type='text/css' rel='stylesheet' />
-  <link href='assets/split.css' type='text/css' rel='stylesheet' />
+  <link href='assets/bass.css' rel='stylesheet'>
+  <link href='assets/style.css' rel='stylesheet'>
+  <link href='assets/github.css' rel='stylesheet'>
+  <link href='assets/split.css' rel='stylesheet'>
 </head>
 <body class='documentation m0'>
     <div class='flex'>
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>bodybuilder</h3>
-          <div class='mb1'><code>2.4.0</code></div>
+          <div class='mb1'><code>2.5.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
             class='col12 block input'
+            spellcheck='false'
+            autocapitalize='off'
+            autocorrect='off'
             type='text' />
           <div id='toc'>
             <ul class='list-reset h5 py1-ul'>
@@ -246,14 +250,14 @@
             </ul>
           </div>
           <div class='mt1 h6 quiet'>
-            <a href='http://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+            <a href='https://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
           </div>
         </div>
       </div>
       <div id='split-right' class='relative overflow-auto height-viewport-100'>
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -304,8 +308,7 @@ you must <code>return</code> the builder object in the nested function. For exam
 <p>The entire elasticsearch query DSL is available using the bodybuilder api.
 There are many more examples in the docs as well as in the tests.</p>
 
-
-  <div class='pre p1 fill-light mt0'>bodybuilder(newBody: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newQueries: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newFilters: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newAggregations: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newSuggestions: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>bodybuilder(newBody: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newQueries: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newFilters: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newAggregations: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, newSuggestions: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -389,12 +392,16 @@ There are many more examples in the docs as well as in the tests.</p>
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -450,8 +457,7 @@ There are many more examples in the docs as well as in the tests.</p>
 .build()
 </code></pre>
 
-
-  <div class='pre p1 fill-light mt0'>sort(field: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, direction: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>sort(field: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, direction: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -509,12 +515,16 @@ There are many more examples in the docs as well as in the tests.</p>
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -529,8 +539,7 @@ There are many more examples in the docs as well as in the tests.</p>
 
   <p>Set a <em>from</em> offset value, for paginating a query.</p>
 
-
-  <div class='pre p1 fill-light mt0'>from(quantity: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>from(quantity: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -579,12 +588,16 @@ fetch.
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -599,8 +612,7 @@ fetch.
 
   <p>Set a <em>size</em> value for maximum results to return.</p>
 
-
-  <div class='pre p1 fill-light mt0'>size(quantity: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>size(quantity: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -648,12 +660,16 @@ fetch.
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -668,8 +684,7 @@ fetch.
 
   <p>Set any key-value on the elasticsearch body.</p>
 
-
-  <div class='pre p1 fill-light mt0'>rawOption(k: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, v: any): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>rawOption(k: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, v: any): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -726,12 +741,16 @@ fetch.
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -747,8 +766,7 @@ fetch.
   <p>Collect all queries, filters, and aggregations and build the entire
 elasticsearch query.</p>
 
-
-  <div class='pre p1 fill-light mt0'>build(version: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+    <div class='pre p1 fill-light mt0'>build(version: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
   
   
 
@@ -799,12 +817,16 @@ elasticsearch 1.x query dsl.
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -824,8 +846,7 @@ const bodyB = bodyA.clone().from(2); // Doesn't affect bodyA
 // bodyB: { size: 3, from: 2 }
 </code></pre>
 
-
-  <div class='pre p1 fill-light mt0'>clone(): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>clone(): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -859,12 +880,16 @@ const bodyB = bodyA.clone().from(2); // Doesn't affect bodyA
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -879,8 +904,7 @@ const bodyB = bodyA.clone().from(2); // Doesn't affect bodyA
 
   <p>Add a query clause to the query body.</p>
 
-
-  <div class='pre p1 fill-light mt0'>query(args: ...any, type: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, field: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), value: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, nest: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>?): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>query(args: ...any, type: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, field: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), value: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, nest: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>?): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -971,33 +995,37 @@ the last argument.
   
 
   
+
+  
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>bodybuilder()
-  .query(<span class="hljs-string">'match_all'</span>)
-  .build()
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">bodybuilder</span>()
+  .<span class="hljs-title function_">query</span>(<span class="hljs-string">&#x27;match_all&#x27;</span>)
+  .<span class="hljs-title function_">build</span>()
 
-bodybuilder()
-  .query(<span class="hljs-string">'match_all'</span>, { <span class="hljs-attr">boost</span>: <span class="hljs-number">1.2</span> })
-  .build()
+<span class="hljs-title function_">bodybuilder</span>()
+  .<span class="hljs-title function_">query</span>(<span class="hljs-string">&#x27;match_all&#x27;</span>, { <span class="hljs-attr">boost</span>: <span class="hljs-number">1.2</span> })
+  .<span class="hljs-title function_">build</span>()
 
-bodybuilder()
-  .query(<span class="hljs-string">'match'</span>, <span class="hljs-string">'message'</span>, <span class="hljs-string">'this is a test'</span>)
-  .build()
+<span class="hljs-title function_">bodybuilder</span>()
+  .<span class="hljs-title function_">query</span>(<span class="hljs-string">&#x27;match&#x27;</span>, <span class="hljs-string">&#x27;message&#x27;</span>, <span class="hljs-string">&#x27;this is a test&#x27;</span>)
+  .<span class="hljs-title function_">build</span>()
 
-bodybuilder()
-  .query(<span class="hljs-string">'terms'</span>, <span class="hljs-string">'user'</span>, [<span class="hljs-string">'kimchy'</span>, <span class="hljs-string">'elastic'</span>])
-  .build()
+<span class="hljs-title function_">bodybuilder</span>()
+  .<span class="hljs-title function_">query</span>(<span class="hljs-string">&#x27;terms&#x27;</span>, <span class="hljs-string">&#x27;user&#x27;</span>, [<span class="hljs-string">&#x27;kimchy&#x27;</span>, <span class="hljs-string">&#x27;elastic&#x27;</span>])
+  .<span class="hljs-title function_">build</span>()
 
-bodybuilder()
-  .query(<span class="hljs-string">'nested'</span>, { <span class="hljs-attr">path</span>: <span class="hljs-string">'obj1'</span>, <span class="hljs-attr">score_mode</span>: <span class="hljs-string">'avg'</span> }, (q) =&gt; {
+<span class="hljs-title function_">bodybuilder</span>()
+  .<span class="hljs-title function_">query</span>(<span class="hljs-string">&#x27;nested&#x27;</span>, { <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;obj1&#x27;</span>, <span class="hljs-attr">score_mode</span>: <span class="hljs-string">&#x27;avg&#x27;</span> }, <span class="hljs-function">(<span class="hljs-params">q</span>) =&gt;</span> {
     <span class="hljs-keyword">return</span> q
-      .query(<span class="hljs-string">'match'</span>, <span class="hljs-string">'obj1.name'</span>, <span class="hljs-string">'blue'</span>)
-      .query(<span class="hljs-string">'range'</span>, <span class="hljs-string">'obj1.count'</span>, {<span class="hljs-attr">gt</span>: <span class="hljs-number">5</span>})
+      .<span class="hljs-title function_">query</span>(<span class="hljs-string">&#x27;match&#x27;</span>, <span class="hljs-string">&#x27;obj1.name&#x27;</span>, <span class="hljs-string">&#x27;blue&#x27;</span>)
+      .<span class="hljs-title function_">query</span>(<span class="hljs-string">&#x27;range&#x27;</span>, <span class="hljs-string">&#x27;obj1.count&#x27;</span>, {<span class="hljs-attr">gt</span>: <span class="hljs-number">5</span>})
   })
-  .build()</pre>
+  .<span class="hljs-title function_">build</span>()</pre>
     
+  
+
   
 
   
@@ -1010,7 +1038,7 @@ bodybuilder()
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -1025,8 +1053,7 @@ bodybuilder()
 
   <p>Alias for <code>query</code>.</p>
 
-
-  <div class='pre p1 fill-light mt0'>andQuery(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>andQuery(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -1073,12 +1100,16 @@ bodybuilder()
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -1093,8 +1124,7 @@ bodybuilder()
 
   <p>Alias for <code>query</code>.</p>
 
-
-  <div class='pre p1 fill-light mt0'>addQuery(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>addQuery(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -1141,12 +1171,16 @@ bodybuilder()
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -1162,8 +1196,7 @@ bodybuilder()
   <p>Add a "should" query to the query body.</p>
 <p>Same arguments as <code>query</code>.</p>
 
-
-  <div class='pre p1 fill-light mt0'>orQuery(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>orQuery(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -1210,12 +1243,16 @@ bodybuilder()
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -1231,8 +1268,7 @@ bodybuilder()
   <p>Add a "must_not" query to the query body.</p>
 <p>Same arguments as <code>query</code>.</p>
 
-
-  <div class='pre p1 fill-light mt0'>notQuery(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>notQuery(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -1279,12 +1315,16 @@ bodybuilder()
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -1300,8 +1340,7 @@ bodybuilder()
   <p>Set the <code>minimum_should_match</code> property on a bool query with more than
 one <code>should</code> clause.</p>
 
-
-  <div class='pre p1 fill-light mt0'>queryMinimumShouldMatch(param: any, override: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>queryMinimumShouldMatch(param: any, override: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -1360,12 +1399,16 @@ see
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -1380,8 +1423,7 @@ see
 
   <p>Add a filter clause to the query body.</p>
 
-
-  <div class='pre p1 fill-light mt0'>filter(args: ...any, type: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, field: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), value: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, nest: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>?): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>filter(args: ...any, type: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, field: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), value: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, nest: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>?): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -1473,13 +1515,17 @@ the last argument.
   
 
   
+
+  
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>bodybuilder()
-  .filter(<span class="hljs-string">'term'</span>, <span class="hljs-string">'user'</span>, <span class="hljs-string">'kimchy'</span>)
-  .build()</pre>
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">bodybuilder</span>()
+  .<span class="hljs-title function_">filter</span>(<span class="hljs-string">&#x27;term&#x27;</span>, <span class="hljs-string">&#x27;user&#x27;</span>, <span class="hljs-string">&#x27;kimchy&#x27;</span>)
+  .<span class="hljs-title function_">build</span>()</pre>
     
+  
+
   
 
   
@@ -1492,7 +1538,7 @@ the last argument.
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -1507,8 +1553,7 @@ the last argument.
 
   <p>Alias for <code>filter</code>.</p>
 
-
-  <div class='pre p1 fill-light mt0'>andFilter(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>andFilter(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -1555,12 +1600,16 @@ the last argument.
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -1575,8 +1624,7 @@ the last argument.
 
   <p>Alias for <code>filter</code>.</p>
 
-
-  <div class='pre p1 fill-light mt0'>addFilter(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>addFilter(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -1623,12 +1671,16 @@ the last argument.
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -1644,8 +1696,7 @@ the last argument.
   <p>Add a "should" filter to the query body.</p>
 <p>Same arguments as <code>filter</code>.</p>
 
-
-  <div class='pre p1 fill-light mt0'>orFilter(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>orFilter(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -1692,12 +1743,16 @@ the last argument.
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -1713,8 +1768,7 @@ the last argument.
   <p>Add a "must_not" filter to the query body.</p>
 <p>Same arguments as <code>filter</code>.</p>
 
-
-  <div class='pre p1 fill-light mt0'>notFilter(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>notFilter(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -1761,12 +1815,16 @@ the last argument.
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -1782,8 +1840,7 @@ the last argument.
   <p>Set the <code>minimum_should_match</code> property on a bool filter with more than
 one <code>should</code> clause.</p>
 
-
-  <div class='pre p1 fill-light mt0'>filterMinimumShouldMatch(param: any, override: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>filterMinimumShouldMatch(param: any, override: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -1842,12 +1899,16 @@ see
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -1862,8 +1923,7 @@ see
 
   <p>Add an aggregation clause to the query body.</p>
 
-
-  <div class='pre p1 fill-light mt0'>aggregation(args: ...any, type: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), field: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, name: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?, nest: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>?): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>aggregation(args: ...any, type: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), field: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, name: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?, nest: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>?): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -1914,16 +1974,8 @@ see
             <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
 	    (optional) Additional options to
 include in the aggregation.
-
-[
-options._meta
-]
- associate a piece of metadata with individual aggregations
-
-[
-options._name 
-]
- another way to pass a custom name to the aggregation.
+[options._meta] associate a piece of metadata with individual aggregations
+[options._name ] another way to pass a custom name to the aggregation.
 
           </div>
           
@@ -1973,38 +2025,42 @@ sub-aggregations as children. This
   
 
   
+
+  
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>bodybuilder()
-  .aggregation(<span class="hljs-string">'max'</span>, <span class="hljs-string">'price'</span>)
-  .build()
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">bodybuilder</span>()
+  .<span class="hljs-title function_">aggregation</span>(<span class="hljs-string">&#x27;max&#x27;</span>, <span class="hljs-string">&#x27;price&#x27;</span>)
+  .<span class="hljs-title function_">build</span>()
 
-bodybuilder()
-  .aggregation(<span class="hljs-string">'percentiles'</span>, <span class="hljs-string">'load_time'</span>, {
+<span class="hljs-title function_">bodybuilder</span>()
+  .<span class="hljs-title function_">aggregation</span>(<span class="hljs-string">&#x27;percentiles&#x27;</span>, <span class="hljs-string">&#x27;load_time&#x27;</span>, {
     <span class="hljs-attr">percents</span>: [<span class="hljs-number">95</span>, <span class="hljs-number">99</span>, <span class="hljs-number">99.9</span>]
   })
-  .build()
+  .<span class="hljs-title function_">build</span>()
 
-bodybuilder()
-  .aggregation(<span class="hljs-string">'date_range'</span>, <span class="hljs-string">'date'</span>, {
-    <span class="hljs-attr">format</span>: <span class="hljs-string">'MM-yyy'</span>,
-    <span class="hljs-attr">ranges</span>: [{ <span class="hljs-attr">to</span>: <span class="hljs-string">'now-10M/M'</span> }, { <span class="hljs-attr">from</span>: <span class="hljs-string">'now-10M/M'</span> }]
+<span class="hljs-title function_">bodybuilder</span>()
+  .<span class="hljs-title function_">aggregation</span>(<span class="hljs-string">&#x27;date_range&#x27;</span>, <span class="hljs-string">&#x27;date&#x27;</span>, {
+    <span class="hljs-attr">format</span>: <span class="hljs-string">&#x27;MM-yyy&#x27;</span>,
+    <span class="hljs-attr">ranges</span>: [{ <span class="hljs-attr">to</span>: <span class="hljs-string">&#x27;now-10M/M&#x27;</span> }, { <span class="hljs-attr">from</span>: <span class="hljs-string">&#x27;now-10M/M&#x27;</span> }]
   })
-  .build()
+  .<span class="hljs-title function_">build</span>()
 
-bodybuilder()
-  .aggregation(<span class="hljs-string">'diversified_sampler'</span>, <span class="hljs-string">'user.id'</span>, { <span class="hljs-attr">shard_size</span>: <span class="hljs-number">200</span> }, (a) =&gt; {
-    <span class="hljs-keyword">return</span> a.aggregation(<span class="hljs-string">'significant_terms'</span>, <span class="hljs-string">'text'</span>, <span class="hljs-string">'keywords'</span>)
+<span class="hljs-title function_">bodybuilder</span>()
+  .<span class="hljs-title function_">aggregation</span>(<span class="hljs-string">&#x27;diversified_sampler&#x27;</span>, <span class="hljs-string">&#x27;user.id&#x27;</span>, { <span class="hljs-attr">shard_size</span>: <span class="hljs-number">200</span> }, <span class="hljs-function">(<span class="hljs-params">a</span>) =&gt;</span> {
+    <span class="hljs-keyword">return</span> a.<span class="hljs-title function_">aggregation</span>(<span class="hljs-string">&#x27;significant_terms&#x27;</span>, <span class="hljs-string">&#x27;text&#x27;</span>, <span class="hljs-string">&#x27;keywords&#x27;</span>)
   })
-  .build()
+  .<span class="hljs-title function_">build</span>()
 
-bodybuilder()
-  .aggregation(<span class="hljs-string">'terms'</span>, <span class="hljs-string">'title'</span>, {
-     <span class="hljs-attr">_meta</span>: { <span class="hljs-attr">color</span>: <span class="hljs-string">'blue'</span> }
-   }, <span class="hljs-string">'titles'</span>)
-  .build()</pre>
+<span class="hljs-title function_">bodybuilder</span>()
+  .<span class="hljs-title function_">aggregation</span>(<span class="hljs-string">&#x27;terms&#x27;</span>, <span class="hljs-string">&#x27;title&#x27;</span>, {
+     <span class="hljs-attr">_meta</span>: { <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;blue&#x27;</span> }
+   }, <span class="hljs-string">&#x27;titles&#x27;</span>)
+  .<span class="hljs-title function_">build</span>()</pre>
     
+  
+
   
 
   
@@ -2017,7 +2073,7 @@ bodybuilder()
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -2032,8 +2088,7 @@ bodybuilder()
 
   <p>Alias for <code>aggregation</code>.</p>
 
-
-  <div class='pre p1 fill-light mt0'>agg(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>agg(args: ...any): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -2080,12 +2135,16 @@ bodybuilder()
   
 
   
+
+  
+
+  
 </section>
 
           
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -2100,8 +2159,7 @@ bodybuilder()
 
   <p>Add a suggestion clause to the query body.</p>
 
-
-  <div class='pre p1 fill-light mt0'>suggest(args: ...any, field: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?): <a href="#bodybuilder">bodybuilder</a></div>
+    <div class='pre p1 fill-light mt0'>suggest(args: ...any, field: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?): <a href="#bodybuilder">bodybuilder</a></div>
   
   
 
@@ -2138,21 +2196,9 @@ bodybuilder()
             <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
 	    (optional) Additional options to
 include in the suggestion clause.
-
-[
-options.text 
-]
- text query to run on suggest
-
-[
-options.name 
-]
- pass a custom name to the function
-
-[
-options.analyzer 
-]
- name of predefined analyzer to use on suggest
+[options.text ] text query to run on suggest
+[options.name ] pass a custom name to the function
+[options.analyzer ] name of predefined analyzer to use on suggest
 
           </div>
           
@@ -2176,17 +2222,21 @@ options.analyzer
   
 
   
+
+  
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>bodybuilder()
-  .suggest('term', price', { text: 'test' })
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">bodybuilder</span>()
+  .<span class="hljs-title function_">suggest</span>(<span class="hljs-string">&#x27;term&#x27;</span>, price<span class="hljs-string">&#x27;, { text: &#x27;</span>test<span class="hljs-string">&#x27; })
   .build()
 
 bodybuilder()
-  .suggest('phrase', 'price', { text: 'test', name: 'custom name' })
-  .build()</pre>
+  .suggest(&#x27;</span>phrase<span class="hljs-string">&#x27;, &#x27;</span>price<span class="hljs-string">&#x27;, { text: &#x27;</span>test<span class="hljs-string">&#x27;, name: &#x27;</span>custom name<span class="hljs-string">&#x27; })
+  .build()</span></pre>
     
+  
+
   
 
   

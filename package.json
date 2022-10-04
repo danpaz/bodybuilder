@@ -14,7 +14,7 @@
   "scripts": {
     "build:babel": "babel src --out-dir lib",
     "build:umd": "webpack lib browser/bodybuilder.min.js",
-    "build:docs": "documentation build src/index.js -o docs -f html --name bodybuilder",
+    "build:docs": "documentation build src/index.js -o docs -f html",
     "build": "npm run build:babel && npm run build:umd && npm run build:docs",
     "lint": "eslint src test",
     "typescript-test": "tsc --project typing-tests",

@@ -1,4 +1,4 @@
-import unset from 'lodash.unset'
+import { unset } from 'lodash'
 import { buildClause, isEmpty } from './utils'
 
 export default function suggestionBuilder(newSuggestion) {

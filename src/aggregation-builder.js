@@ -1,5 +1,4 @@
-import isPlainObject from 'lodash.isplainobject'
-import unset from 'lodash.unset'
+import { isPlainObject, unset } from 'lodash'
 import { buildClause, isEmpty, isFunction, isString } from './utils'
 import filterBuilder from './filter-builder'
 

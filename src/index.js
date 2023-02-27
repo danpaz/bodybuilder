@@ -1,7 +1,4 @@
-import isPlainObject from 'lodash.isplainobject'
-import set from 'lodash.set'
-import merge from 'lodash.merge'
-import cloneDeep from 'lodash.clonedeep'
+import { set, merge, cloneDeep, isPlainObject } from 'lodash'
 import queryBuilder from './query-builder'
 import filterBuilder from './filter-builder'
 import aggregationBuilder from './aggregation-builder'

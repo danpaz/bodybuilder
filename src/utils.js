@@ -1,5 +1,4 @@
-import isPlainObject from 'lodash.isplainobject'
-import isObject from 'lodash.isobject'
+import { isPlainObject, isObject } from 'lodash'
 import queryBuilder from './query-builder'
 import filterBuilder from './filter-builder'
 

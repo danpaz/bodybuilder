@@ -237,24 +237,24 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
 }
 
 function _buildV1(body, queries, filters, aggregations) {
-  let clonedBody = cloneDeep(body);
+  let clonedBody = cloneDeep(body)
 
-  clonedBody.query = clonedBody.query ??= {};
-  clonedBody.query.filtered = clonedBody.query.filtered ??= {};
+  clonedBody.query ??= {};
+  clonedBody.query.filtered ??= {}
 
   if (!isEmpty(filters)) {
-    clonedBody.query.filtered.filter = filters;
+    clonedBody.query.filtered.filter = filters
 
     if (!isEmpty(queries)) {
-      clonedBody.query.filtered.query = queries;
+      clonedBody.query.filtered.query = queries
     }
 
   } else if (!isEmpty(queries)) {
-    clonedBody.query = queries;
+    clonedBody.query = queries
   }
 
   if (!isEmpty(aggregations)) {
-    clonedBody.aggregations = aggregations;
+    clonedBody.aggregations = aggregations
   }
   return clonedBody
 }
@@ -264,28 +264,28 @@ function _build(body, queries, filters, aggregations, suggestions) {
 
   if (!isEmpty(filters)) {
     let filterBody = {}
-    let queryBody = {};
-    filterBody.query = filterBody.query ??= {};
-    filterBody.query.bool = filterBody.query.bool ??= {};
-    filterBody.query.bool.filter = filters;
-    queryBody.query = queryBody.query ??= {};
-    queryBody.query.bool = queryBody.query.bool ??= {};
+    let queryBody = {}
+    filterBody.query ??= {}
+    filterBody.query.bool ??= {}
+    filterBody.query.bool.filter = filters
+    queryBody.query ??= {}
+    queryBody.query.bool ??= {}
     if (!isEmpty(queries.bool)) {
-      queryBody.query.bool = queries.bool;
+      queryBody.query.bool = queries.bool
     } else if (!isEmpty(queries)) {
-      queryBody.query.bool.must = queries;
+      queryBody.query.bool.must = queries
     }
     merge(clonedBody, filterBody, queryBody)
   } else if (!isEmpty(queries)) {
-    clonedBody.query = queries;
+    clonedBody.query = queries
   }
 
   if (!isEmpty(aggregations)) {
-    clonedBody.aggs = aggregations;
+    clonedBody.aggs = aggregations
   }
 
   if (!isEmpty(suggestions)) {
-    clonedBody.suggest = suggestions;
+    clonedBody.suggest = suggestions
   }
 
   return clonedBody

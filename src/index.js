@@ -240,7 +240,7 @@ function _buildV1(body, queries, filters, aggregations) {
   let clonedBody = cloneDeep(body)
 
   if (!isEmpty(filters)) {
-    clonedBody.query.filtered.filters = filters;
+    clonedBody.query.filtered.filter = filters;
 
     if (!isEmpty(queries)) {
       clonedBody.query.filtered.query = queries;

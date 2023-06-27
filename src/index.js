@@ -263,13 +263,20 @@ function _build(body, queries, filters, aggregations, suggestions) {
   let clonedBody = cloneDeep(body);
 
   if (!isEmpty(filters)) {
-    let filterBody = {}
-    let queryBody = {}
-    filterBody.query ??= {}
-    filterBody.query.bool ??= {}
-    filterBody.query.bool.filter = filters
-    queryBody.query ??= {}
-    queryBody.query.bool ??= {}
+    let queryBody = {
+      query: {
+        bool: {}
+      }
+    }
+
+    let filterBody = {
+      query: {
+        bool: {
+          filter: filters
+        }
+      }
+    }
+
     if (!isEmpty(queries.bool)) {
       queryBody.query.bool = queries.bool
     } else if (!isEmpty(queries)) {

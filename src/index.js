@@ -1,5 +1,4 @@
 import isPlainObject from 'lodash.isplainobject'
-import set from 'lodash.set'
 import merge from 'lodash.merge'
 import cloneDeep from 'lodash.clonedeep'
 import queryBuilder from './query-builder'
@@ -241,18 +240,18 @@ function _buildV1(body, queries, filters, aggregations) {
   let clonedBody = cloneDeep(body)
 
   if (!isEmpty(filters)) {
-    set(clonedBody, 'query.filtered.filter', filters)
+    clonedBody.query.filtered.filters = filters;
 
     if (!isEmpty(queries)) {
-      set(clonedBody, 'query.filtered.query', queries)
+      clonedBody.query.filtered.query = queries;
     }
 
   } else if (!isEmpty(queries)) {
-    set(clonedBody, 'query', queries)
+    clonedBody.query = queries;
   }
 
   if (!isEmpty(aggregations)) {
-    set(clonedBody, 'aggregations', aggregations)
+    clonedBody.aggregations = aggregations;
   }
   return clonedBody
 }
@@ -263,23 +262,23 @@ function _build(body, queries, filters, aggregations, suggestions) {
   if (!isEmpty(filters)) {
     let filterBody = {}
     let queryBody = {}
-    set(filterBody, 'query.bool.filter', filters)
+    filterBody.query.bool.filter = filters;
     if (!isEmpty(queries.bool)) {
-      set(queryBody, 'query.bool', queries.bool)
+      queryBody.query.bool = queries.bool;
     } else if (!isEmpty(queries)) {
-      set(queryBody, 'query.bool.must', queries)
+      queryBody.query.bool.must = queries;
     }
     merge(clonedBody, filterBody, queryBody)
   } else if (!isEmpty(queries)) {
-    set(clonedBody, 'query', queries)
+    clonedBody.query = queries;
   }
 
   if (!isEmpty(aggregations)) {
-    set(clonedBody, 'aggs', aggregations)
+    clonedBody.aggs = aggregations;
   }
 
   if (!isEmpty(suggestions)) {
-    set(clonedBody, 'suggest', suggestions)
+    clonedBody.suggest = suggestions;
   }
 
   return clonedBody

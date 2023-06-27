@@ -237,7 +237,10 @@ export default function bodybuilder (newBody, newQueries, newFilters, newAggrega
 }
 
 function _buildV1(body, queries, filters, aggregations) {
-  let clonedBody = cloneDeep(body)
+  let clonedBody = cloneDeep(body);
+
+  clonedBody.query = clonedBody.query ??= {};
+  clonedBody.query.filtered = clonedBody.query.filtered ??= {};
 
   if (!isEmpty(filters)) {
     clonedBody.query.filtered.filter = filters;
@@ -257,12 +260,16 @@ function _buildV1(body, queries, filters, aggregations) {
 }
 
 function _build(body, queries, filters, aggregations, suggestions) {
-  let clonedBody = cloneDeep(body)
+  let clonedBody = cloneDeep(body);
 
   if (!isEmpty(filters)) {
     let filterBody = {}
-    let queryBody = {}
+    let queryBody = {};
+    filterBody.query = filterBody.query ??= {};
+    filterBody.query.bool = filterBody.query.bool ??= {};
     filterBody.query.bool.filter = filters;
+    queryBody.query = queryBody.query ??= {};
+    queryBody.query.bool = queryBody.query.bool ??= {};
     if (!isEmpty(queries.bool)) {
       queryBody.query.bool = queries.bool;
     } else if (!isEmpty(queries)) {

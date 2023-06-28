@@ -176,6 +176,17 @@ export function isString (str) {
   return false
 }
 
+/**
+ * Util to replace lodash.set, sets the value of an object
+ *
+ * @private
+ *
+ * @param  {Object} obj Body of the query
+ * @param  {string|Object} path Field value or array of fields.
+ * @param  {Object} value  Additional key-value pairs.
+ *
+ * @return {Object} Clause
+ */
 export function set(obj, path, value) {
   const keys = Array.isArray(path) ? path : path.split('.') // convert path to array if it's a string
   const lastKeyIndex = keys.length - 1

@@ -175,3 +175,18 @@ export function isString (str) {
   }
   return false
 }
+
+export function set(obj, path, value) {
+  const keys = Array.isArray(path) ? path : path.split('.') // convert path to array if it's a string
+  const lastKeyIndex = keys.length - 1
+
+  for (let i = 0; i < lastKeyIndex; i++) {
+    const key = keys[i]
+    if (!(key in obj)) {
+      obj[key] = {}
+    }
+    obj = obj[key]
+  }
+
+  obj[keys[lastKeyIndex]] = value
+}

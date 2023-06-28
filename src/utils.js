@@ -181,11 +181,11 @@ export function isString (str) {
  *
  * @private
  *
- * @param  {Object} obj Body of the query
- * @param  {string|Object} path Field value or array of fields.
- * @param  {Object} value  Additional key-value pairs.
+ * @param  {Object} obj Object to set value in
+ * @param  {string|Object} path Path in the object where to set the value
+ * @param  {Object} value  Value to set
  *
- * @return {Object} Clause
+ * @return {Object} undefined
  */
 export function set(obj, path, value) {
   const keys = Array.isArray(path) ? path : path.split('.') // convert path to array if it's a string

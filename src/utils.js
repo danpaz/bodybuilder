@@ -188,8 +188,8 @@ export function isString (str) {
  * @return {Object} undefined
  */
 export function set(obj, path, value) {
-  const keys = Array.isArray(path) ? path : path.replaceAll('[', '.').replaceAll(']', '').split('.') // removes array reference and convert path to array if it's a string
-
+  const keys = Array.isArray(path) ? path : path.replace(/\[/g, '.').replace(/\]/g, '').split('.') // removes array reference and convert path to array if it's a string
+console.log({ keys })
   const lastKeyIndex = keys.length - 1
 
   for (let i = 0; i < lastKeyIndex; i++) {

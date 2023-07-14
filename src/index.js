@@ -1,12 +1,11 @@
 import isPlainObject from 'lodash.isplainobject'
-import set from 'lodash.set'
 import merge from 'lodash.merge'
 import cloneDeep from 'lodash.clonedeep'
 import queryBuilder from './query-builder'
 import filterBuilder from './filter-builder'
 import aggregationBuilder from './aggregation-builder'
 import suggestionBuilder from './suggestion-builder'
-import { sortMerge, isEmpty, isString } from './utils'
+import { sortMerge, isEmpty, isString, set } from './utils'
 
 /**
  * **http://bodybuilder.js.org**

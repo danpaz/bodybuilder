@@ -61,7 +61,6 @@
     "lodash.isobject": "3.0.2",
     "lodash.isplainobject": "4.0.6",
     "lodash.merge": "4.6.2",
-    "lodash.set": "4.3.2",
     "lodash.unset": "4.5.2"
   },
   "repository": {

@@ -54,7 +54,7 @@
     "tape": "4.8.0",
     "tape-watch": "2.3.0",
     "typescript": "^5.8.3",
-    "webpack": "1.12.13"
+    "webpack": "5.99.9"
   },
   "dependencies": {
     "lodash.clonedeep": "4.5.0",
